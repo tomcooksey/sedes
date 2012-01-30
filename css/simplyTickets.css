@@ -97,6 +97,40 @@ section.app #orderProgress .steps li.current {
     font-weight: bold;    
 }
 
+form#seats {
+    width: 60%;
+}
+
+form {
+    display: block;
+    margin-top: 10px;
+}
+
+form .fieldWrapper {
+    display: block;
+    padding: 10px 0px 10px 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+form .fieldWrapper label {
+    text-align: right;
+    width: 200px;
+    display: inline-block;
+}
+
+form .fieldWrapper select {
+    width: 250px;
+    margin-left: 10px;
+}
+
+form .valid {
+    background-color: #D1FFDC;
+}
+
+form .invalid {
+    background-color: #FCE6E6;
+}
+
 footer {
     display: block;
     height: 90px;
