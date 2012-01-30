@@ -42,26 +42,30 @@
             this.viewport.clean();
             this.setProgress(1);
             
-            this.viewport.addView(new simply.forms.seats());
+            this.viewport.addView(new simply.forms.seats(), 'choose_seats');
         },
         
         //Stage 2
         chooseSeats: function() {
+            this.viewport.clean();
             this.setProgress(2);
         },
         
         //Stage 3
         yourInfo: function() {
+            this.viewport.clean();
             this.setProgress(3);
         },
         
         //Stage 4
         payment: function() {
+            this.viewport.clean();
             this.setProgress(4);
         },
         
         //Stage 5
         thanks: function() {
+            this.viewport.clean();
             this.setProgress(5);
         }
         
