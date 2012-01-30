@@ -27,7 +27,9 @@
             //simply.session.fetch();
 
             //Setup the viewport
-            this.viewport = new simply.views.viewport().render();
+            this.viewport = new simply.views.viewport();
+            this.viewport.render();
+
         },
         
         setProgress: function(stage) {
@@ -37,7 +39,10 @@
         
         //Stage 1
         choosePerformance: function() {
+            this.viewport.clean();
             this.setProgress(1);
+            
+            this.viewport.addView(new simply.forms.seats());
         },
         
         //Stage 2

@@ -4,7 +4,9 @@
         views: {},
         models: {},
         routers: {},
-        collections: {}
+        collections: {},
+        forms: {},
+        fields: {}
     };
     
     $(document).ready(function() {

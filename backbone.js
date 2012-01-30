@@ -952,7 +952,6 @@
     // not `change`, `submit`, and `reset` in Internet Explorer.
     delegateEvents : function(events) {
       if (!(events || (events = this.events))) return;
-      
       if (_.isFunction(events)) events = events.call(this);
       $(this.el).unbind('.delegateEvents' + this.cid);
       for (var key in events) {
@@ -962,11 +961,9 @@
         var eventName = match[1], selector = match[2];
         method = _.bind(method, this);
         eventName += '.delegateEvents' + this.cid;
-        
         if (selector === '') {
           $(this.el).bind(eventName, method);
         } else {
-          console.log(eventName);
           $(this.el).delegate(selector, eventName, method);
         }
       }
