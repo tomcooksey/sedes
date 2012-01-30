@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+    
+<html>
+    
+    <head>
+        <title>Simply Tickets</title>
+        
+        <link rel="stylesheet" type="text/css" href="css/simplyTickets.css" />
+        <!--hosted for the time being-->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+        <script src="underscore.js"></script>
+        <script src="backbone.js"></script>
+        <script src="app.js"></script>
+        
+        
+        <!--models-->
+	<script src="models/stage.model.js"></script>
+	<script src="models/session.model.js"></script>
+        
+        <!--collections-->
+        <script src="collections/stages.collection.js"></script>
+	
+        <!--views-->
+	<script src="lib/progressStage.view.js"></script>
+	<script src="lib/progress.view.js"></script>
+	<script src="lib/viewport.view.js"></script>
+        
+        <!--routers-->
+        <script src="routers/main.router.js"></script>
+        
+        <!--templates-->
+
+        
+  
+        
+
+        
+        <script>
+        
+        
+        
+            
+        </script>
+        
+    </head>
+    
+    <body>
+        
+	<header>
+	    <div class="inner">
+		<img src="images/common/logo.png" alt="Simply Theatre" class="logo" />
+	    </div>
+	</header>
+	
+	<section class="app">
+	    <div id="orderProgress">
+		<div class="bar"></div>
+		<div class="mask"></div>
+		<ul class="steps">
+		    
+		</ul>
+	    </div>
+	    
+	    <div id="activeSpace">
+		
+		<a href="#">Step 1</a><br/>
+		<a href="#choose-seats">Step 2</a><br/>
+		<a href="#your-info">Step 3</a><br/>
+		<a href="#payment">Step 4</a><br/>
+		<a href="#thanks">Step 5</a><br/>
+		
+	    </div>
+	    
+	</section>
+	
+	<footer>
+	    
+	</footer>
+
+    </body>
+    
+</html>

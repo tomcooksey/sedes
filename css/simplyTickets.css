@@ -1,0 +1,105 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;   
+}
+
+header {
+    display: block;
+    height: 90px;
+    border-bottom: 1px solid #b5b4ad;
+    margin-bottom: 20px;
+}
+
+header .inner {
+    width: 967px;
+    margin: auto;
+    padding: 0px;
+    height: 90px;
+}
+
+header .inner img.logo {
+    margin-top: 27px;
+}
+
+section.app {
+    width: 967px;
+    margin: auto;
+    padding: 0px;
+}
+
+section.app #orderProgress {
+    display: block;
+    height: 46px;
+    position: relative;
+    background: url(../images/progress/path.png);
+    overflow: hidden;
+}
+
+section.app #orderProgress .bar {
+    width: 1251px;
+    height: 70px;
+    background-image: url(../images/progress/bar.png);
+    background-position: center;
+    position: absolute;
+    top: -12px;
+    right: 966px;
+    z-index: 50;
+}
+
+section.app #orderProgress .mask {
+    width: 967px;
+    height: 46px;
+    background: url(../images/progress/mask.png);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+}
+
+section.app #orderProgress .steps {
+    width: 967px;
+    height: 46px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 150;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+section.app #orderProgress .steps li {
+    padding: 0px;
+    width:  224px;
+    display: inline-block;
+    height: 46px;
+    line-height: 46px;
+    margin-left: 15px;
+    margin-right: 8px;
+    color: #606060;
+}
+
+section.app #orderProgress .steps li.end {
+    margin-right: 0px;
+    width: 198px!important;
+    margin-left: 8px;
+}
+
+section.app #orderProgress .steps li.complete {
+    color: #fff;
+    background-image: url(../images/progress/tick.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+section.app #orderProgress .steps li.current {
+    font-weight: bold;    
+}
+
+footer {
+    display: block;
+    height: 90px;
+    border-top: 1px solid #b5b4ad;
+    margin-top: 20px;
+}
