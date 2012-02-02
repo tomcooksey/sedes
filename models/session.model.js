@@ -3,8 +3,12 @@
     simply.models.session = Backbone.Model.extend({
         
         defaults: {
-            order_id: null,
-            current_stage: 1
+            //TO DO this order_id should come from the server and be
+            //a protected attribute..is this possible?
+            order_id: 1,
+            current_stage: 1,
+            show_id: false,
+            performance_id: 0
         }
         
     });

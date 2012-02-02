@@ -10,7 +10,7 @@
                     "number": 1,
                     "title": "1. Select your performance",
                     "completed" : false,
-                    "current": false
+                    "current": true
                 },
                 
                  {
@@ -37,6 +37,7 @@
         },
         
         changeStage: function() {
+            console.log('stage changing');
             var stageNumber = simply.session.get('current_stage');
             
             this.each(function(stage) {

@@ -97,9 +97,7 @@ section.app #orderProgress .steps li.current {
     font-weight: bold;    
 }
 
-form#seats {
-    width: 60%;
-}
+
 
 form {
     display: block;
@@ -110,17 +108,28 @@ form .fieldWrapper {
     display: block;
     padding: 10px 0px 10px 0px;
     border-bottom: 1px solid #ccc;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 form .fieldWrapper label {
-    text-align: right;
+    text-align: left;
     width: 200px;
     display: inline-block;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 form .fieldWrapper select {
     width: 250px;
     margin-left: 10px;
+}
+
+form .fieldWrapper input {
+    width: 245px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    height: 20px;
 }
 
 form .valid {
@@ -131,6 +140,51 @@ form .invalid {
     background-color: #FCE6E6;
 }
 
+form fieldset.fieldWrapper {
+    display: block;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0px 10px 0px;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+form fieldset.fieldWrapper legend {
+    padding: 0px;
+    -webkit-padding-start: 0px;
+    -webkit-padding-end: 0px;
+    font-size: 16px;
+    width: 200px;
+    display: inline-block;
+    float: left;
+}
+
+form fieldset.fieldWrapper label {
+    width: 300px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+form fieldset.fieldWrapper  input {
+    display: inline-block;
+    width: 20px;
+    margin: 0px;
+    border: 0px;
+    height: auto;
+}
+
+form fieldset.fieldWrapper .radioGroup  {
+    float: left;
+    width: 60%;
+    margin-left: 10px;
+}
+
+form fieldset.fieldWrapper .radioGroup .radioRow {
+    margin-bottom: 5px;
+}   
 footer {
     display: block;
     height: 90px;
