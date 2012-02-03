@@ -39,7 +39,6 @@
         },
         
         setProgress: function(stage) {
-            console.log('setting');
             simply.session.set({current_stage: stage});
             //TODO Save to server to maintain state
         },

@@ -4,17 +4,17 @@
         //TO DO - self filling with models at the moment, this
         //needs to come from the server depending on company_id
         
-        model: simply.models.show,
+        model: simply.models.performance,
         
         initialize: function() {
             this.add([
                 {
-                    show_id: 1,
-                    name: "Street car named desire"
+                    performance_id: 1,
+                    title: "Thursday 5th March 2012, 19:30"
                 },
                 {
-                    show_id: 2,
-                    name: "Little shop of horrors"
+                    performance_id: 2,
+                    name: "Friday 6th March 2012, 19:30"
                 }
             ]);
         }

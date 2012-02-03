@@ -7,7 +7,7 @@
             //a protected attribute..is this possible?
             order_id: 1,
             current_stage: 1,
-            show_id: false,
+            show_id: 0,
             performance_id: 0
         }
         

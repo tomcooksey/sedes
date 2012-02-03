@@ -37,7 +37,7 @@
         },
         
         changeStage: function() {
-            console.log('stage changing');
+            console.log('bound to this?');
             var stageNumber = simply.session.get('current_stage');
             
             this.each(function(stage) {
