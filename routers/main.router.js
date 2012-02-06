@@ -22,6 +22,8 @@
         //Sets up page furniture etc
         initialize: function() {
             
+            simply.globalChanging = false;
+            
             //Put session in the global namespace
             simply.session = new simply.models.session();
             //Put shows in global namespace for ease of use
