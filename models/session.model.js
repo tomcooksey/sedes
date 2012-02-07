@@ -6,10 +6,7 @@
         
         //We need to override set so that we can cache any requests that come in
         set: function(attributes, options) {
-            console.log('calling my setter');
             var self = this;
-            
-           
             
             var caller = function() {
                 if(!simply.globalChanging) {
@@ -32,65 +29,82 @@
             this.on('change', this.globalChange, this);
         },
         
-        cachedRequests: {},
+        save: function(callback) {
+            console.log('saving session');
+            
+            var self = this;
+            //callback.apply(self);
+            //return;
+            setTimeout(function() {
+                console.log('session is saved');
+                callback.apply(self);
+            }, 1000);
+            
+            
+                
+        },
         
         globalChange: function() {
             
             if(simply.globalChanging) return;
             
+            //TO DO - This needs to be on save and the rest should be
+            //run during a callback..otherwise it won't
+            //send back any new data, it'll be the old
+            //stuff!
             simply.globalChanging = true;
             
-            var asyncCalls = 0, completedASyncCalls = 0;
+            //Cache the changed attributes because otherwise when we get into the callback
+            //they are no longer considered new 
+            var self = this, changedAttributes = this.changedAttributes();
             
-            function incrementCompleted() {
-                console.log('recieving completion');
-                completedASyncCalls +=1;
-            }
             
-            _.each(this.changedAttributes(), function(x, field) {
-                if(this.binds.hasOwnProperty(field)) {
-                    //If we don't need to wait before getting
-                    //a response (ie no server interaction is involved),
-                    //then we can just call the function and forget
-                    //about it
-                    for(var y=0; y< this.binds[field].length; y+=1) {
-                        var bind = this.binds[field][y];
-                        if(!bind.async) {
-                            bind.fn.apply(bind.context);
-                        }else{
-                            asyncCalls +=1;
-                            bind.fn.apply(bind.context, [incrementCompleted]);
-                        }
-                    }
-                    
+            this.save(function() {
+                var asyncCalls = 0, completedASyncCalls = 0;
+            
+                function incrementCompleted() {
+                    completedASyncCalls +=1;
                 }
                 
-            }, this);
-            
-            timeoutFunc = function() {
-                if(asyncCalls !== completedASyncCalls) {
+                
+                _.each(changedAttributes, function(x, field) {
+                    if(self.binds.hasOwnProperty(field)) {
+                        //If we don't need to wait before getting
+                        //a response (ie no server interaction is involved),
+                        //then we can just call the function and forget
+                        //about it
+                        for(var y=0; y< self.binds[field].length; y+=1) {
+                            var bind = self.binds[field][y];
+                            if(!bind.async) {
+                                bind.fn.apply(bind.context);
+                            }else{
+                                asyncCalls +=1;
+                                bind.fn.apply(bind.context, [incrementCompleted]);
+                            }
+                        }
+                        
+                    }
                     
-                    console.log('asc', asyncCalls);
-                    console.log('cac', completedASyncCalls);
-                    
-                    setTimeout(function() {
-                        console.log('Not completed, check again');
-                        timeoutFunc.apply()
-                    }, 100);
-                }else{
-                    
-                    console.log('asc', asyncCalls);
-                    console.log('cac', completedASyncCalls);
-                    
-                    simply.globalChanging = false;
-                    console.log('all completed', simply.globalChanging);
+                }, self);
+                
+                timeoutFunc = function() {
+                    if(asyncCalls !== completedASyncCalls) {
+                        
+                        setTimeout(function() {
+                            timeoutFunc.apply()
+                        }, 100);
+                    }else{     
+                        simply.globalChanging = false;
+                    }
                 }
-            }
+                
+                //Set a timeout to check completedASyncCalls
+                setTimeout(function() {
+                    timeoutFunc.apply();
+                }, 100);
+            });
             
-            //Set a timeout to check completedASyncCalls
-            setTimeout(function() {
-                timeoutFunc.apply();
-            }, 100);
+            
         },
         
         defaults: {

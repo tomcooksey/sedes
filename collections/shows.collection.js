@@ -11,10 +11,6 @@
                 {
                     show_id: 1,
                     name: "Street car named desire"
-                },
-                {
-                    show_id: 2,
-                    name: "Little shop of horrors"
                 }
             ]);
         }
