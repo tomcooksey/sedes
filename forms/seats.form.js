@@ -6,131 +6,68 @@
         
         initialize: function() {
             
-            this.form = new simply.form({
-                name: 'seats',
-                action: 'choose-seats'
+            this.seatOptions = _.memoize(function() {
+                var obj, options = [];
+                
+                for(var x=0; x<10; x+=1) {
+                    obj = {
+                        value: x,
+                        text: x
+                    }
+                    
+                    options.push(obj);
+                }
+                
+                return options;
             });
             
-            //TO DO this will be auto generated once it's database driven,
-            //until then we're giving it arbitary IDs
-            this.form.addField( new simply.fields.select({
-                label: "Adults:",
-                id: "adult_tickets",
-                form: this.form,
-                choices: [
-                    {
-                        value: 0,
-                        text: "0"
-                    },
-                    
-                    {
-                        value: 1,
-                        text: "1"
-                    },
-                    
-                    {
-                        value: 2,
-                        text: "2"
-                    },
-                    
-                    {
-                        value: 3,
-                        text: "3"
-                    },
-                    
-                    {
-                        value: 4,
-                        text: "4"
-                    }
-                ],
-                validation: [
-                    {
-                        type: function() {
-                            return this.getVal() > 0;
-                        },
-                        msg: "Please select a value"
-                    }
-                ]
-            }));
+            this.forms = [];
             
-            this.form.addField( new simply.fields.select({
-                label: "Children:",
-                id: "child_tickets",
-                form: this.form,
-                choices: [
-                    {
-                        value: 0,
-                        text: "0"
-                    },
-                    
-                    {
-                        value: 1,
-                        text: "1"
-                    },
-                    
-                    {
-                        value: 2,
-                        text: "2"
-                    },
-                    
-                    {
-                        value: 3,
-                        text: "3"
-                    },
-                    
-                    {
-                        value: 4,
-                        text: "4"
+            simply.ticketTypes.each(function(ticket) {
+                var form, self = this;
+
+                form = new simply.form({
+                    name: 'form_seats_' + ticket.get('id'),
+                    action: 'seat-map',
+                    model: ticket
+                });
+                
+                form.addField( new simply.fields.select({
+                    label: ticket.get('name') + ":",
+                    note: "( &pound;" + ticket.get('price').toFixed(2) + ")",
+                    id: "field_seats_" + ticket.get('id'),
+                    form: form,
+                    modelField: 'quantity',
+                    choices: this.seatOptions(),
+                    onValid: function() {
+                        self.seatMap.show();
                     }
-                ]
-            }));
+                }));
+                
+                this.forms.push(form);
+                
+            }, this);
             
-            this.form.addField( new simply.fields.select({
-                label: "Concessions",
-                id: "concession_tickets",
-                form: this.form,
-                choices: [
-                    {
-                        value: 0,
-                        text: "0"
-                    },
-                    
-                    {
-                        value: 1,
-                        text: "1"
-                    },
-                    
-                    {
-                        value: 2,
-                        text: "2"
-                    },
-                    
-                    {
-                        value: 3,
-                        text: "3"
-                    },
-                    
-                    {
-                        value: 4,
-                        text: "4"
-                    }
-                ]
-            }));
+            this.seatMap = new simply.views.seatMap();
             
-            this.form.addField( new simply.fields.button({
-                label: "Next",
-                buttonClass: "test",
-                id: 'next_button',
-                form: this.form,
-                action: "submit"
-            }));
             
         },
         
         
         
         render: function() {
-            return this.form.render();
+            var buildUp;
+            
+            buildUp = $('<div>');
+            
+            _.each(this.forms, function(form) {
+                buildUp.append(form.render());
+            });
+            
+            buildUp.append(this.seatMap.render());
+            
+            return buildUp;
+            
         }
     });
 

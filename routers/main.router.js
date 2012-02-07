@@ -30,6 +30,7 @@
             //TO DO - sync from server instead of hardcoded
             simply.shows = new simply.collections.shows();
             //simply.shows.fetch();
+            simply.ticketTypes = new simply.collections.ticketTypes();
             
             //TODO Update from the server
             //simply.session.fetch();
