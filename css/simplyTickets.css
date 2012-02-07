@@ -4,6 +4,25 @@ html, body {
     font-family: sans-serif;   
 }
 
+
+
+#loading {
+    position: absolute;
+    background: #fff;
+    line-height: 100px;
+    opacity: 0.8;
+    border: 1px solid #ccc;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 1000;
+}
+
+.loadingState {
+    opacity: 0.8;
+}
+
 header {
     display: block;
     height: 90px;
@@ -22,10 +41,13 @@ header .inner img.logo {
     margin-top: 27px;
 }
 
+
+
 section.app {
     width: 967px;
     margin: auto;
     padding: 0px;
+    position: relative;
 }
 
 section.app #orderProgress {

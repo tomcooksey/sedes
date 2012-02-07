@@ -4,19 +4,46 @@
         
         binds: {},
         
+        //We need to override set so that we can cache any requests that come in
+        set: function(attributes, options) {
+            console.log('calling my setter');
+            var self = this;
+            
+           
+            
+            var caller = function() {
+                if(!simply.globalChanging) {
+                    Backbone.Model.prototype.set.call(self, attributes, options);
+                }else{
+                    setTimeout(function() {
+                        caller.apply();
+                    }, 100);
+                }
+            }
+            
+            caller.apply();
+            
+            return true;
+        },
+        
         initialize: function() {
             this.binds = {};
             
             this.on('change', this.globalChange, this);
         },
         
+        cachedRequests: {},
+        
         globalChange: function() {
+            
+            if(simply.globalChanging) return;
             
             simply.globalChanging = true;
             
             var asyncCalls = 0, completedASyncCalls = 0;
             
             function incrementCompleted() {
+                console.log('recieving completion');
                 completedASyncCalls +=1;
             }
             
@@ -32,7 +59,7 @@
                             bind.fn.apply(bind.context);
                         }else{
                             asyncCalls +=1;
-                            bind.fn.apply(bind.context);
+                            bind.fn.apply(bind.context, [incrementCompleted]);
                         }
                     }
                     
@@ -40,15 +67,29 @@
                 
             }, this);
             
-            //Set a timeout to check completedASyncCalls
-            setTimeout(function() {
+            timeoutFunc = function() {
                 if(asyncCalls !== completedASyncCalls) {
+                    
+                    console.log('asc', asyncCalls);
+                    console.log('cac', completedASyncCalls);
+                    
                     setTimeout(function() {
-                        this.apply()
+                        console.log('Not completed, check again');
+                        timeoutFunc.apply()
                     }, 100);
                 }else{
                     
+                    console.log('asc', asyncCalls);
+                    console.log('cac', completedASyncCalls);
+                    
+                    simply.globalChanging = false;
+                    console.log('all completed', simply.globalChanging);
                 }
+            }
+            
+            //Set a timeout to check completedASyncCalls
+            setTimeout(function() {
+                timeoutFunc.apply();
             }, 100);
         },
         
