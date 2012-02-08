@@ -1,0 +1,335 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;   
+}
+
+
+
+#loading {
+    position: absolute;
+    background: #fff;
+    line-height: 100px;
+    opacity: 0.8;
+    border: 1px solid #ccc;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 1000;
+}
+
+.loadingState {
+    opacity: 0.8;
+}
+
+header {
+    display: block;
+    height: 90px;
+    border-bottom: 1px solid #b5b4ad;
+    margin-bottom: 20px;
+}
+
+header .inner {
+    width: 967px;
+    margin: auto;
+    padding: 0px;
+    height: 90px;
+}
+
+header .inner img.logo {
+    margin-top: 27px;
+}
+
+
+
+section.app {
+    width: 967px;
+    margin: auto;
+    padding: 0px;
+    position: relative;
+}
+
+section.app #orderProgress {
+    display: block;
+    height: 46px;
+    position: relative;
+    background: url(../images/progress/path.png);
+    overflow: hidden;
+}
+
+section.app #orderProgress .bar {
+    width: 1251px;
+    height: 70px;
+    background-image: url(../images/progress/bar.png);
+    background-position: center;
+    position: absolute;
+    top: -12px;
+    right: 966px;
+    z-index: 50;
+}
+
+section.app #orderProgress .mask {
+    width: 967px;
+    height: 46px;
+    background: url(../images/progress/mask.png);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+}
+
+section.app #orderProgress .steps {
+    width: 967px;
+    height: 46px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 150;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+section.app #orderProgress .steps li {
+    padding: 0px;
+    width:  224px;
+    display: inline-block;
+    height: 46px;
+    line-height: 46px;
+    margin-left: 15px;
+    margin-right: 8px;
+    color: #606060;
+}
+
+section.app #orderProgress .steps li.end {
+    margin-right: 0px;
+    width: 198px!important;
+    margin-left: 8px;
+}
+
+section.app #orderProgress .steps li.complete {
+    color: #fff;
+    background-image: url(../images/progress/tick.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+section.app #orderProgress .steps li.current {
+    font-weight: bold;    
+}
+
+
+
+form {
+    display: block;
+    margin-top: 10px;
+}
+
+form .fieldWrapper {
+    display: block;
+    padding: 10px 0px 10px 0px;
+    border-bottom: 1px solid #ccc;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+form .fieldWrapper label {
+    text-align: left;
+    width: 200px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+form .fieldWrapper .fieldNote {
+    color: #555;
+    font-size: 12px;
+}
+
+form .fieldWrapper select {
+    width: 250px;
+    margin-left: 10px;
+}
+
+form .fieldWrapper input {
+    width: 245px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    height: 20px;
+}
+
+form .valid {
+    background-color: #D1FFDC;
+}
+
+form .invalid {
+    background-color: #FCE6E6;
+}
+
+form fieldset.fieldWrapper {
+    display: block;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0px 10px 0px;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+form fieldset.fieldWrapper legend {
+    padding: 0px;
+    -webkit-padding-start: 0px;
+    -webkit-padding-end: 0px;
+    font-size: 16px;
+    width: 200px;
+    display: inline-block;
+    float: left;
+}
+
+form fieldset.fieldWrapper label {
+    width: 300px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+form fieldset.fieldWrapper  input {
+    display: inline-block;
+    width: 20px;
+    margin: 0px;
+    border: 0px;
+    height: auto;
+}
+
+form fieldset.fieldWrapper .radioGroup  {
+    float: left;
+    width: 60%;
+    margin-left: 10px;
+}
+
+form fieldset.fieldWrapper .radioGroup .radioRow {
+    margin-bottom: 5px;
+}
+
+.seatMap {
+    display: block;
+    height: 500px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.seatMap .key {
+    width: 400px;
+    height: 100px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.seatMap .key .keyRow {
+    width: 150px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.seatMap .key .seat {
+    margin-right: 10px;
+}
+
+.seatMap .key h2 {
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 20px;
+}
+
+.seatMap .loadingSeatmap {
+    width: 400px;
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.seatMap .mapStage {
+    display: block;
+    height: 53px;
+    background: #444;
+    margin-top: 10px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 53px;
+}
+
+.seatMap .rowsHolder {
+    margin-top: 159px;
+}
+
+.seatMap .row {
+    display: block;
+    height: 30px;
+    width: 860px;
+    margin: auto;
+    margin-bottom: 1px;
+}
+
+
+.seatMap .row .rowId {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+}
+
+body .seatMap .notForSale {
+    background-color: #eee;
+    color: #ccc;
+    cursor: default;
+}
+
+body .seatMap .noSeat {
+    background-color: #fff;
+    cursor: default;
+}
+
+body .seatMap .takenSeat {
+    background-color: #3ecef7;
+    color: #0f9bc3;
+    cursor: default;
+}
+
+body .seatMap  .selectedSeat {
+    background-color: #f73e9c;
+    color: #fff;
+}
+
+.seatMap  .seat {
+    width: 30px;
+    height: 30px;
+    background: #ccc;
+    display: block;
+    float: left;
+    margin-right: 1px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+footer {
+    display: block;
+    height: 90px;
+    border-top: 1px solid #b5b4ad;
+    margin-top: 20px;
+}
