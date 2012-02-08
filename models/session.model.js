@@ -30,13 +30,11 @@
         },
         
         save: function(callback) {
-            console.log('saving session');
             
             var self = this;
             //callback.apply(self);
             //return;
             setTimeout(function() {
-                console.log('session is saved');
                 callback.apply(self);
             }, 1000);
             

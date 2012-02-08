@@ -214,13 +214,61 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
 }
 
 .seatMap {
-    display: block;
+    display: none;
     height: 400px;
     border: 1px solid #ccc;
     margin-top: 10px;
-    display: none;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.seatMap .loadingSeatmap {
+    width: 400px;
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.seatMap .row {
+    display: block;
+    height: 30px;
+    width: 860px;
+    margin: auto;
+    margin-bottom: 1px;
+}
+
+.seatMap .rowId {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+}
+
+body .seatMap .row .notForSale {
+    background-color: #eee;
+    color: #ccc;
+    cursor: default;
+}
+
+body .seatMap .row .noSeat {
+    background-color: #fff;
+    cursor: default;
+}
+
+.seatMap .row .seat {
+    width: 30px;
+    height: 30px;
+    background: #ccc;
+    display: block;
+    float: left;
+    margin-right: 1px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 footer {

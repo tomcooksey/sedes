@@ -3,6 +3,7 @@
     simply.forms.seats = Backbone.View.extend({
         
         form: null,
+        collections: {},
         
         initialize: function() {
             
@@ -12,7 +13,8 @@
                 for(var x=0; x<10; x+=1) {
                     obj = {
                         value: x,
-                        text: x
+                        //Stringify otherwise 0 doesn't show
+                        text: x + ''
                     }
                     
                     options.push(obj);
@@ -48,7 +50,9 @@
                 
             }, this);
             
-            this.seatMap = new simply.views.seatMap();
+            this.collections.seatMap = new simply.collections.seats();
+            
+            this.seatMap = new simply.views.seatMap({ collection: this.collections.seatMap });
             
             
         },
@@ -58,7 +62,7 @@
         render: function() {
             var buildUp;
             
-            buildUp = $('<div>');
+            buildUp = $(this.make('div'));
             
             _.each(this.forms, function(form) {
                 buildUp.append(form.render());
