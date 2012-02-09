@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <!-- Uncomment this if you have PEAR Log installed
+  <log>
+    <type>file</type>
+    <name>/path/to/propel.log</name>
+    <ident>propel-bookstore</ident>
+    <level>7</level>
+  </log>
+  -->
+  <propel>
+    <datasources default="simply">
+      <datasource id="simply">
+        <adapter>mysql</adapter> <!-- sqlite, mysql, myssql, oracle, or pgsql -->
+        <connection>
+          <dsn>mysql:host=localhost;dbname=simply</dsn>
+          <user>root</user>
+          <password>1234</password>
+          <settings>
+          <setting id="charset">utf8</setting>
+          </settings>
+          <options>
+          <option id="MYSQL_ATTR_INIT_COMMAND">SET NAMES utf8 COLLATE utf8_unicode_ci</option>
+          </options>
+        </connection>
+      </datasource>
+    </datasources>
+  </propel>
+</config>

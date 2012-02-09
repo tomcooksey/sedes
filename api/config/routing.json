@@ -1,0 +1,7 @@
+{
+    "/login" : {
+        "module" : "admin",
+        "action" : "login",
+        "secure" : false
+    }
+}

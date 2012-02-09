@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="simply" defaultIdMethod="native">
+  
+  <table name="performance" phpName="Performance">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="title" type="varchar" size="255" required="true" />
+    <column name="occurs" type="timestamp" required="true" />
+  </table>
+  
+</database>
