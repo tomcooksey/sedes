@@ -43,11 +43,7 @@ class session {
     }
     
     function put() {
-        print_r($this->context->headerVals);
-        print_r($this->context->getSessionVar('progress'));
         $this->context->setSessionVar('progress', $this->context->headerVals);
-        
-        print_r($this->context->getSessionVar('progress'));
         
         $this->context->returnSuccess(array());
     }

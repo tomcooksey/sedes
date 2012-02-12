@@ -24,6 +24,12 @@
             });
             
             this.forms = [];
+              
+            
+        },
+        
+
+        render: function() {
             
             simply.ticketTypes.each(function(ticket) {
                 var form, self = this;
@@ -54,12 +60,6 @@
             
             this.seatMap = new simply.views.seatMap({ collection: this.collections.seatMap });
             
-            
-        },
-        
-        
-        
-        render: function() {
             var buildUp;
             
             buildUp = $(this.make('div'));

@@ -6,7 +6,6 @@
         initialize: function(options) {
             
             _.bindAll(this, 'renderSeats');
-            
             //These can lazy load because we don't need them yet
             this.collection.fetch({success: this.renderSeats});
             var el = this.make("div", { "class": "seatMap"});

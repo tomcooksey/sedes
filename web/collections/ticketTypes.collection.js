@@ -4,9 +4,11 @@
         
         model: simply.models.ticketType,
         
+        url: "/api.php/ticketTypes",
+        
         initialize: function(options) {
             //Add some dummy data in for now
-            this.add([
+            /*this.add([
                 {
                     id: 1,
                     name: 'Adults (14 and over)',
@@ -27,7 +29,7 @@
                     price: 12.5,
                     quantity: 0
                 }
-            ]);
+            ]);*/
         },
         
         getTotalTickets: function() {

@@ -8,5 +8,10 @@
     "/session" : {
         "module" : "session",
         "action" : "verbHandler"
+    },
+    
+    "/ticketTypes" : {
+        "module" : "ticketTypes",
+        "action" : "verbHandler"
     }
 }

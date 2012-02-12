@@ -10,13 +10,31 @@ html, body {
     position: absolute;
     background: #fff;
     line-height: 100px;
-    opacity: 0.8;
+    opacity: 0.95;
     border: 1px solid #ccc;
     text-align: center;
     top: 0px;
     left: 0px;
     display: none;
     z-index: 1000;
+}
+
+.loadingInfo {
+    padding-left: 30px;
+    background-image: url(../images/common/ajax-loader.gif);
+    background-repeat:no-repeat;
+    width: 200px;
+    margin: auto;
+    height: 23px;
+    line-height: 23px;
+    background-position: top left;
+    margin-top: 200px;
+    text-align: left;
+}
+
+.loadingError {
+    background-image: url(../images/common/ajax-fail.png);
+    width: 500px;
 }
 
 .loadingState {

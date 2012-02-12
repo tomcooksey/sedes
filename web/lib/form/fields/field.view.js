@@ -126,7 +126,7 @@
                     modelUpdate = {};
                     modelUpdate[this.options.modelField] = this.getVal();
 
-                    this.options.form.model.save(modelUpdate);
+                    this.options.form.model.save(modelUpdate, {wait: true});
 
                 }
                 
