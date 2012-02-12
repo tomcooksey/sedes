@@ -126,7 +126,7 @@
                     modelUpdate = {};
                     modelUpdate[this.options.modelField] = this.getVal();
 
-                    this.options.form.model.set(modelUpdate, {silent: false});
+                    this.options.form.model.save(modelUpdate);
 
                 }
                 

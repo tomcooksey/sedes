@@ -3,5 +3,10 @@
         "module" : "admin",
         "action" : "login",
         "secure" : false
+    },
+    
+    "/session" : {
+        "module" : "session",
+        "action" : "verbHandler"
     }
 }

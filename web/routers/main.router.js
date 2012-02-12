@@ -23,38 +23,53 @@
         initialize: function() {
             
             simply.globalChanging = false;
-            
+
             //Put session in the global namespace
-            simply.session = new simply.models.session();
+            
+            
+            /*simply.session.set({
+                id: 1,
+                order_id: 0,
+                current_stage: 1,
+                show_id: 0,
+                performance_id: 0 
+            }, {silent: true});*/
+            
+            
+            
             //Put shows in global namespace for ease of use
             //TO DO - sync from server instead of hardcoded
             simply.shows = new simply.collections.shows();
+            
             //simply.shows.fetch();
             simply.ticketTypes = new simply.collections.ticketTypes();
             
             //TODO Update from the server
-            //simply.session.fetch();
-
+            
+            
+            
             //Setup the viewport
             this.viewport = new simply.views.viewport();
             this.viewport.render();
-
+            
         },
         
         setProgress: function(stage) {
-            simply.session.set({current_stage: stage});
-            //TODO Save to server to maintain state
+            
+            console.log('show_id', simply.session.get('show_id'));
+            simply.session.save({current_stage: stage});
         },
         
         //Stage 1a
         choosePerformance: function() {
             this.viewport.clean();
-            this.setProgress(1);
+            
+            
             //TO DO error handling of no shows
             if(simply.shows.length === 1) {
-                simply.session.set({show_id : simply.shows.at(0).get('show_id')});
+                simply.session.save({show_id : simply.shows.at(0).get('show_id')});
             }
-            
+            this.setProgress(1);
             if(simply.shows.length > 1 && !simply.session.get('show_id')) {
                 location.hash = 'choose-show';
             }else{

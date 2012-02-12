@@ -3,15 +3,20 @@
     simply.models.session = Backbone.Model.extend({
         
         binds: {},
+        url: "/api.php/session",
         
         //We need to override set so that we can cache any requests that come in
-        set: function(attributes, options) {
+        myset: function(attributes, options) {
+
+            console.log('something calling set');
+            console.log(attributes);
             var self = this;
             
             var caller = function() {
                 if(!simply.globalChanging) {
                     Backbone.Model.prototype.set.call(self, attributes, options);
                 }else{
+                    console.log('change in progress');
                     setTimeout(function() {
                         caller.apply();
                     }, 100);
@@ -26,10 +31,10 @@
         initialize: function() {
             this.binds = {};
             
-            this.on('change', this.globalChange, this);
+            //this.on('change', this.globalChange, this);
         },
         
-        save: function(callback) {
+        saveCopy: function(callback) {
             
             var self = this;
             //callback.apply(self);
@@ -42,8 +47,12 @@
                 
         },
         
+        
         globalChange: function() {
             
+            console.log('attempting global change');
+            console.log(this.changedAttributes());
+            console.log(simply.globalChanging);
             if(simply.globalChanging) return;
             
             //TO DO - This needs to be on save and the rest should be
@@ -56,8 +65,10 @@
             //they are no longer considered new 
             var self = this, changedAttributes = this.changedAttributes();
             
+            console.log('about to try save session');
             
-            this.save(function() {
+            this.save([], {"success" : function() {
+                console.log('session save complete');
                 var asyncCalls = 0, completedASyncCalls = 0;
             
                 function incrementCompleted() {
@@ -100,19 +111,22 @@
                 setTimeout(function() {
                     timeoutFunc.apply();
                 }, 100);
-            });
+            }, error: function(stuff) {
+                alert(stuff);
+            }});
             
             
         },
         
         defaults: {
-            //TO DO this order_id should come from the server and be
-            //a protected attribute..is this possible?
-            order_id: 1,
+            id: 1,
+            order_id: 0,
             current_stage: 1,
             show_id: 0,
             performance_id: 0
         },
+        
+        
         
         //We are going to bind change events to this model
         //from within it self because one event needs to

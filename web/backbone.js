@@ -303,6 +303,7 @@
     // If the server returns an attributes hash that differs, the model's
     // state will be `set` again.
     save: function(key, value, options) {
+
       var attrs, current;
       if (_.isObject(key) || key == null) {
         attrs = key;
@@ -313,12 +314,23 @@
       }
 
       options = options ? _.clone(options) : {};
+      
+      
+      
       if (options.wait) current = _.clone(this.attributes);
       var silentOptions = _.extend({}, options, {silent: true});
       if (attrs && !this.set(attrs, options.wait ? silentOptions : options)) {
         return false;
       }
       var model = this;
+      
+      if(!options.silent) {
+        model.trigger('beforeSave');
+        for(var f in attrs) {
+          model.trigger('beforeSave:' + f);
+        }
+      }
+      
       var success = options.success;
       options.success = function(resp, status, xhr) {
         var serverAttrs = model.parse(resp, xhr);
@@ -332,7 +344,10 @@
       };
       options.error = Backbone.wrapError(options.error, model, options);
       var method = this.isNew() ? 'create' : 'update';
+
+      
       var xhr = (this.sync || Backbone.sync).call(this, method, this, options);
+
       if (options.wait) this.set(current, silentOptions);
       return xhr;
     },

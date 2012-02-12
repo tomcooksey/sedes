@@ -81,18 +81,19 @@ class actions {
                         $raw .= $kb;
                     }
                     fclose($httpContent);
-                    //print('header');
-                    //print_r(json_decode($raw, true));
-                    //$this->headerVals = json_decode(stripslashes($raw), true);
+                    
+                    //print_r($raw);
                     $this->headerVals = json_decode($raw, true);
                     //print($this->headerVals);
                     
                     //echo 'here:<br/>';
                     //echo $raw;
                 
-                    echo $file;
+                  
                     if(file_exists($file)) {
                         require_once($file);
+                        
+                        
                         
                         if(class_exists($currentModule)) {
                             if(method_exists($currentModule, $currentAction)) {
@@ -164,11 +165,8 @@ class actions {
     }
     
     function returnSuccess($object) {
-        $obj['success'] = true;
-        $obj['data'] = $object;
-        $obj['total'] = $this->total;
         header('Content-Type: text/html; charset=utf-8');
-        $this->jsonOutput($obj);
+        $this->jsonOutput($object);
     }
     
     function pageNotFound() {
