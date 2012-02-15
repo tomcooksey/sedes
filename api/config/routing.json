@@ -10,8 +10,18 @@
         "action" : "verbHandler"
     },
     
-    "/ticketTypes" : {
+    "/ticketTypes/:id" : {
         "module" : "ticketTypes",
+        "action" : "verbHandler"
+    },
+    
+    "/seats" : {
+        "module" : "seats",
+        "action" : "verbHandler"
+    },
+    
+    "/shows" : {
+        "module" : "shows",
         "action" : "verbHandler"
     }
 }

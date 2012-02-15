@@ -142,6 +142,7 @@ section.app #orderProgress .steps li.current {
 form {
     display: block;
     margin-top: 10px;
+    overflow: auto;
 }
 
 form .fieldWrapper {
@@ -229,6 +230,27 @@ form fieldset.fieldWrapper .radioGroup  {
 
 form fieldset.fieldWrapper .radioGroup .radioRow {
     margin-bottom: 5px;
+}
+
+.buttonWrapper {
+    display: block;
+    margin: 5px 0px 5px 0px;
+}
+
+.buttonWrapper button {
+    background-color: #f73e9c;
+    color: #fff;
+    border: 0px;
+    font-size: 16px;
+    padding: 5px 10px 5px 10px;
+}
+
+.nextButton {
+    float: right;
+}
+
+.previousButton {
+    float: left;
 }
 
 .seatMap {

@@ -15,20 +15,6 @@
             
             this.setElement(this.make('form', {id: this.name, name: this.name}));
             
-            //Bind to the model changing
-            /*if(this.options.model) {
-                this.options.model.bind('change', function() {
-                    console.log('changing');
-                    for(var x in this.fields ) {
-                        if(this.fields[x].options.hasOwnProperty('modelField')) {
-                            modelUpdate = {};
-                            modelUpdate[this.fields[x].options.modelField] = this.fields[x].getVal();
-                            this.model.set(modelUpdate);
-                        }
-                    }
-                }, this);
-            }*/
-            
         },
         
         addField: function(field) {

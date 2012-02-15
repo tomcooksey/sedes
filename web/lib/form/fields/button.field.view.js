@@ -4,6 +4,7 @@
         
         wrapperClass: "buttonWrapper",
         doNotValidate: true,
+        type: 'button',
             
         
         events: {
@@ -43,7 +44,7 @@
         },
         
         renderField: function() {
-            this.setElement(this.make('button', { "class": "button " + this.options.buttonClass }, this.options.label ));
+            this.setElement(this.make('button', {}, this.options.label ));
             return this.$el;
         }
         

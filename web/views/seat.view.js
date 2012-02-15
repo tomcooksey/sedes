@@ -20,8 +20,8 @@
             
             if(this.model.get('booked') || !this.model.get('forSale') || this.model.get('noSeat')) return;
             
-            if(simply.ticketTypes.getTotalTickets() != this.collection.getTotalSelected() || this.model.get('selected')) {
-                 this.model.set({selected: !this.model.get('selected')});
+            if(this.collection.getTotalSelected() < simply.ticketTypes.getTotalTickets() || this.model.get('selected')) {
+                 this.model.save({selected: !this.model.get('selected')});
             }else{
                  //Create error
             }
@@ -46,6 +46,10 @@
             
             if(this.model.get('booked')) {
                 this.$el.addClass('takenSeat');
+            }
+            
+            if(this.model.get('selected')) {
+                this.$el.addClass('selectedSeat');
             }
             
             return this.$el;

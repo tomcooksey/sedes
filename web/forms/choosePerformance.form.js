@@ -50,11 +50,12 @@
             
             this.form.addField( new simply.fields.button({
                 label: "Next",
-                buttonClass: "test",
+                class: "nextButton",
                 form: this.form,
-                action: "submit"
+                action: "submit",
+                id: "next"
             }));
-            
+        
         },
         
         render: function() {

@@ -324,13 +324,6 @@
       }
       var model = this;
       
-      if(!options.silent) {
-        model.trigger('beforeSave');
-        for(var f in attrs) {
-          model.trigger('beforeSave:' + f);
-        }
-      }
-      
       var success = options.success;
       options.success = function(resp, status, xhr) {
         var serverAttrs = model.parse(resp, xhr);

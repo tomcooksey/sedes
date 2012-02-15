@@ -51,6 +51,7 @@
                 
                 this.renderStage();
                 this.renderKey();
+                this.renderButtons();
             
             });
         },
@@ -67,9 +68,16 @@
             var key = $(this.make('div', {"class": "key"}));
             key.append(simply.templates.mapKey());
             
-            
-            
             this.$el.append(key);
+        },
+        
+        renderButtons: function() {
+            var nextWrapper = $(this.make('div', {class: "buttonWrapper nextButton"}));
+            this.nextButton = $(this.make('button', {}, 'Next'));
+            
+            nextWrapper.append(this.nextButton);
+            
+            this.$el.append(nextWrapper);
         },
         
         show: function() {

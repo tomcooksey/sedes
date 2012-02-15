@@ -7,12 +7,7 @@
         model: simply.models.show,
         
         initialize: function() {
-            this.add([
-                {
-                    show_id: 1,
-                    name: "Street car named desire"
-                }
-            ]);
+            
         }
     });
     

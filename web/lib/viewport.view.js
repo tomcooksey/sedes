@@ -14,6 +14,8 @@
             
             _.bindAll(this);
             
+            
+            
             //Create our bindings to the session object
             simply.session.on('change:current_stage', this.collections.progress.changeStage, this.collections.progress);
             simply.session.on('change:show_id', this.showChange, this);
@@ -28,6 +30,9 @@
             this.loadingOverlay = $('#loading');
             this.loadingText = $('.loadingInfo');
             this.window = $(window);
+            
+            //Apply the changeStage function
+            this.collections.progress.changeStage.apply(this.collections.progress);
             
             //Return this for chaining
             return this;

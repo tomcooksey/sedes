@@ -24,30 +24,6 @@
             
             simply.globalChanging = false;
 
-            //Put session in the global namespace
-            
-            
-            /*simply.session.set({
-                id: 1,
-                order_id: 0,
-                current_stage: 1,
-                show_id: 0,
-                performance_id: 0 
-            }, {silent: true});*/
-            
-            
-            
-            //Put shows in global namespace for ease of use
-            //TO DO - sync from server instead of hardcoded
-            simply.shows = new simply.collections.shows();
-            
-            //simply.shows.fetch();
-            simply.ticketTypes = new simply.collections.ticketTypes();
-            
-            //TODO Update from the server
-            
-            
-            
             //Setup the viewport
             this.viewport = new simply.views.viewport();
             this.viewport.render();
@@ -55,8 +31,6 @@
         },
         
         setProgress: function(stage) {
-            
-            console.log('show_id', simply.session.get('show_id'));
             simply.session.save({current_stage: stage});
         },
         

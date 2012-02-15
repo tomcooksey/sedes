@@ -58,7 +58,7 @@ class actions {
                     }
                     
                     if(count($queryStringItems) !== count($parts)) {
-                        $this->error(QUERY_STRING_MISMATCH);
+                        //$this->error(QUERY_STRING_MISMATCH);
                     }
                     
                     if(count($queryStringItems) && count($parts)) {
@@ -82,19 +82,11 @@ class actions {
                     }
                     fclose($httpContent);
                     
-                    //print_r($raw);
                     $this->headerVals = json_decode($raw, true);
-                    //print($this->headerVals);
-                    
-                    //echo 'here:<br/>';
-                    //echo $raw;
-                
                   
                     if(file_exists($file)) {
                         require_once($file);
-                        
-                        
-                        
+
                         if(class_exists($currentModule)) {
                             if(method_exists($currentModule, $currentAction)) {
                                 //instantiate
@@ -143,10 +135,7 @@ class actions {
             //print($key);
             return $vals[$key];
         }else{
-            //print('here');
             $vals = $this->getHEADERvals();
-            //print_r($vals);
-            //print('here2');
             if(isset($vals[$key])) {
                 return $vals[$key];
             }
@@ -159,8 +148,10 @@ class actions {
     }
     
     function getGetVal($key) {
-        
-        return $this->getPostVal($key);
+        if($this->getVals[$key]) {
+            return $this->getVals[$key];
+        }
+        return false;
         
     }
     
@@ -198,10 +189,14 @@ class actions {
     }
     
     function getSessionVar($var) {
+        
         if(isset($_SESSION[$var])){
             return $_SESSION[$var];
+        }else{
+            return false;
         }
-        return false;
+
+
     }
     
     function unsetSessionVar($var) {

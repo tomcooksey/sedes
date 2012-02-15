@@ -1,18 +1,94 @@
 <!DOCTYPE html>
     
 <html>
-    
+
     <head>
         <title>Simply Tickets</title>
         
         <link rel="stylesheet" type="text/css" href="css/simplyTickets.css" />
         <!--hosted for the time being-->
-	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="/jquery.js"></script>
         <script src="underscore.js"></script>
         <script src="backbone.js"></script>
-        <script src="app.js"></script>
         
+	<script type="text/javascript">
+	
+	//Initialization has to be inline to allow bootstrapping of data
         
+        (function($) {
+    
+	    window.simply = {
+		views: {},
+		models: {},
+		routers: {},
+		collections: {},
+		forms: {},
+		fields: {}
+	    };
+	    
+	    $(document).ready(function() {
+		//Start the router and navigation
+		//Load the loading text
+		var win = $(window);
+		var loadingOverlay = $('#loading');
+		
+		loadingOverlay.height(win.height());
+		loadingOverlay.width(win.width());
+		loadingOverlay.fadeIn('fast');
+			
+		//Put shows in global namespace for ease of use
+		simply.shows = new simply.collections.shows();
+		simply.shows.reset(<?php echo file_get_contents('http://' . $_SERVER['HTTP_HOST'] . '/api.php/shows');?>);
+		
+		//Bootstrap with data from server
+		simply.session = new simply.models.session();
+		simply.ticketTypes = new simply.collections.ticketTypes();
+
+		var dependenciesFulfilled = false, completedCount = 0, fatal=false;
+		
+		var dependencies = [
+		    simply.session,
+		    simply.ticketTypes
+		];
+		
+		function completion() {
+		    completedCount +=1;
+		}
+		
+		function error() {
+		    fatal = true;
+		}
+		
+		for(var dependency in dependencies) {
+		    dependencies[dependency].fetch.call(dependencies[dependency], {'success': completion,
+							 'error': error});
+		}
+		
+		var checker = function() {
+		    if(completedCount !== dependencies.length && !fatal) {
+			setTimeout(checker, 100);
+		    }else{
+			if(fatal) {
+			    alert('Application could not initialise, please try again later');
+			}else{
+			    new simply.routers.main();
+			    Backbone.history.start();
+			}
+			
+		    }
+		}
+		
+		checker.apply();
+		
+		
+	    });
+	    
+	    
+	})(jQuery);
+        
+	
+	</script>
+
         <!--models-->
 	<script src="models/stage.model.js"></script>
 	<script src="models/session.model.js"></script>
@@ -55,17 +131,6 @@
         
         <!--templates-->
 	<script src="templates/simply.template.js"></script>
-        
-  
-        
-
-        
-        <script>
-        
-        
-        
-            
-        </script>
         
     </head>
     
