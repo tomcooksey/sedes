@@ -8,15 +8,20 @@
             _.bindAll(this, 'renderSeats');
             //These can lazy load because we don't need them yet
             this.collection.fetch({success: this.renderSeats});
-            var el = this.make("div", { "class": "seatMap"});
+            this.seatMap = $(this.make("div", { "class": "seatMap"}));
+            
+            var el = this.make('div', {class: "seatMapHolder"});
+            
             this.setElement(el);
+            
+            this.$el.append(this.seatMap);
             
             this.addLoading();
         },
         
         addLoading: function() {
             this.loadingDiv = $(this.make('div', { "class" : "loadingSeatmap" }, "Loading seat map, please wait..."));
-            this.$el.append(this.loadingDiv);
+            this.seatMap.append(this.loadingDiv);
         },
         
         removeLoading: function(callback) {
@@ -47,7 +52,7 @@
                     rowsHolder.append(rowContainer);
                 }
                 
-                this.$el.append(rowsHolder);
+                this.seatMap.append(rowsHolder);
                 
                 this.renderStage();
                 this.renderKey();
@@ -59,7 +64,7 @@
         renderStage: function() {
             var stage = $(this.make('div', {"class": "mapStage"}, "Stage"));
             
-            this.$el.append(stage);
+            this.seatMap.append(stage);
             
         },
         
@@ -68,16 +73,25 @@
             var key = $(this.make('div', {"class": "key"}));
             key.append(simply.templates.mapKey());
             
-            this.$el.append(key);
+            this.seatMap.append(key);
         },
         
         renderButtons: function() {
-            var nextWrapper = $(this.make('div', {class: "buttonWrapper nextButton"}));
-            this.nextButton = $(this.make('button', {}, 'Next'));
             
-            nextWrapper.append(this.nextButton);
+            var buttonTypes = ['next', 'previous'];
+            var wrapper, label;
             
-            this.$el.append(nextWrapper);
+            for(var el in buttonTypes) {
+                btn = buttonTypes[el];
+                label = btn === "next" ? "Next" : "Back";
+                wrapper = $(this.make('div', {class: "buttonWrapper " + btn + "Button"}));
+                this[btn + "Button"] = $(this.make('button', {}, label));
+                
+                wrapper.append(this[btn + "Button"]);
+                this.$el.append(wrapper);
+            }
+            
+            
         },
         
         show: function() {
@@ -85,7 +99,22 @@
         },
         
         render: function() {
+            
             return this.el;
+        },
+        
+        //This function removes any amount of seats over the amount allowed
+        adjustBookedSeats: function() {
+            var totalAllowed = simply.ticketTypes.getTotalTickets()
+            var totalSelected = this.collection.getTotalSelected();
+            
+            console.log(totalAllowed);
+            console.log(totalSelected); 
+            
+            console.log('here');
+            if(totalSelected > totalAllowed) {
+                console.log('will remove seats');
+            }
         }
         
     });

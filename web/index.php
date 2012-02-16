@@ -10,10 +10,12 @@
 	<script type="text/javascript" src="/jquery.js"></script>
         <script src="underscore.js"></script>
         <script src="backbone.js"></script>
+	
+	<script src="/lib/bootstrap.js"></script>
         
 	<script type="text/javascript">
 	
-	//Initialization has to be inline to allow bootstrapping of data
+	//Initialisation has to be inline to allow bootstrapping of data
         
         (function($) {
     
@@ -44,42 +46,14 @@
 		simply.session = new simply.models.session();
 		simply.ticketTypes = new simply.collections.ticketTypes();
 
-		var dependenciesFulfilled = false, completedCount = 0, fatal=false;
+		var dispatch = new bootstrapper();
+		dispatch.addDependency(simply.session);
+		dispatch.addDependency(simply.ticketTypes);
 		
-		var dependencies = [
-		    simply.session,
-		    simply.ticketTypes
-		];
-		
-		function completion() {
-		    completedCount +=1;
-		}
-		
-		function error() {
-		    fatal = true;
-		}
-		
-		for(var dependency in dependencies) {
-		    dependencies[dependency].fetch.call(dependencies[dependency], {'success': completion,
-							 'error': error});
-		}
-		
-		var checker = function() {
-		    if(completedCount !== dependencies.length && !fatal) {
-			setTimeout(checker, 100);
-		    }else{
-			if(fatal) {
-			    alert('Application could not initialise, please try again later');
-			}else{
-			    new simply.routers.main();
-			    Backbone.history.start();
-			}
-			
-		    }
-		}
-		
-		checker.apply();
-		
+		dispatch.start(function() {
+		    new simply.routers.main();
+		    Backbone.history.start();
+		});
 		
 	    });
 	    
@@ -168,7 +142,7 @@
 	</section>
 	
 	<footer>
-	    
+	    Powered by <a href="#">Sedes</a> v0.1.0 | &copy; 2012
 	</footer>
 
     </body>

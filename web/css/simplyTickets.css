@@ -243,6 +243,11 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
     border: 0px;
     font-size: 16px;
     padding: 5px 10px 5px 10px;
+    cursor: pointer;
+}
+
+.buttonWrapper button:hover {
+    background-color: #3ecef7;
 }
 
 .nextButton {
@@ -251,6 +256,19 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
 
 .previousButton {
     float: left;
+}
+
+.nextButton button {
+    margin-right: 6px;
+}
+
+.previousButton button {
+    margin-left: 5px;
+}
+
+.seatMapHolder {
+    overflow: auto;
+    display: none;
 }
 
 .seatMap {
@@ -372,4 +390,12 @@ footer {
     height: 90px;
     border-top: 1px solid #b5b4ad;
     margin-top: 20px;
+    text-align:center;
+    color: #888;
+    font-size: 14px;
+    padding-top: 10px;
+}
+
+footer a {
+    color: #f73e9c;
 }

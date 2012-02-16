@@ -47,6 +47,7 @@
                     choices: this.seatOptions(),
                     onValid: function() {
                         self.seatMap.show();
+                        self.seatMap.adjustBookedSeats();
                     }
                 }));
                 
@@ -67,6 +68,14 @@
             });
             
             buildUp.append(this.seatMap.render());
+            
+            var self = this;
+            
+            setTimeout(function() {
+                if(simply.ticketTypes.getTotalTickets()) {
+                    self.seatMap.show();
+                }
+            }, 100);
             
             return buildUp;
             
