@@ -7,35 +7,34 @@
     successCallback = null;
     bootstrapper = false;
     
+    var completion = function () {
+        completedCount +=1;
+    }
+    
+    var error =  function() {
+        fatal = true;
+    }
+    
+    var checker = function() {
+        if(completedCount !== dependencies.length && !fatal) {
+            setTimeout(checker, 100);
+        }else{
+            if(fatal) {
+                alert('Application could not initialise, please try again later');
+            }else{
+                if(typeof successCallback === 'function') {
+                    successCallback.apply();
+                }
+            }
+            
+        }
+    }
+    
     function Bootstrapper() {
         
         if (bootstrapper) return bootstrapper;
         
-        bootstrapper = this;
-    
-        function completion() {
-            completedCount +=1;
-        }
-        
-        function error() {
-            fatal = true;
-        }
-        
-        function checker() {
-            if(completedCount !== dependencies.length && !fatal) {
-                setTimeout(checker, 100);
-            }else{
-                if(fatal) {
-                    alert('Application could not initialise, please try again later');
-                }else{
-                    if(typeof successCallback === 'function') {
-                        successCallback.apply();
-                    }
-                }
-                
-            }
-        }
-        
+        bootstrapper = this;        
     }
         
     Bootstrapper.prototype = {
@@ -55,5 +54,7 @@
             checker.apply(this);
         }
     }
+    
+    window.Bootstrapper = Bootstrapper;
     
 }());
