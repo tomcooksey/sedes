@@ -46,7 +46,7 @@
 		simply.session = new simply.models.session();
 		simply.ticketTypes = new simply.collections.ticketTypes();
 
-		var dispatch = new bootstrapper();
+		var dispatch = new Bootstrapper();
 		dispatch.addDependency(simply.session);
 		dispatch.addDependency(simply.ticketTypes);
 		
