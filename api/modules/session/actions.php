@@ -26,19 +26,6 @@ class session {
     }
     
     function get() {
-        if(!$this->context->getSessionVar('progress')) {
-            
-            $defaultSession = array(
-                "id" => 1,
-                "order_id" => 0,
-                "current_stage" => 1,
-                "show_id" => 0,
-                "performance_id" => 0
-            );
-            
-            $this->context->setSessionVar('progress', $defaultSession);
-        }
-        
         $this->context->returnSuccess($this->context->getSessionVar('progress'));
     }
     

@@ -12,34 +12,24 @@
                 model: simply.session
             });
             
-           
+            var choices = [], obj;
+            simply.performances.each(function(performance) {
+                obj = {
+                    value: performance.get('id'),
+                    text: performance.get('name')
+                };
+                
+                choices.push(obj);
+                
+            }, this);
+
            
             this.form.addField( new simply.fields.radio({
                 label: "Choose Performance:",
                 id: "performance_choice",
                 form: this.form,
                 modelField: 'performance_id',
-                choices: [
-                    {
-                        value: 1,
-                        text: "Thursday 5th March 2012 - 19:00"
-                    },
-                    
-                    {
-                        value: 2,
-                        text: "Friday 6th March 2012 - 19:00"
-                    },
-                    
-                    {
-                        value: 3,
-                        text: "Saturday 7th March 2012 - 14:00"
-                    },
-                    
-                    {
-                        value: 4,
-                        text: "Saturday 7th March 2012 - 19:00"
-                    }
-                ],
+                choices: choices,
                 validation: [
                     {
                         type: "required",

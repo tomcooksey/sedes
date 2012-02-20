@@ -36,6 +36,13 @@ class shows {
         
         if(!$this->context->getGETVal('id')) {
             
+            if(count($this->dummyData) === 1) {
+                $prog = $this->context->getSessionVar('progress');
+                $prog['show_id'] = $this->dummyData[0]['show_id'];
+                $this->context->setSessionVar('progress', $prog);
+            }
+            
+            
             if($this->dummyData != "") {
                 $this->context->returnSuccess($this->dummyData);
             }else{

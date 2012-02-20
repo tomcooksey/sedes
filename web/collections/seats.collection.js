@@ -33,9 +33,64 @@
                     totalCount +=1;
                 }
             });
-            console.log('TC', totalCount);
+
             return totalCount;
             
+        },
+        
+        getSelectedSeats: function() {
+            var selectedSeats = [];
+            
+            this.each(function(seat) {
+                
+                if(seat.get('selected')) {
+                    selectedSeats.push(seat);
+                }
+            });
+            
+            return selectedSeats;
+        },
+        
+        
+        //This method will look at the seats a user has selected and work out
+        //whether they have added in any single seat gaps within their own
+        //selection and between another order.  This will only have row scope,
+        //ie it won't check multiple rows
+        hasGaps: function() {
+            
+            var selected = this.getSelectedSeats();
+
+            //If selection is 1 or less don't validate the booking gap because
+            //we can't.  We will simply skip to see if the 
+            if(selected.length > 1) {
+                var difference = (selected[selected.length -1].get('number') - selected[0].get('number')) + 1;
+                
+                if(difference !== this.getTotalSelected()) return true;
+            }
+            
+            return false;
+            
+        },
+        
+        valid: function() {
+            
+            var errors = [];
+            
+            if(this.getTotalSelected() !== simply.ticketTypes.getTotalTickets()) {
+                errors.push("You haven't selected enough seats");
+            }
+            
+            if(this.hasGaps()) {
+                errors.push("Please don't leave any gaps");
+            }
+            
+            //...
+            
+            if(errors.length === 0) {
+                return true;
+            }else{
+                return errors;
+            }
         }
         
     });

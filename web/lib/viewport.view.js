@@ -49,13 +49,16 @@
         },
         
         //This should be an overwrite of reset()
+        //TO DO What are these functions passed?  If they are passed the collection
+        //name, surely we can have one method that does all these?!
         showChange: function() {
             console.log('here I would update the performances');
+            this.setLoadingActive();
+            simply.performances.fetch({'success': this.setLoadingInActive, 'error': this.ajaxError});
         },
         
         performanceChange: function() {
             console.log('here I would request the ticket types and prices');
-            var self = this;
             this.setLoadingActive();
             simply.ticketTypes.fetch({'success': this.setLoadingInActive, 'error': this.ajaxError});
         },

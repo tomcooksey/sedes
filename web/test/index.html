@@ -3,29 +3,158 @@
 <head>
   <script src="/jquery.js"></script>
   <link rel="stylesheet" href="vendor/qunit.css" type="text/css" media="screen" />
-  <script type="text/javascript" src="vendor/qunit.js">
+  <script type="text/javascript" src="vendor/qunit.js"></script>
+  
+    <script type="text/javascript">
+    
+    window.simply = {
+            views: {},
+            models: {},
+            routers: {},
+            collections: {},
+            forms: {},
+            fields: {}
+        };
+    </script>
     
     <script type="text/javascript" src="/underscore.js" ></script>
     <script type="text/javascript" src="/backbone.js" ></script>
     
-    <script>
+    <script type="text/javascript" src="/lib/bootstrap.js"></script>
     
+    <script type="text/javascript" src="/lib/form/form.view.js"></script>
+    <script type="text/javascript" src="/lib/form//fields/field.view.js"></script>
+    <script type="text/javascript" src="/lib/form//fields/button.field.view.js"></script>
+    
+    <script type="text/javascript" src="/lib/form//fields/radio.field.view.js"></script>
+    <script type="text/javascript" src="/lib/form//fields/select.field.view.js"></script>
+    
+    
+    <script>
+    $(document).ready(function() {
+        
+        
+        
+        (function($) {
+            
+            module('Bootstrap', {
+                setup: function() {
+                    collectionSuccess = Backbone.Collection.extend({
+                
+                        fetch:function(options) {
+                            //call the callback
+                            options.success.apply();
+                        }
+                        
+                    });
+                    
+                    collectionError = Backbone.Collection.extend({
+                
+                        fetch:function(options) {
+                            //call the callback
+                            options.error.apply();
+                        }
+                        
+                    });
+                },
+                
+                teardown: function() {
+                    collectionSuccess = null;
+                    collectionError = null;
+                }
+            });
+            
+            asyncTest('Check bootstrapper runs success callback when fetch() is valid', function() {
+                
+                var successCall = false;
+                var errorCall = false;
+                
+                //New up bootstrap
+                var testDespatch = new Bootstrapper();
+                testDespatch.addDependency(new collectionSuccess());
+                
+                testDespatch.start(function() {
+                   successCall = true; 
+                }, function() {
+                    errorCall = true;
+                });
+                
+                setTimeout(function() {
+                    ok(successCall, 'Success is set to true');
+                    equal(errorCall, false, 'Error is set to false');
+                    start();
+                }, 13);
+                
+            
+            });
+
+            asyncTest('Check bootstrapper runs error callback when fetch() is invalid', function() {
+                
+                var successCall = false;
+                var errorCall = false;
+                
+                //New up bootstrap
+                var testDespatch = new Bootstrapper();
+                testDespatch.addDependency(new collectionError());
+                
+                testDespatch.start(function() {
+                   successCall = true; 
+                }, function() {
+                    errorCall = true;
+                });
+                
+                
+                setTimeout(function() {
+                    equal(successCall, false, 'Success is set to false');
+                    ok(errorCall, 'Error is set to true');
+                    start();
+                }, 13);
+            
+            });
+            
+            module('Form');
+            
+            test('Instantiation of a form', function() {
+                
+                raises(function() {
+                    var form = new simply.form();
+                }, "Throws error because no Name is passed");
+                
+                
+                var realForm = new simply.form({name: "test_form"});
+                
+                equal(realForm.$el.attr('id'), "test_form", 'form.$el is a jquery element with id test_form');
+                equal(realForm.options.action, null, 'Form action should be null');
+                
+            });
+            
+            test('Adding of fields to form', function() {
+                
+                var fieldForm = new simply.form({name: "field_test_form"});
+                 
+                fieldForm.addField( new simply.field ({
+                        label: "Test",
+                        class: "testClass",
+                        form: fieldForm,
+                        action: null,
+                        id: "testButton"
+                }));
+                
+                equal(fieldForm.fields.length, 1, "Number of fields should be 1");
+            });
+            
+        })(jQuery);
+        
+        
+    });
+
     
     </script>
     
 </head>
 
 <body>
-    <script>
-        $(document).ready(function() {
 
-        test("Sample", function() {
-            var test = 1;
-            equal(test, 1, "1 equals 1");
-        
-        });
-    });
-    </script>
   <h1 id="qunit-header">Sedes Test Suite</h1>
  <h2 id="qunit-banner"></h2>
  <div id="qunit-testrunner-toolbar"></div>

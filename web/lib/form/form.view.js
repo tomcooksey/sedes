@@ -1,5 +1,5 @@
 (function(simply) {
-    //TO DO Next we need to tie forms to models!
+
     simply.form = Backbone.View.extend({
         
         name: null,
@@ -7,6 +7,9 @@
         action: null,
         
         initialize: function(options) {
+            
+            if(!options.name) throw new Error ('A form must have a NAME specified');
+            
             var modelUpdate;
             
             this.fields = [];

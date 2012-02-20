@@ -29,8 +29,9 @@
 	    };
 	    
 	    $(document).ready(function() {
-		//Start the router and navigation
-		//Load the loading text
+
+		//Get control of the loading screen so that
+		//we can use it for loading, errors etc
 		var win = $(window);
 		var loadingOverlay = $('#loading');
 		
@@ -40,20 +41,48 @@
 			
 		//Put shows in global namespace for ease of use
 		simply.shows = new simply.collections.shows();
-		simply.shows.reset(<?php echo file_get_contents('http://' . $_SERVER['HTTP_HOST'] . '/api.php/shows');?>);
 		
-		//Bootstrap with data from server
-		simply.session = new simply.models.session();
-		simply.ticketTypes = new simply.collections.ticketTypes();
-
-		var dispatch = new Bootstrapper();
-		dispatch.addDependency(simply.session);
-		dispatch.addDependency(simply.ticketTypes);
-		
-		dispatch.start(function() {
-		    new simply.routers.main();
-		    Backbone.history.start();
+		//We're going to load the content asyncronously
+		$.ajax({
+		    url: '/api.php/shows',
+		    method: 'GET',
+		    success: function(response) {
+			//We can reset the shows because they are static and not
+			//session dependent.
+			simply.shows.reset(response);
+			
+			//Bootstrap with data from server, these critical collections
+			//go in the global namespace as they are needed accross numerous
+			//views & forms
+			simply.session = new simply.models.session();
+			simply.ticketTypes = new simply.collections.ticketTypes();
+			simply.performances = new simply.collections.performances();
+	
+			//The bootstrapper blocks the app starting whilst it
+			//fulfills each dependency asyncronously.  This is because
+			//Backbone's recommended method of prepopulating collections
+			//with collection.reset() won't work in this app as it's
+			//all session based.
+			var dispatch = new Bootstrapper();
+			dispatch.addDependency(simply.session);
+			dispatch.addDependency(simply.ticketTypes);
+			dispatch.addDependency(simply.performances);
+			
+			//TO DO nicer handling of bootstrap error, an Alert isn't
+			//exactly ideal.
+			dispatch.start(function() {
+			    new simply.routers.main();
+			    Backbone.history.start();
+			}, function() {
+			    alert('Could not initialise Application, please try again later');
+			});
+		    },
+		    error: function() {
+			alert('No session recieved');
+		    }
 		});
+		
+		
 		
 	    });
 	    

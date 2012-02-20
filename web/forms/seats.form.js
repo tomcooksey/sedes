@@ -57,6 +57,8 @@
             
             this.collections.seatMap = new simply.collections.seats();
             
+            this.collections.seatMap.hasGaps();
+            
             this.seatMap = new simply.views.seatMap({ collection: this.collections.seatMap });
             
             var buildUp;

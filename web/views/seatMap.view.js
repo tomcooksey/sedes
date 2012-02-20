@@ -33,6 +33,7 @@
         },
         
         renderSeats: function() {
+            
             this.removeLoading(function() {
                 
                 var rowsHolder = $(this.make('div',{ "class" : "rowsHolder"}));
@@ -77,21 +78,43 @@
         },
         
         renderButtons: function() {
-            
+            var self = this;
             var buttonTypes = ['next', 'previous'];
+            var funcs = {
+                'next': function() {
+                    
+                    //Strict equals here because it always returns something
+                    //either true if valid or an array if invalid
+                    if(self.collection.valid() !== true) {
+                        alert('would display errors here');
+                    }
+                }
+            }
             var wrapper, label;
             
             for(var el in buttonTypes) {
-                btn = buttonTypes[el];
-                label = btn === "next" ? "Next" : "Back";
-                wrapper = $(this.make('div', {class: "buttonWrapper " + btn + "Button"}));
-                this[btn + "Button"] = $(this.make('button', {}, label));
-                
-                wrapper.append(this[btn + "Button"]);
-                this.$el.append(wrapper);
+                button = buttonTypes[el];
+
+                var self = this;
+                //Has to be wrapped in a closure due to loop
+                (function(btn) {
+                    label = btn === "next" ? "Next" : "Back";
+                    var wrapper = $(self.make('div', {class: "buttonWrapper " + btn + "Button"}));
+                    self[btn + "Button"] = $(self.make('button', {}, label));
+                    
+                    if(funcs[btn]) {
+              
+                        self[btn + "Button"].bind('click', function(event) {
+                            event.preventDefault();
+                            funcs[btn].apply();
+                        });
+                        
+                    }
+                    
+                    wrapper.append(self[btn + "Button"]);
+                    self.$el.append(wrapper);
+                })(button);
             }
-            
-            
         },
         
         show: function() {

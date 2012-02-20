@@ -23,5 +23,10 @@
     "/shows" : {
         "module" : "shows",
         "action" : "verbHandler"
-    }
+    },
+    
+    "/performances" : {
+        "module" : "performances",
+        "action" : "verbHandler"
+    }   
 }
