@@ -32,6 +32,10 @@
                     {
                         type: "required",
                         msg: "Please enter your email address"
+                    },
+                    {
+                        type: "email",
+                        msg: "Please enter a valid email address"
                     }
                 ]
             }));
@@ -45,6 +49,10 @@
                     {
                         type: "required",
                         msg: "Please enter your phone number"
+                    },
+                    {
+                        type: "phone",
+                        msg: "Please enter a valid phone number"
                     }
                 ]
             }));

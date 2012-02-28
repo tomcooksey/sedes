@@ -11,7 +11,7 @@ class shows {
         
         $this->dummyData = array(
             array(
-                show_id => 1,
+                id => 1,
                 name => "Street car named desire"
             )
         );
@@ -38,7 +38,7 @@ class shows {
             
             if(count($this->dummyData) === 1) {
                 $prog = $this->context->getSessionVar('progress');
-                $prog['show_id'] = $this->dummyData[0]['show_id'];
+                $prog['show_id'] = $this->dummyData[0]['id'];
                 $this->context->setSessionVar('progress', $prog);
             }
             

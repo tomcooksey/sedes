@@ -4,8 +4,20 @@ html, body {
     font-family: sans-serif;   
 }
 
+h1 {
+    font-weight: normal;
+    width: 50%;
+    margin: 0px;
+}
 
-
+h2 {
+    font-weight: normal;
+    margin: 0px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+    
 #loading {
     position: absolute;
     background: #fff;

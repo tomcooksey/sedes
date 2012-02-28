@@ -50,6 +50,10 @@
 		    url: '/api.php/shows',
 		    method: 'GET',
 		    success: function(response) {
+			
+			//Have to PARSE as JSON otherwise it's just a string..
+			response = $.parseJSON(response);
+			
 			//We can reset the shows because they are static and not
 			//session dependent.
 			simply.shows.reset(response);
@@ -165,6 +169,10 @@
 	</header>
 	
 	<section class="app">
+	    
+	    <h1 id="show_name"></h1>
+	    <h2 id="performance_name"></h2>
+	    
 	    <div id="orderProgress">
 		<div class="bar"></div>
 		<div class="mask"></div>

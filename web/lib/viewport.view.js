@@ -34,6 +34,9 @@
             //Apply the changeStage function
             this.collections.progress.changeStage.apply(this.collections.progress);
             
+            this.showTitle = $('#show_name');
+            this.performanceTitle = $('#performance_name');
+            
             //Return this for chaining
             return this;
         },
@@ -54,12 +57,31 @@
             console.log('here I would update the performances');
             this.setLoadingActive();
             simply.performances.fetch({'success': this.setLoadingInActive, 'error': this.ajaxError});
+            this.setShowName();
+        },
+        
+        setShowName: function() {
+            var currentShow = simply.shows.get(simply.session.get('show_id'));
+            
+            if(currentShow !== undefined) {
+                this.showTitle.html(currentShow.get('name'));
+            }  
+        },
+        
+        setPerformanceName: function() {
+            var currentPerformance = simply.performances.get(simply.session.get('performance_id'));
+            
+            if(currentPerformance !== undefined) {
+                this.performanceTitle.html(currentPerformance.get('name'));
+            }
         },
         
         performanceChange: function() {
             console.log('here I would request the ticket types and prices');
             this.setLoadingActive();
             simply.ticketTypes.fetch({'success': this.setLoadingInActive, 'error': this.ajaxError});
+            
+            this.setPerformanceName();
         },
         
         ajaxError: function(args, response) {

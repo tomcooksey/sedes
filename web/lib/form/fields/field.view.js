@@ -85,6 +85,12 @@
         
         validate: function(silent) {
             
+            var obj = this;
+            
+            function regexValidator(regex) {
+                return regex.test(obj.getVal())
+            }
+            
             this.errors = [];
             
             if(this.doNotValidate) {
@@ -119,7 +125,17 @@
                                 if(this.getVal() !== undefined && this.getVal() !== '') {
                                     validCount +=1;
                                 }
-                                break; 
+                                break;
+                            case "email":
+                                if(regexValidator(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)) {
+                                    validCount +=1;
+                                }
+                                break;
+                            case "phone":
+                                if(regexValidator(/^((\(44\))( )?|(\(\+44\))( )?|(\+44)( )?|(44)( )?)?((0)|(\(0\)))?( )?(((1[0-9]{3})|(7[1-9]{1}[0-9]{2})|(20)( )?[7-8]{1})( )?([0-9]{3}[ -]?[0-9]{3})|(2[0-9]{2}( )?[0-9]{3}[ -]?[0-9]{4}))$/)) {
+                                    validCount +=1;
+                                }
+                                break;
                         }
                     }
                     

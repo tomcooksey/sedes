@@ -28,6 +28,9 @@
             this.viewport = new simply.views.viewport();
             this.viewport.render();
             
+            this.viewport.setShowName();
+            this.viewport.setPerformanceName();
+            
         },
         
         setProgress: function(stage) {
