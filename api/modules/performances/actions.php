@@ -80,7 +80,10 @@ class performances {
             
             $prog = $this->context->getSessionVar('progress');
             
+            
+            
             if($prog['show_id'] == "" || $prog['show_id'] == "0") {
+                print_r($prog);
                  $this->context->returnSuccess(array());
                  die();
             }

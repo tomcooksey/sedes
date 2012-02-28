@@ -85,6 +85,8 @@
         
         validate: function(silent) {
             
+            this.errors = [];
+            
             if(this.doNotValidate) {
                 this.valid = true;
                 return true;
@@ -102,6 +104,9 @@
                 validCount = 0;
                 
                 _.each(this.options.validation, function (rule) {
+                    
+                    cacheValidCount = validCount;
+                    
                     if(typeof rule.type === 'function') {
                         //evaluate the func
                         if(rule.type.apply(this)) {
@@ -111,12 +116,18 @@
                         //Switch through some defaults
                         switch (rule.type) {
                             case "required":
-                                if(this.getVal() !== undefined) {
+                                if(this.getVal() !== undefined && this.getVal() !== '') {
                                     validCount +=1;
                                 }
                                 break; 
                         }
                     }
+                    
+                    if(cacheValidCount == validCount) {
+                        //It didn't pass
+                        this.errors.push(rule.msg);
+                    }
+                    
                 }, this);
                 
                 this.valid = validCount === this.options.validation.length;
@@ -130,7 +141,7 @@
                     modelUpdate = {};
                     modelUpdate[this.options.modelField] = this.getVal();
 
-                    this.options.form.model.save(modelUpdate, {wait: true});
+                    this.options.form.model.save(modelUpdate, {wait: !this.options.form.options.noWait});
 
                 }
                 

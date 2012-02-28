@@ -51,6 +51,17 @@
             return selectedSeats;
         },
         
+        removeSeats: function(count) {
+            var selSeats = this.getSelectedSeats();
+
+            //Though infinitly more complex, remove from the right
+            //rather than left as it makes more sense to western
+            //language users (ie writing left to right)
+            for(var x=selSeats.length - 1; x>=selSeats.length - count ; x-=1) {
+                selSeats[x].save('selected', false);
+            }
+        },
+        
         
         //This method will look at the seats a user has selected and work out
         //whether they have added in any single seat gaps within their own
@@ -82,6 +93,10 @@
             
             if(this.hasGaps()) {
                 errors.push("Please don't leave any gaps");
+            }
+            
+            if(simply.ticketTypes.getTotalTickets() === 0) {
+                errors.push('You haven\'t selected any seats');
             }
             
             //...

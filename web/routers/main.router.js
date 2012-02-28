@@ -31,22 +31,17 @@
         },
         
         setProgress: function(stage) {
-            simply.session.save({current_stage: stage});
+            simply.session.save({current_stage: stage}, {wait: true});
         },
         
         //Stage 1a
         choosePerformance: function() {
             this.viewport.clean();
             
-            
-            //TO DO error handling of no shows
-            if(simply.shows.length === 1) {
-                simply.session.save({show_id : simply.shows.at(0).get('show_id')});
-            }
-            this.setProgress(1);
             if(simply.shows.length > 1 && !simply.session.get('show_id')) {
                 location.hash = 'choose-show';
             }else{
+                this.setProgress(1);
                 this.viewport.addView(new simply.forms.choosePerformance());
             }
         },
@@ -78,6 +73,8 @@
         yourInfo: function() {
             this.viewport.clean();
             this.setProgress(3);
+            
+            this.viewport.addView(new simply.forms.personalDetails());
         },
         
         //Stage 4

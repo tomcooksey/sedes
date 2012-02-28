@@ -10,7 +10,7 @@ html, body {
     position: absolute;
     background: #fff;
     line-height: 100px;
-    opacity: 0.95;
+    opacity: 0.8;
     border: 1px solid #ccc;
     text-align: center;
     top: 0px;
@@ -37,8 +37,32 @@ html, body {
     width: 500px;
 }
 
-.loadingState {
-    opacity: 0.8;
+
+.errorPane {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 967px;
+    background-color: #f73e9c;
+    color: #fff;
+    display: none;
+    z-index: 100000;
+}
+
+.errorPane h2 {
+    margin-left: 10px;
+}
+
+.errorPane p {
+    margin-left: 10px;
+}
+
+.errorPane button {
+    background: #fff;
+    color: #f73e9c;
+    padding: 10px;
+    border: 0px;
+    margin: 0px 0px 10px 10px;
 }
 
 header {
@@ -53,6 +77,7 @@ header .inner {
     margin: auto;
     padding: 0px;
     height: 90px;
+    position: relative;
 }
 
 header .inner img.logo {
@@ -117,7 +142,7 @@ section.app #orderProgress .steps li {
     line-height: 46px;
     margin-left: 15px;
     margin-right: 8px;
-    color: #606060;
+    color: #999;
 }
 
 section.app #orderProgress .steps li.end {
@@ -134,7 +159,8 @@ section.app #orderProgress .steps li.complete {
 }
 
 section.app #orderProgress .steps li.current {
-    font-weight: bold;    
+    font-weight: bold;
+    color: #606060;
 }
 
 

@@ -12,6 +12,8 @@
             
             var modelUpdate;
             
+            this.options = options;
+            
             this.fields = [];
             this.name = options.name;
             this.action = options.action || null;
@@ -29,17 +31,7 @@
         //TO DO Create self submitting forms
         submit: function() {
 
-            var validCount = 0;
-            
-            if(!this.valid) {
-                for(var x=0; x< this.fields.length; x+=1) {
-                    if(this.fields[x].validate()) {
-                        validCount+=1;
-                    }
-                }
-
-                this.valid = validCount === this.fields.length;
-            }
+            this.validate();
             
             if(this.valid) {
                 if(typeof this.action !== 'function') {
@@ -47,6 +39,26 @@
                 }else{
                     this.action.apply(this);
                 }
+            }
+        },
+        
+        validate: function() {
+            var validCount = 0;
+            
+            var errors = [];
+            
+            for(var x=0; x< this.fields.length; x+=1) {
+                if(this.fields[x].validate()) {
+                    validCount+=1;
+                }else{
+                    errors = errors.concat(this.fields[x].errors);
+                }
+            }
+
+            this.valid = validCount === this.fields.length;
+            
+            if(!this.valid) {
+                simply.errors.addErrors(errors);
             }
         },
         

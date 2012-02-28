@@ -28,5 +28,10 @@
     "/performances" : {
         "module" : "performances",
         "action" : "verbHandler"
+    },
+    
+    "/personalDetails" : {
+        "module" : "personalDetails",
+        "action" : "verbHandler"
     }   
 }

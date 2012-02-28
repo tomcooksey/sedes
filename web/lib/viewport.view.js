@@ -48,9 +48,8 @@
             simply.globalChanging = false;
         },
         
-        //This should be an overwrite of reset()
         //TO DO What are these functions passed?  If they are passed the collection
-        //name, surely we can have one method that does all these?!
+        //reference, surely we can have one method that does all these?!
         showChange: function() {
             console.log('here I would update the performances');
             this.setLoadingActive();

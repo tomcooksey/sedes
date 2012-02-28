@@ -62,8 +62,6 @@ class ticketTypes {
         
         $ticketsSelected = $this->context->getSessionVar('ticketsSelected');
         
-        
-        
         if(!$ticketsSelected) {
             $ticketsSelected = array();
         }

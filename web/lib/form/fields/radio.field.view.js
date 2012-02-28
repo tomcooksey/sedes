@@ -46,8 +46,12 @@
                 
                 this.validate();
             }
+            
+            var val = parseInt($('input[name=' + this.fieldName + ']:checked').val());
+            
+            if(isNaN(val)) val = undefined;
 
-            return parseInt($('input[name=' + this.fieldName + ']:checked').val());
+            return val;
         },
         
         getChoiceFromVal: function(val) {

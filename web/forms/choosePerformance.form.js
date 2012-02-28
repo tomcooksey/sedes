@@ -13,6 +13,7 @@
             });
             
             var choices = [], obj;
+            
             simply.performances.each(function(performance) {
                 obj = {
                     value: performance.get('id'),
@@ -22,6 +23,8 @@
                 choices.push(obj);
                 
             }, this);
+            
+            
 
            
             this.form.addField( new simply.fields.radio({
@@ -33,7 +36,7 @@
                 validation: [
                     {
                         type: "required",
-                        msg: "This field is required"
+                        msg: "Please choose a performance!"
                     }
                 ]
             }));

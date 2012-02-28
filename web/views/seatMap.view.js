@@ -85,8 +85,12 @@
                     
                     //Strict equals here because it always returns something
                     //either true if valid or an array if invalid
-                    if(self.collection.valid() !== true) {
-                        alert('would display errors here');
+                    var valid = self.collection.valid();
+                    if(valid !== true) {
+                        simply.errors.addErrors(valid);
+                    }else{
+                        simply.errors.hide();
+                        location.hash = 'your-info';
                     }
                 }
             }
@@ -131,12 +135,9 @@
             var totalAllowed = simply.ticketTypes.getTotalTickets()
             var totalSelected = this.collection.getTotalSelected();
             
-            console.log(totalAllowed);
-            console.log(totalSelected); 
-            
-            console.log('here');
             if(totalSelected > totalAllowed) {
-                console.log('will remove seats');
+                var difference = totalSelected - totalAllowed;
+                this.collection.removeSeats(difference);
             }
         }
         

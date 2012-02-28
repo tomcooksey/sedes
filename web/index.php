@@ -38,6 +38,9 @@
 		loadingOverlay.height(win.height());
 		loadingOverlay.width(win.width());
 		loadingOverlay.fadeIn('fast');
+		
+		//We need to setup the errors page first
+		simply.errors = new simply.views.errors();
 			
 		//Put shows in global namespace for ease of use
 		simply.shows = new simply.collections.shows();
@@ -57,6 +60,7 @@
 			simply.session = new simply.models.session();
 			simply.ticketTypes = new simply.collections.ticketTypes();
 			simply.performances = new simply.collections.performances();
+			simply.personalDetails = new simply.models.personalDetails();
 	
 			//The bootstrapper blocks the app starting whilst it
 			//fulfills each dependency asyncronously.  This is because
@@ -67,14 +71,18 @@
 			dispatch.addDependency(simply.session);
 			dispatch.addDependency(simply.ticketTypes);
 			dispatch.addDependency(simply.performances);
+			dispatch.addDependency(simply.personalDetails);
 			
-			//TO DO nicer handling of bootstrap error, an Alert isn't
-			//exactly ideal.
 			dispatch.start(function() {
 			    new simply.routers.main();
 			    Backbone.history.start();
 			}, function() {
-			    alert('Could not initialise Application, please try again later');
+			    //Create a new viewport
+			    errorViewport = new simply.views.viewport();
+			    errorViewport.loadingText.addClass('loadingError');
+			    var textString = 'Could not initialise Application, please try again later';
+			    errorViewport.setLoading("We're sorry, something went wrong.  Please quote the following error:<br/>" + textString);
+			    //alert();
 			});
 		    },
 		    error: function() {
@@ -99,6 +107,7 @@
 	<script src="models/performance.model.js"></script>
 	<script src="models/ticketType.model.js"></script>
 	<script src="models/seat.model.js"></script>
+	<script src="models/personalDetails.model.js"></script>
         
         <!--collections-->
         <script src="collections/stages.collection.js"></script>
@@ -121,6 +130,7 @@
 	<script src="forms/seats.form.js"></script>
 	<script src="forms/choosePerformance.form.js"></script>
 	<script src="forms/chooseShow.form.js"></script>
+	<script src="forms/personalDetails.form.js"></script>
 	
         <!--views-->
 	<script src="lib/progressStage.view.js"></script>
@@ -128,6 +138,8 @@
 	<script src="lib/viewport.view.js"></script>
 	<script src="views/seatMap.view.js"></script>
 	<script src="views/seat.view.js"></script>
+	<script src="lib/errors.view.js"></script>
+	<script src="views/checkout.view.js"></script>
         
         <!--routers-->
         <script src="routers/main.router.js"></script>
@@ -143,6 +155,7 @@
 	    <div class="loadingInfo">
 		Loading, please wait...
 	    </div>
+	    
 	</div>
 	
 	<header>

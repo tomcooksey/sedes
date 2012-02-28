@@ -35,7 +35,8 @@
                 form = new simply.form({
                     name: 'form_seats_' + ticket.get('id'),
                     action: 'seat-map',
-                    model: ticket
+                    model: ticket,
+                    noWait: true
                 });
                 
                 form.addField( new simply.fields.select({
