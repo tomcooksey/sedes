@@ -125,6 +125,7 @@
 	<script src="lib/form/fields/select.field.view.js"></script>
 	<script src="lib/form/fields/radio.field.view.js"></script>
 	<script src="lib/form/fields/button.field.view.js"></script>
+	<script src="lib/form/fields/performance.field.view.js"></script>
 	
 	
 	<!--form lib-->
@@ -170,8 +171,8 @@
 	
 	<section class="app">
 	    
-	    <h1 id="show_name"></h1>
-	    <h2 id="performance_name"></h2>
+	    <h1 id="show_name"> </h1>
+	    <h2 id="performance_name"> </h2>
 	    
 	    <div id="orderProgress">
 		<div class="bar"></div>

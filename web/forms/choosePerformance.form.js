@@ -27,7 +27,7 @@
             
 
            
-            this.form.addField( new simply.fields.radio({
+            this.form.addField( new simply.fields.performance({
                 label: "Choose Performance:",
                 id: "performance_choice",
                 form: this.form,

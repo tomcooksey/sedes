@@ -423,6 +423,35 @@ body .seatMap  .selectedSeat {
     cursor: pointer;
 }
 
+.performanceWrapper {
+    display: block;
+    
+}
+
+.performanceWrapper h3 {
+    font-size: 16px;
+    margin: 0px;
+    margin-bottom: 20px;
+    margin-top:10px;
+}
+
+.performanceWrapper .performanceRow {
+    display: block;
+    border-top: 1px solid #8ae0f8;
+    border-bottom: 1px solid #1992b5;
+    background-color: #3ecef7;
+    padding: 20px;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+.performanceWrapper .selected {
+    background-color: #f73e9c;
+    border-top: 1px solid #fd9bcd;
+    border-bottom: 1px solid #c6126d;
+    color: #fff;
+}
+
 footer {
     display: block;
     height: 90px;
