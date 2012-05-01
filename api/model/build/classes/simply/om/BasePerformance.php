@@ -37,16 +37,47 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	protected $id;
 
 	/**
-	 * The value for the title field.
-	 * @var        string
+	 * The value for the showid field.
+	 * @var        int
 	 */
-	protected $title;
+	protected $showid;
 
 	/**
-	 * The value for the occurs field.
+	 * The value for the venueid field.
+	 * @var        int
+	 */
+	protected $venueid;
+
+	/**
+	 * The value for the name field.
 	 * @var        string
 	 */
-	protected $occurs;
+	protected $name;
+
+	/**
+	 * @var        Show
+	 */
+	protected $aShow;
+
+	/**
+	 * @var        Venue
+	 */
+	protected $aVenue;
+
+	/**
+	 * @var        array TicketType[] Collection to store aggregation of TicketType objects.
+	 */
+	protected $collPerformanceToTicketTypes;
+
+	/**
+	 * @var        array SeatAvailability[] Collection to store aggregation of SeatAvailability objects.
+	 */
+	protected $collPerformanceToAvailabilitys;
+
+	/**
+	 * @var        array Order[] Collection to store aggregation of Order objects.
+	 */
+	protected $collPerformanceToOrders;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -63,27 +94,55 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	protected $alreadyInValidation = false;
 
 	/**
+	 * An array of objects scheduled for deletion.
+	 * @var		array
+	 */
+	protected $performanceToTicketTypesScheduledForDeletion = null;
+
+	/**
+	 * An array of objects scheduled for deletion.
+	 * @var		array
+	 */
+	protected $performanceToAvailabilitysScheduledForDeletion = null;
+
+	/**
+	 * An array of objects scheduled for deletion.
+	 * @var		array
+	 */
+	protected $performanceToOrdersScheduledForDeletion = null;
+
+	/**
 	 * Get the [id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getId()
+	public function getid()
 	{
 		return $this->id;
 	}
 
 	/**
-	 * Get the [title] column value.
+	 * Get the [showid] column value.
 	 * 
-	 * @return     string
+	 * @return     int
 	 */
-	public function getTitle()
+	public function getshowId()
 	{
-		return $this->title;
+		return $this->showid;
 	}
 
 	/**
-	 * Get the [optionally formatted] temporal [occurs] column value.
+	 * Get the [venueid] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getvenueId()
+	{
+		return $this->venueid;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [name] column value.
 	 * 
 	 *
 	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -91,22 +150,22 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
 	 * @throws     PropelException - if unable to parse/validate the date/time value.
 	 */
-	public function getOccurs($format = 'Y-m-d H:i:s')
+	public function getname($format = 'Y-m-d H:i:s')
 	{
-		if ($this->occurs === null) {
+		if ($this->name === null) {
 			return null;
 		}
 
 
-		if ($this->occurs === '0000-00-00 00:00:00') {
+		if ($this->name === '0000-00-00 00:00:00') {
 			// while technically this is not a default value of NULL,
 			// this seems to be closest in meaning.
 			return null;
 		} else {
 			try {
-				$dt = new DateTime($this->occurs);
+				$dt = new DateTime($this->name);
 			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->occurs, true), $x);
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->name, true), $x);
 			}
 		}
 
@@ -126,7 +185,7 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	 * @param      int $v new value
 	 * @return     Performance The current object (for fluent API support)
 	 */
-	public function setId($v)
+	public function setid($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
@@ -138,49 +197,77 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		}
 
 		return $this;
-	} // setId()
+	} // setid()
 
 	/**
-	 * Set the value of [title] column.
+	 * Set the value of [showid] column.
 	 * 
-	 * @param      string $v new value
+	 * @param      int $v new value
 	 * @return     Performance The current object (for fluent API support)
 	 */
-	public function setTitle($v)
+	public function setshowId($v)
 	{
 		if ($v !== null) {
-			$v = (string) $v;
+			$v = (int) $v;
 		}
 
-		if ($this->title !== $v) {
-			$this->title = $v;
-			$this->modifiedColumns[] = PerformancePeer::TITLE;
+		if ($this->showid !== $v) {
+			$this->showid = $v;
+			$this->modifiedColumns[] = PerformancePeer::SHOWID;
+		}
+
+		if ($this->aShow !== null && $this->aShow->getid() !== $v) {
+			$this->aShow = null;
 		}
 
 		return $this;
-	} // setTitle()
+	} // setshowId()
 
 	/**
-	 * Sets the value of [occurs] column to a normalized version of the date/time value specified.
+	 * Set the value of [venueid] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Performance The current object (for fluent API support)
+	 */
+	public function setvenueId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->venueid !== $v) {
+			$this->venueid = $v;
+			$this->modifiedColumns[] = PerformancePeer::VENUEID;
+		}
+
+		if ($this->aVenue !== null && $this->aVenue->getid() !== $v) {
+			$this->aVenue = null;
+		}
+
+		return $this;
+	} // setvenueId()
+
+	/**
+	 * Sets the value of [name] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.
 	 *               Empty strings are treated as NULL.
 	 * @return     Performance The current object (for fluent API support)
 	 */
-	public function setOccurs($v)
+	public function setname($v)
 	{
 		$dt = PropelDateTime::newInstance($v, null, 'DateTime');
-		if ($this->occurs !== null || $dt !== null) {
-			$currentDateAsString = ($this->occurs !== null && $tmpDt = new DateTime($this->occurs)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+		if ($this->name !== null || $dt !== null) {
+			$currentDateAsString = ($this->name !== null && $tmpDt = new DateTime($this->name)) ? $tmpDt->format('Y-m-d H:i:s') : null;
 			$newDateAsString = $dt ? $dt->format('Y-m-d H:i:s') : null;
 			if ($currentDateAsString !== $newDateAsString) {
-				$this->occurs = $newDateAsString;
-				$this->modifiedColumns[] = PerformancePeer::OCCURS;
+				$this->name = $newDateAsString;
+				$this->modifiedColumns[] = PerformancePeer::NAME;
 			}
 		} // if either are not null
 
 		return $this;
-	} // setOccurs()
+	} // setname()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -215,8 +302,9 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->occurs = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->showid = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->venueid = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -225,7 +313,7 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 				$this->ensureConsistency();
 			}
 
-			return $startcol + 3; // 3 = PerformancePeer::NUM_HYDRATE_COLUMNS.
+			return $startcol + 4; // 4 = PerformancePeer::NUM_HYDRATE_COLUMNS.
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Performance object", $e);
@@ -248,6 +336,12 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	public function ensureConsistency()
 	{
 
+		if ($this->aShow !== null && $this->showid !== $this->aShow->getid()) {
+			$this->aShow = null;
+		}
+		if ($this->aVenue !== null && $this->venueid !== $this->aVenue->getid()) {
+			$this->aVenue = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -286,6 +380,14 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		$this->hydrate($row, 0, true); // rehydrate
 
 		if ($deep) {  // also de-associate any related objects?
+
+			$this->aShow = null;
+			$this->aVenue = null;
+			$this->collPerformanceToTicketTypes = null;
+
+			$this->collPerformanceToAvailabilitys = null;
+
+			$this->collPerformanceToOrders = null;
 
 		} // if (deep)
 	}
@@ -397,6 +499,25 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aShow !== null) {
+				if ($this->aShow->isModified() || $this->aShow->isNew()) {
+					$affectedRows += $this->aShow->save($con);
+				}
+				$this->setShow($this->aShow);
+			}
+
+			if ($this->aVenue !== null) {
+				if ($this->aVenue->isModified() || $this->aVenue->isNew()) {
+					$affectedRows += $this->aVenue->save($con);
+				}
+				$this->setVenue($this->aVenue);
+			}
+
 			if ($this->isNew() || $this->isModified()) {
 				// persist changes
 				if ($this->isNew()) {
@@ -406,6 +527,57 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 				}
 				$affectedRows += 1;
 				$this->resetModified();
+			}
+
+			if ($this->performanceToTicketTypesScheduledForDeletion !== null) {
+				if (!$this->performanceToTicketTypesScheduledForDeletion->isEmpty()) {
+					TicketTypeQuery::create()
+						->filterByPrimaryKeys($this->performanceToTicketTypesScheduledForDeletion->getPrimaryKeys(false))
+						->delete($con);
+					$this->performanceToTicketTypesScheduledForDeletion = null;
+				}
+			}
+
+			if ($this->collPerformanceToTicketTypes !== null) {
+				foreach ($this->collPerformanceToTicketTypes as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->performanceToAvailabilitysScheduledForDeletion !== null) {
+				if (!$this->performanceToAvailabilitysScheduledForDeletion->isEmpty()) {
+					SeatAvailabilityQuery::create()
+						->filterByPrimaryKeys($this->performanceToAvailabilitysScheduledForDeletion->getPrimaryKeys(false))
+						->delete($con);
+					$this->performanceToAvailabilitysScheduledForDeletion = null;
+				}
+			}
+
+			if ($this->collPerformanceToAvailabilitys !== null) {
+				foreach ($this->collPerformanceToAvailabilitys as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->performanceToOrdersScheduledForDeletion !== null) {
+				if (!$this->performanceToOrdersScheduledForDeletion->isEmpty()) {
+					OrderQuery::create()
+						->filterByPrimaryKeys($this->performanceToOrdersScheduledForDeletion->getPrimaryKeys(false))
+						->delete($con);
+					$this->performanceToOrdersScheduledForDeletion = null;
+				}
+			}
+
+			if ($this->collPerformanceToOrders !== null) {
+				foreach ($this->collPerformanceToOrders as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
 			}
 
 			$this->alreadyInSave = false;
@@ -436,11 +608,14 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		if ($this->isColumnModified(PerformancePeer::ID)) {
 			$modifiedColumns[':p' . $index++]  = '`ID`';
 		}
-		if ($this->isColumnModified(PerformancePeer::TITLE)) {
-			$modifiedColumns[':p' . $index++]  = '`TITLE`';
+		if ($this->isColumnModified(PerformancePeer::SHOWID)) {
+			$modifiedColumns[':p' . $index++]  = '`SHOWID`';
 		}
-		if ($this->isColumnModified(PerformancePeer::OCCURS)) {
-			$modifiedColumns[':p' . $index++]  = '`OCCURS`';
+		if ($this->isColumnModified(PerformancePeer::VENUEID)) {
+			$modifiedColumns[':p' . $index++]  = '`VENUEID`';
+		}
+		if ($this->isColumnModified(PerformancePeer::NAME)) {
+			$modifiedColumns[':p' . $index++]  = '`NAME`';
 		}
 
 		$sql = sprintf(
@@ -456,11 +631,14 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 					case '`ID`':
 						$stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
 						break;
-					case '`TITLE`':
-						$stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
+					case '`SHOWID`':
+						$stmt->bindValue($identifier, $this->showid, PDO::PARAM_INT);
 						break;
-					case '`OCCURS`':
-						$stmt->bindValue($identifier, $this->occurs, PDO::PARAM_STR);
+					case '`VENUEID`':
+						$stmt->bindValue($identifier, $this->venueid, PDO::PARAM_INT);
+						break;
+					case '`NAME`':
+						$stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
 						break;
 				}
 			}
@@ -475,7 +653,7 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		} catch (Exception $e) {
 			throw new PropelException('Unable to get autoincrement id.', $e);
 		}
-		$this->setId($pk);
+		$this->setid($pk);
 
 		$this->setNew(false);
 	}
@@ -554,10 +732,52 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 			$failureMap = array();
 
 
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aShow !== null) {
+				if (!$this->aShow->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aShow->getValidationFailures());
+				}
+			}
+
+			if ($this->aVenue !== null) {
+				if (!$this->aVenue->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aVenue->getValidationFailures());
+				}
+			}
+
+
 			if (($retval = PerformancePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collPerformanceToTicketTypes !== null) {
+					foreach ($this->collPerformanceToTicketTypes as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collPerformanceToAvailabilitys !== null) {
+					foreach ($this->collPerformanceToAvailabilitys as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collPerformanceToOrders !== null) {
+					foreach ($this->collPerformanceToOrders as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -593,13 +813,16 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	{
 		switch($pos) {
 			case 0:
-				return $this->getId();
+				return $this->getid();
 				break;
 			case 1:
-				return $this->getTitle();
+				return $this->getshowId();
 				break;
 			case 2:
-				return $this->getOccurs();
+				return $this->getvenueId();
+				break;
+			case 3:
+				return $this->getname();
 				break;
 			default:
 				return null;
@@ -618,10 +841,11 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	 *                    Defaults to BasePeer::TYPE_PHPNAME.
 	 * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
 	 * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+	 * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
 	 *
 	 * @return    array an associative array containing the field names (as keys) and field values
 	 */
-	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
 	{
 		if (isset($alreadyDumpedObjects['Performance'][$this->getPrimaryKey()])) {
 			return '*RECURSION*';
@@ -629,10 +853,28 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		$alreadyDumpedObjects['Performance'][$this->getPrimaryKey()] = true;
 		$keys = PerformancePeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getId(),
-			$keys[1] => $this->getTitle(),
-			$keys[2] => $this->getOccurs(),
+			$keys[0] => $this->getid(),
+			$keys[1] => $this->getshowId(),
+			$keys[2] => $this->getvenueId(),
+			$keys[3] => $this->getname(),
 		);
+		if ($includeForeignObjects) {
+			if (null !== $this->aShow) {
+				$result['Show'] = $this->aShow->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+			}
+			if (null !== $this->aVenue) {
+				$result['Venue'] = $this->aVenue->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+			}
+			if (null !== $this->collPerformanceToTicketTypes) {
+				$result['PerformanceToTicketTypes'] = $this->collPerformanceToTicketTypes->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+			}
+			if (null !== $this->collPerformanceToAvailabilitys) {
+				$result['PerformanceToAvailabilitys'] = $this->collPerformanceToAvailabilitys->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+			}
+			if (null !== $this->collPerformanceToOrders) {
+				$result['PerformanceToOrders'] = $this->collPerformanceToOrders->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+			}
+		}
 		return $result;
 	}
 
@@ -664,13 +906,16 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	{
 		switch($pos) {
 			case 0:
-				$this->setId($value);
+				$this->setid($value);
 				break;
 			case 1:
-				$this->setTitle($value);
+				$this->setshowId($value);
 				break;
 			case 2:
-				$this->setOccurs($value);
+				$this->setvenueId($value);
+				break;
+			case 3:
+				$this->setname($value);
 				break;
 		} // switch()
 	}
@@ -696,9 +941,10 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	{
 		$keys = PerformancePeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setOccurs($arr[$keys[2]]);
+		if (array_key_exists($keys[0], $arr)) $this->setid($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setshowId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setvenueId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setname($arr[$keys[3]]);
 	}
 
 	/**
@@ -711,8 +957,9 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 		$criteria = new Criteria(PerformancePeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(PerformancePeer::ID)) $criteria->add(PerformancePeer::ID, $this->id);
-		if ($this->isColumnModified(PerformancePeer::TITLE)) $criteria->add(PerformancePeer::TITLE, $this->title);
-		if ($this->isColumnModified(PerformancePeer::OCCURS)) $criteria->add(PerformancePeer::OCCURS, $this->occurs);
+		if ($this->isColumnModified(PerformancePeer::SHOWID)) $criteria->add(PerformancePeer::SHOWID, $this->showid);
+		if ($this->isColumnModified(PerformancePeer::VENUEID)) $criteria->add(PerformancePeer::VENUEID, $this->venueid);
+		if ($this->isColumnModified(PerformancePeer::NAME)) $criteria->add(PerformancePeer::NAME, $this->name);
 
 		return $criteria;
 	}
@@ -739,7 +986,7 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	 */
 	public function getPrimaryKey()
 	{
-		return $this->getId();
+		return $this->getid();
 	}
 
 	/**
@@ -750,7 +997,7 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	 */
 	public function setPrimaryKey($key)
 	{
-		$this->setId($key);
+		$this->setid($key);
 	}
 
 	/**
@@ -759,7 +1006,7 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	 */
 	public function isPrimaryKeyNull()
 	{
-		return null === $this->getId();
+		return null === $this->getid();
 	}
 
 	/**
@@ -775,11 +1022,42 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	 */
 	public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
 	{
-		$copyObj->setTitle($this->getTitle());
-		$copyObj->setOccurs($this->getOccurs());
+		$copyObj->setshowId($this->getshowId());
+		$copyObj->setvenueId($this->getvenueId());
+		$copyObj->setname($this->getname());
+
+		if ($deepCopy && !$this->startCopy) {
+			// important: temporarily setNew(false) because this affects the behavior of
+			// the getter/setter methods for fkey referrer objects.
+			$copyObj->setNew(false);
+			// store object hash to prevent cycle
+			$this->startCopy = true;
+
+			foreach ($this->getPerformanceToTicketTypes() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addPerformanceToTicketType($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getPerformanceToAvailabilitys() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addPerformanceToAvailability($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getPerformanceToOrders() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addPerformanceToOrder($relObj->copy($deepCopy));
+				}
+			}
+
+			//unflag object copy
+			$this->startCopy = false;
+		} // if ($deepCopy)
+
 		if ($makeNew) {
 			$copyObj->setNew(true);
-			$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
+			$copyObj->setid(NULL); // this is a auto-increment column, so set to default value
 		}
 	}
 
@@ -822,13 +1100,603 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	}
 
 	/**
+	 * Declares an association between this object and a Show object.
+	 *
+	 * @param      Show $v
+	 * @return     Performance The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setShow(Show $v = null)
+	{
+		if ($v === null) {
+			$this->setshowId(NULL);
+		} else {
+			$this->setshowId($v->getid());
+		}
+
+		$this->aShow = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Show object, it will not be re-added.
+		if ($v !== null) {
+			$v->addShowToPerformance($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated Show object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Show The associated Show object.
+	 * @throws     PropelException
+	 */
+	public function getShow(PropelPDO $con = null)
+	{
+		if ($this->aShow === null && ($this->showid !== null)) {
+			$this->aShow = ShowQuery::create()->findPk($this->showid, $con);
+			/* The following can be used additionally to
+				guarantee the related object contains a reference
+				to this object.  This level of coupling may, however, be
+				undesirable since it could result in an only partially populated collection
+				in the referenced object.
+				$this->aShow->addShowToPerformances($this);
+			 */
+		}
+		return $this->aShow;
+	}
+
+	/**
+	 * Declares an association between this object and a Venue object.
+	 *
+	 * @param      Venue $v
+	 * @return     Performance The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setVenue(Venue $v = null)
+	{
+		if ($v === null) {
+			$this->setvenueId(NULL);
+		} else {
+			$this->setvenueId($v->getid());
+		}
+
+		$this->aVenue = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Venue object, it will not be re-added.
+		if ($v !== null) {
+			$v->addVenueToShow($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated Venue object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Venue The associated Venue object.
+	 * @throws     PropelException
+	 */
+	public function getVenue(PropelPDO $con = null)
+	{
+		if ($this->aVenue === null && ($this->venueid !== null)) {
+			$this->aVenue = VenueQuery::create()->findPk($this->venueid, $con);
+			/* The following can be used additionally to
+				guarantee the related object contains a reference
+				to this object.  This level of coupling may, however, be
+				undesirable since it could result in an only partially populated collection
+				in the referenced object.
+				$this->aVenue->addVenueToShows($this);
+			 */
+		}
+		return $this->aVenue;
+	}
+
+
+	/**
+	 * Initializes a collection based on the name of a relation.
+	 * Avoids crafting an 'init[$relationName]s' method name
+	 * that wouldn't work when StandardEnglishPluralizer is used.
+	 *
+	 * @param      string $relationName The name of the relation to initialize
+	 * @return     void
+	 */
+	public function initRelation($relationName)
+	{
+		if ('PerformanceToTicketType' == $relationName) {
+			return $this->initPerformanceToTicketTypes();
+		}
+		if ('PerformanceToAvailability' == $relationName) {
+			return $this->initPerformanceToAvailabilitys();
+		}
+		if ('PerformanceToOrder' == $relationName) {
+			return $this->initPerformanceToOrders();
+		}
+	}
+
+	/**
+	 * Clears out the collPerformanceToTicketTypes collection
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addPerformanceToTicketTypes()
+	 */
+	public function clearPerformanceToTicketTypes()
+	{
+		$this->collPerformanceToTicketTypes = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collPerformanceToTicketTypes collection.
+	 *
+	 * By default this just sets the collPerformanceToTicketTypes collection to an empty array (like clearcollPerformanceToTicketTypes());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @param      boolean $overrideExisting If set to true, the method call initializes
+	 *                                        the collection even if it is not empty
+	 *
+	 * @return     void
+	 */
+	public function initPerformanceToTicketTypes($overrideExisting = true)
+	{
+		if (null !== $this->collPerformanceToTicketTypes && !$overrideExisting) {
+			return;
+		}
+		$this->collPerformanceToTicketTypes = new PropelObjectCollection();
+		$this->collPerformanceToTicketTypes->setModel('TicketType');
+	}
+
+	/**
+	 * Gets an array of TicketType objects which contain a foreign key that references this object.
+	 *
+	 * If the $criteria is not null, it is used to always fetch the results from the database.
+	 * Otherwise the results are fetched from the database the first time, then cached.
+	 * Next time the same method is called without $criteria, the cached collection is returned.
+	 * If this Performance is new, it will return
+	 * an empty collection or the current collection; the criteria is ignored on a new object.
+	 *
+	 * @param      Criteria $criteria optional Criteria object to narrow the query
+	 * @param      PropelPDO $con optional connection object
+	 * @return     PropelCollection|array TicketType[] List of TicketType objects
+	 * @throws     PropelException
+	 */
+	public function getPerformanceToTicketTypes($criteria = null, PropelPDO $con = null)
+	{
+		if(null === $this->collPerformanceToTicketTypes || null !== $criteria) {
+			if ($this->isNew() && null === $this->collPerformanceToTicketTypes) {
+				// return empty collection
+				$this->initPerformanceToTicketTypes();
+			} else {
+				$collPerformanceToTicketTypes = TicketTypeQuery::create(null, $criteria)
+					->filterByPerformance($this)
+					->find($con);
+				if (null !== $criteria) {
+					return $collPerformanceToTicketTypes;
+				}
+				$this->collPerformanceToTicketTypes = $collPerformanceToTicketTypes;
+			}
+		}
+		return $this->collPerformanceToTicketTypes;
+	}
+
+	/**
+	 * Sets a collection of PerformanceToTicketType objects related by a one-to-many relationship
+	 * to the current object.
+	 * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+	 * and new objects from the given Propel collection.
+	 *
+	 * @param      PropelCollection $performanceToTicketTypes A Propel collection.
+	 * @param      PropelPDO $con Optional connection object
+	 */
+	public function setPerformanceToTicketTypes(PropelCollection $performanceToTicketTypes, PropelPDO $con = null)
+	{
+		$this->performanceToTicketTypesScheduledForDeletion = $this->getPerformanceToTicketTypes(new Criteria(), $con)->diff($performanceToTicketTypes);
+
+		foreach ($performanceToTicketTypes as $performanceToTicketType) {
+			// Fix issue with collection modified by reference
+			if ($performanceToTicketType->isNew()) {
+				$performanceToTicketType->setPerformance($this);
+			}
+			$this->addPerformanceToTicketType($performanceToTicketType);
+		}
+
+		$this->collPerformanceToTicketTypes = $performanceToTicketTypes;
+	}
+
+	/**
+	 * Returns the number of related TicketType objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related TicketType objects.
+	 * @throws     PropelException
+	 */
+	public function countPerformanceToTicketTypes(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if(null === $this->collPerformanceToTicketTypes || null !== $criteria) {
+			if ($this->isNew() && null === $this->collPerformanceToTicketTypes) {
+				return 0;
+			} else {
+				$query = TicketTypeQuery::create(null, $criteria);
+				if($distinct) {
+					$query->distinct();
+				}
+				return $query
+					->filterByPerformance($this)
+					->count($con);
+			}
+		} else {
+			return count($this->collPerformanceToTicketTypes);
+		}
+	}
+
+	/**
+	 * Method called to associate a TicketType object to this object
+	 * through the TicketType foreign key attribute.
+	 *
+	 * @param      TicketType $l TicketType
+	 * @return     Performance The current object (for fluent API support)
+	 */
+	public function addPerformanceToTicketType(TicketType $l)
+	{
+		if ($this->collPerformanceToTicketTypes === null) {
+			$this->initPerformanceToTicketTypes();
+		}
+		if (!$this->collPerformanceToTicketTypes->contains($l)) { // only add it if the **same** object is not already associated
+			$this->doAddPerformanceToTicketType($l);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param	PerformanceToTicketType $performanceToTicketType The performanceToTicketType object to add.
+	 */
+	protected function doAddPerformanceToTicketType($performanceToTicketType)
+	{
+		$this->collPerformanceToTicketTypes[]= $performanceToTicketType;
+		$performanceToTicketType->setPerformance($this);
+	}
+
+	/**
+	 * Clears out the collPerformanceToAvailabilitys collection
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addPerformanceToAvailabilitys()
+	 */
+	public function clearPerformanceToAvailabilitys()
+	{
+		$this->collPerformanceToAvailabilitys = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collPerformanceToAvailabilitys collection.
+	 *
+	 * By default this just sets the collPerformanceToAvailabilitys collection to an empty array (like clearcollPerformanceToAvailabilitys());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @param      boolean $overrideExisting If set to true, the method call initializes
+	 *                                        the collection even if it is not empty
+	 *
+	 * @return     void
+	 */
+	public function initPerformanceToAvailabilitys($overrideExisting = true)
+	{
+		if (null !== $this->collPerformanceToAvailabilitys && !$overrideExisting) {
+			return;
+		}
+		$this->collPerformanceToAvailabilitys = new PropelObjectCollection();
+		$this->collPerformanceToAvailabilitys->setModel('SeatAvailability');
+	}
+
+	/**
+	 * Gets an array of SeatAvailability objects which contain a foreign key that references this object.
+	 *
+	 * If the $criteria is not null, it is used to always fetch the results from the database.
+	 * Otherwise the results are fetched from the database the first time, then cached.
+	 * Next time the same method is called without $criteria, the cached collection is returned.
+	 * If this Performance is new, it will return
+	 * an empty collection or the current collection; the criteria is ignored on a new object.
+	 *
+	 * @param      Criteria $criteria optional Criteria object to narrow the query
+	 * @param      PropelPDO $con optional connection object
+	 * @return     PropelCollection|array SeatAvailability[] List of SeatAvailability objects
+	 * @throws     PropelException
+	 */
+	public function getPerformanceToAvailabilitys($criteria = null, PropelPDO $con = null)
+	{
+		if(null === $this->collPerformanceToAvailabilitys || null !== $criteria) {
+			if ($this->isNew() && null === $this->collPerformanceToAvailabilitys) {
+				// return empty collection
+				$this->initPerformanceToAvailabilitys();
+			} else {
+				$collPerformanceToAvailabilitys = SeatAvailabilityQuery::create(null, $criteria)
+					->filterByPerformance($this)
+					->find($con);
+				if (null !== $criteria) {
+					return $collPerformanceToAvailabilitys;
+				}
+				$this->collPerformanceToAvailabilitys = $collPerformanceToAvailabilitys;
+			}
+		}
+		return $this->collPerformanceToAvailabilitys;
+	}
+
+	/**
+	 * Sets a collection of PerformanceToAvailability objects related by a one-to-many relationship
+	 * to the current object.
+	 * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+	 * and new objects from the given Propel collection.
+	 *
+	 * @param      PropelCollection $performanceToAvailabilitys A Propel collection.
+	 * @param      PropelPDO $con Optional connection object
+	 */
+	public function setPerformanceToAvailabilitys(PropelCollection $performanceToAvailabilitys, PropelPDO $con = null)
+	{
+		$this->performanceToAvailabilitysScheduledForDeletion = $this->getPerformanceToAvailabilitys(new Criteria(), $con)->diff($performanceToAvailabilitys);
+
+		foreach ($performanceToAvailabilitys as $performanceToAvailability) {
+			// Fix issue with collection modified by reference
+			if ($performanceToAvailability->isNew()) {
+				$performanceToAvailability->setPerformance($this);
+			}
+			$this->addPerformanceToAvailability($performanceToAvailability);
+		}
+
+		$this->collPerformanceToAvailabilitys = $performanceToAvailabilitys;
+	}
+
+	/**
+	 * Returns the number of related SeatAvailability objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related SeatAvailability objects.
+	 * @throws     PropelException
+	 */
+	public function countPerformanceToAvailabilitys(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if(null === $this->collPerformanceToAvailabilitys || null !== $criteria) {
+			if ($this->isNew() && null === $this->collPerformanceToAvailabilitys) {
+				return 0;
+			} else {
+				$query = SeatAvailabilityQuery::create(null, $criteria);
+				if($distinct) {
+					$query->distinct();
+				}
+				return $query
+					->filterByPerformance($this)
+					->count($con);
+			}
+		} else {
+			return count($this->collPerformanceToAvailabilitys);
+		}
+	}
+
+	/**
+	 * Method called to associate a SeatAvailability object to this object
+	 * through the SeatAvailability foreign key attribute.
+	 *
+	 * @param      SeatAvailability $l SeatAvailability
+	 * @return     Performance The current object (for fluent API support)
+	 */
+	public function addPerformanceToAvailability(SeatAvailability $l)
+	{
+		if ($this->collPerformanceToAvailabilitys === null) {
+			$this->initPerformanceToAvailabilitys();
+		}
+		if (!$this->collPerformanceToAvailabilitys->contains($l)) { // only add it if the **same** object is not already associated
+			$this->doAddPerformanceToAvailability($l);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param	PerformanceToAvailability $performanceToAvailability The performanceToAvailability object to add.
+	 */
+	protected function doAddPerformanceToAvailability($performanceToAvailability)
+	{
+		$this->collPerformanceToAvailabilitys[]= $performanceToAvailability;
+		$performanceToAvailability->setPerformance($this);
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Performance is new, it will return
+	 * an empty collection; or if this Performance has previously
+	 * been saved, it will retrieve related PerformanceToAvailabilitys from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Performance.
+	 *
+	 * @param      Criteria $criteria optional Criteria object to narrow the query
+	 * @param      PropelPDO $con optional connection object
+	 * @param      string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+	 * @return     PropelCollection|array SeatAvailability[] List of SeatAvailability objects
+	 */
+	public function getPerformanceToAvailabilitysJoinSeat($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$query = SeatAvailabilityQuery::create(null, $criteria);
+		$query->joinWith('Seat', $join_behavior);
+
+		return $this->getPerformanceToAvailabilitys($query, $con);
+	}
+
+	/**
+	 * Clears out the collPerformanceToOrders collection
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addPerformanceToOrders()
+	 */
+	public function clearPerformanceToOrders()
+	{
+		$this->collPerformanceToOrders = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collPerformanceToOrders collection.
+	 *
+	 * By default this just sets the collPerformanceToOrders collection to an empty array (like clearcollPerformanceToOrders());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @param      boolean $overrideExisting If set to true, the method call initializes
+	 *                                        the collection even if it is not empty
+	 *
+	 * @return     void
+	 */
+	public function initPerformanceToOrders($overrideExisting = true)
+	{
+		if (null !== $this->collPerformanceToOrders && !$overrideExisting) {
+			return;
+		}
+		$this->collPerformanceToOrders = new PropelObjectCollection();
+		$this->collPerformanceToOrders->setModel('Order');
+	}
+
+	/**
+	 * Gets an array of Order objects which contain a foreign key that references this object.
+	 *
+	 * If the $criteria is not null, it is used to always fetch the results from the database.
+	 * Otherwise the results are fetched from the database the first time, then cached.
+	 * Next time the same method is called without $criteria, the cached collection is returned.
+	 * If this Performance is new, it will return
+	 * an empty collection or the current collection; the criteria is ignored on a new object.
+	 *
+	 * @param      Criteria $criteria optional Criteria object to narrow the query
+	 * @param      PropelPDO $con optional connection object
+	 * @return     PropelCollection|array Order[] List of Order objects
+	 * @throws     PropelException
+	 */
+	public function getPerformanceToOrders($criteria = null, PropelPDO $con = null)
+	{
+		if(null === $this->collPerformanceToOrders || null !== $criteria) {
+			if ($this->isNew() && null === $this->collPerformanceToOrders) {
+				// return empty collection
+				$this->initPerformanceToOrders();
+			} else {
+				$collPerformanceToOrders = OrderQuery::create(null, $criteria)
+					->filterByPerformance($this)
+					->find($con);
+				if (null !== $criteria) {
+					return $collPerformanceToOrders;
+				}
+				$this->collPerformanceToOrders = $collPerformanceToOrders;
+			}
+		}
+		return $this->collPerformanceToOrders;
+	}
+
+	/**
+	 * Sets a collection of PerformanceToOrder objects related by a one-to-many relationship
+	 * to the current object.
+	 * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+	 * and new objects from the given Propel collection.
+	 *
+	 * @param      PropelCollection $performanceToOrders A Propel collection.
+	 * @param      PropelPDO $con Optional connection object
+	 */
+	public function setPerformanceToOrders(PropelCollection $performanceToOrders, PropelPDO $con = null)
+	{
+		$this->performanceToOrdersScheduledForDeletion = $this->getPerformanceToOrders(new Criteria(), $con)->diff($performanceToOrders);
+
+		foreach ($performanceToOrders as $performanceToOrder) {
+			// Fix issue with collection modified by reference
+			if ($performanceToOrder->isNew()) {
+				$performanceToOrder->setPerformance($this);
+			}
+			$this->addPerformanceToOrder($performanceToOrder);
+		}
+
+		$this->collPerformanceToOrders = $performanceToOrders;
+	}
+
+	/**
+	 * Returns the number of related Order objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Order objects.
+	 * @throws     PropelException
+	 */
+	public function countPerformanceToOrders(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if(null === $this->collPerformanceToOrders || null !== $criteria) {
+			if ($this->isNew() && null === $this->collPerformanceToOrders) {
+				return 0;
+			} else {
+				$query = OrderQuery::create(null, $criteria);
+				if($distinct) {
+					$query->distinct();
+				}
+				return $query
+					->filterByPerformance($this)
+					->count($con);
+			}
+		} else {
+			return count($this->collPerformanceToOrders);
+		}
+	}
+
+	/**
+	 * Method called to associate a Order object to this object
+	 * through the Order foreign key attribute.
+	 *
+	 * @param      Order $l Order
+	 * @return     Performance The current object (for fluent API support)
+	 */
+	public function addPerformanceToOrder(Order $l)
+	{
+		if ($this->collPerformanceToOrders === null) {
+			$this->initPerformanceToOrders();
+		}
+		if (!$this->collPerformanceToOrders->contains($l)) { // only add it if the **same** object is not already associated
+			$this->doAddPerformanceToOrder($l);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param	PerformanceToOrder $performanceToOrder The performanceToOrder object to add.
+	 */
+	protected function doAddPerformanceToOrder($performanceToOrder)
+	{
+		$this->collPerformanceToOrders[]= $performanceToOrder;
+		$performanceToOrder->setPerformance($this);
+	}
+
+	/**
 	 * Clears the current object and sets all attributes to their default values
 	 */
 	public function clear()
 	{
 		$this->id = null;
-		$this->title = null;
-		$this->occurs = null;
+		$this->showid = null;
+		$this->venueid = null;
+		$this->name = null;
 		$this->alreadyInSave = false;
 		$this->alreadyInValidation = false;
 		$this->clearAllReferences();
@@ -849,8 +1717,37 @@ abstract class BasePerformance extends BaseObject  implements Persistent
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collPerformanceToTicketTypes) {
+				foreach ($this->collPerformanceToTicketTypes as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collPerformanceToAvailabilitys) {
+				foreach ($this->collPerformanceToAvailabilitys as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collPerformanceToOrders) {
+				foreach ($this->collPerformanceToOrders as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
+		if ($this->collPerformanceToTicketTypes instanceof PropelCollection) {
+			$this->collPerformanceToTicketTypes->clearIterator();
+		}
+		$this->collPerformanceToTicketTypes = null;
+		if ($this->collPerformanceToAvailabilitys instanceof PropelCollection) {
+			$this->collPerformanceToAvailabilitys->clearIterator();
+		}
+		$this->collPerformanceToAvailabilitys = null;
+		if ($this->collPerformanceToOrders instanceof PropelCollection) {
+			$this->collPerformanceToOrders->clearIterator();
+		}
+		$this->collPerformanceToOrders = null;
+		$this->aShow = null;
+		$this->aVenue = null;
 	}
 
 	/**

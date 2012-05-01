@@ -8,54 +8,6 @@ class performances {
     }
     
     function verbHandler() {
-
-        $this->dummyData = array(
-            1 => array(
-                array(
-                    id => 1,
-                    name => 'Thursday 9th March 2012 19:00'
-                ),
-                
-                array(
-                    id => 2,
-                    name => 'Friday 10th March 2012 19:00'
-                ),
-                
-                array(
-                    id => 3,
-                    name => 'Saturday 11th March 2012 14:00'
-                ),
-                
-                array(
-                    id => 4,
-                    name => 'Saturday 11th March 2012 19:00'
-                )
-                
-            ),
-            
-            2 => array(
-                array(
-                    id => 5,
-                    name => 'Thursday 9th April 2012 19:00'
-                ),
-                
-                array(
-                    id => 6,
-                    name => 'Friday 10th April 2012 19:00'
-                ),
-                
-                array(
-                    id => 7,
-                    name => 'Saturday 11th April 2012 14:00'
-                ),
-                
-                array(
-                    id => 8,
-                    name => 'Saturday 11th April 2012 19:00'
-                )
-                
-            )
-        );
         
         
         switch($_SERVER['REQUEST_METHOD']) {
@@ -80,18 +32,25 @@ class performances {
             
             $prog = $this->context->getSessionVar('progress');
             
-            
-            
             if($prog['show_id'] == "" || $prog['show_id'] == "0") {
-                print_r($prog);
                  $this->context->returnSuccess(array());
                  die();
             }
+            
+            $q = PerformanceQuery::create()->filterByShowId($prog['show_id']);
+            
+            $data = $q->find()->toArray();
+            
 
-            $data = $this->dummyData[$prog['show_id']];
-            
-            
-            if($data != "") {
+            if(count($data) > 0) {
+                
+                foreach($data as $i => $v) {
+                    foreach($v as $k => $l) {
+                        if($k === 'name') {
+                            $data[$i][$k] = date('l jS F Y g:ia', strtotime($l));
+                        }
+                    }
+                }
                 
                 $this->context->returnSuccess($data);
             }else{

@@ -1,4 +1,16 @@
 {
+    "/stub" : {
+        "module" : "stub",
+        "action" : "verbHandler",
+        "secure" : false
+    },
+    
+    "/order" : {
+        "module" : "orderMake",
+        "action" : "verbHandler",
+        "secure" : false
+    },
+    
     "/login" : {
         "module" : "admin",
         "action" : "login",

@@ -6,11 +6,13 @@
         
         url: "/api.php/seats",
         
-        convertToRows: function() {
+        convertToRows: function(seats) {
             
             var rows = {};
             
-            this.each(function(seat) {
+            var run = seats || this.models;
+            
+            _.each(run, function(seat) {
                 
                 if(!rows.hasOwnProperty(seat.get('row'))) {
                     
@@ -67,6 +69,8 @@
         //whether they have added in any single seat gaps within their own
         //selection and between another order.  This will only have row scope,
         //ie it won't check multiple rows
+        
+        //TO DO check against other bookings
         hasGaps: function() {
             
             var selected = this.getSelectedSeats();

@@ -38,9 +38,10 @@ class PerformanceTableMap extends TableMap
 		$this->setPackage('simply');
 		$this->setUseIdGenerator(true);
 		// columns
-		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('TITLE', 'Title', 'VARCHAR', true, 255, null);
-		$this->addColumn('OCCURS', 'Occurs', 'TIMESTAMP', true, null, null);
+		$this->addPrimaryKey('ID', 'id', 'INTEGER', true, null, null);
+		$this->addForeignKey('SHOWID', 'showId', 'INTEGER', 'show', 'ID', false, null, null);
+		$this->addForeignKey('VENUEID', 'venueId', 'INTEGER', 'venue', 'ID', false, null, null);
+		$this->addColumn('NAME', 'name', 'TIMESTAMP', true, null, null);
 		// validators
 	} // initialize()
 
@@ -49,6 +50,11 @@ class PerformanceTableMap extends TableMap
 	 */
 	public function buildRelations()
 	{
+		$this->addRelation('Show', 'Show', RelationMap::MANY_TO_ONE, array('showId' => 'id', ), null, null);
+		$this->addRelation('Venue', 'Venue', RelationMap::MANY_TO_ONE, array('venueId' => 'id', ), null, null);
+		$this->addRelation('PerformanceToTicketType', 'TicketType', RelationMap::ONE_TO_MANY, array('id' => 'performanceId', ), null, null, 'PerformanceToTicketTypes');
+		$this->addRelation('PerformanceToAvailability', 'SeatAvailability', RelationMap::ONE_TO_MANY, array('id' => 'performanceId', ), null, null, 'PerformanceToAvailabilitys');
+		$this->addRelation('PerformanceToOrder', 'Order', RelationMap::ONE_TO_MANY, array('id' => 'performanceId', ), null, null, 'PerformanceToOrders');
 	} // buildRelations()
 
 } // PerformanceTableMap

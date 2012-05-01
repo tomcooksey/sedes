@@ -1,10 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="simply" defaultIdMethod="native">
   
+  <table name="show" phpName="Show">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="name" type="varchar" size="255" required="true" phpName="name" />
+  </table>
+  
   <table name="performance" phpName="Performance">
-    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="title" type="varchar" size="255" required="true" />
-    <column name="occurs" type="timestamp" required="true" />
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="showId" type="integer" phpName="showId" />
+    <column name="venueId" type="integer" phpName="venueId" />
+    <column name="name" type="timestamp" required="true" phpName="name" />
+    <foreign-key foreignTable="show" phpName="Show" refPhpName="ShowToPerformance">
+      <reference local="showId" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="venue" phpName="Venue" refPhpName="VenueToShow">
+      <reference local="venueId" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="venue" phpName="Venue">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="name" type="varchar" phpName="name" />
+    <column name="address" type="varchar" phpName="address" />
+  </table>
+  
+  <table name="ticketType" phpName="TicketType">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="performanceId" type="integer" phpName="performanceId" />
+    <column name="name" type="varchar" phpName="name" />
+    <column name="price" type="integer" phpName="price" />
+    <foreign-key foreignTable="performance" phpName="Performance" refPhpName="PerformanceToTicketType">
+      <reference local="performanceId" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="row" phpName="Row">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id" />
+    <column name="venueId" type="integer" phpName="venueId" />
+    <column name="name" type="varchar" phpName="name" />
+    <foreign-key foreignTable="venue" phpName="Venue" refPhpName="VenueToRow">
+      <reference local="venueId" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="seat" phpName="Seat">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="rowId" type="integer" phpName="rowId" />
+    <column name="name" type="varchar" phpName="name" />
+    <column name="number" type="varchar" phpName="number" />
+    <column name="noSeat" type="boolean" phpName="noSeat" />
+    <foreign-key foreignTable="row" phpName="Row" refPhpName="RowToSeat">
+      <reference local="rowId" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="seatAvailability" phpName="SeatAvailability">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="seatId" type="integer" phpName="seatId" />
+    <column name="performanceId" type="integer" phpName="performanceId" />
+    <column name="forSale" type="boolean" phpName="forSale" />
+    <foreign-key foreignTable="seat" phpName="Seat" refPhpName="SeatToAvailability">
+      <reference local="seatId" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="performance" phpName="Performance" refPhpName="PerformanceToAvailability">
+      <reference local="performanceId" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="order" phpName="Order">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id" />
+    <column name="when" type="timestamp" phpName="when" />
+    <column name="fullName" type="varchar" phpName="fullName" />
+    <column name="email" type="varchar"  phpName="email"/>
+    <column name="phone" type="varchar" phpName="phone" />
+    <column name="performanceId" type="integer" />
+    <foreign-key foreignTable="performance" phpName="Performance" refPhpName="PerformanceToOrder">
+      <reference local="performanceId" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="orderSeat" phpName="OrderSeat">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="seatId" type="integer" phpName="seatId" />
+    <column name="orderId" type="integer" phpName="orderId" />
+    <foreign-key foreignTable="seat" phpName="Seat" refPhpName="SeatToOrder">
+      <reference local="seatId" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="order" phpName="Order" refPhpName="OrderToSeatOrder">
+      <reference local="orderId" foreign="id"/>
+    </foreign-key>
+  </table>
+  
+  <table name="orderTicketType" phpName="OrderTicketType">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="typeId" type="integer" phpName="typeId" />
+    <column name="orderId" type="integer" phpName="orderId" />
+    <column name="quantity" type="integer" phpName="quantity" />
+    <foreign-key foreignTable="ticketType" phpName="TicketType" refPhpName="TicketTypeToOrderTicketType">
+      <reference local="typeId" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="order" phpName="Order" refPhpName="OrderToTicketType">
+      <reference local="orderId" foreign="id"/>
+    </foreign-key>
   </table>
   
 </database>

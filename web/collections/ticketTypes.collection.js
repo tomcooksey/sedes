@@ -16,6 +16,20 @@
             
             return totalCount;
             
+        },
+        
+        getOrderedTickets: function() {
+        
+            var ordered = [];
+            
+            this.each(function(type) {
+                if(type.get('quantity') > 0) {
+                    ordered.push(type);
+                }
+            });
+            
+            return ordered;
+            
         }
             
          

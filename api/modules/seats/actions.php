@@ -26,9 +26,6 @@ class seats {
     }
     
     function get() {
-        //Manually feed in the seats for now
-        $rows = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j');
-        
         $prog = $this->context->getSessionVar('progress');
         $perfId = $prog['performance_id'];
         
@@ -39,76 +36,45 @@ class seats {
         if(!$chosen) {
             $chosen = array();
         }
+  
+        $q = new RowQuery();
+        //Hardcoded Venue ID for now
+        $q->filterByVenueId(1);
+        $q = $q->find()->toArray();
         
-        $unique = 1;
+        $avail = new SeatAvailabilityQuery();
+        $avail = $avail->find()->toArray();
         
-        $buildup = array();
+        $a = array();
         
-        for($x=count($rows) - 1; $x>=0; $x-=1) {
+        foreach($avail as $k => $av) {
             
-            $seatNumber = 1;
+            $a[$av['seatId']] = $av['forSale'];
             
-            for($y=1; $y<27; $y+=1) {
-                $forSale = true;
-                
-                $selected = in_array($unique, $chosen, false);
-                
-                if($rows[$x] == 'j') {
-                    if($seatNumber < 5) {
-                        $forSale = false;
-                    }
-                    
-                    if($y < 4 || $y===26 || $y===8) {
-                        
-                        array_push($buildup, array(
-                            id => $unique,
-                            row => $rows[$x],
-                            number => '',
-                            booked => false,
-                            forSale => false,
-                            selected => $selected,
-                            noSeat => true
-                        ));
-                    }else{
-                        
-                        array_push($buildup, array(
-                            id => $unique,
-                            row => $rows[$x],
-                            number => $seatNumber,
-                            booked => false,
-                            forSale => $forSale,
-                            selected => $selected
-                        ));
-                        $seatNumber +=1;
-                        
-                    }
-                }else{
-                    
-                    $booked = false;
-                    
-                    if($rows[$x] == 'e') {
-                        if($seatNumber > 5 && $seatNumber < 22) {
-                            $booked = true;
-                        }
-                    }
-                    array_push($buildup, array(
-                        id => $unique,
-                        row => $rows[$x],
-                        number => $seatNumber,
-                        booked => $booked,
-                        forSale => $forSale,
-                        selected => $selected
-                    ));
-                   
-                    $seatNumber +=1;
-                   
-                }
-                 $unique +=1;
-                
-            }
         }
         
-        $this->context->returnSuccess($buildup);
+        $seats = array();
+        
+        foreach($q as $k => $row) {
+            $rowSeats = new SeatQuery();
+            $rowSeats->filterByRowId($row['id']);
+            $rowSeats = $rowSeats->find()->toArray();
+            
+            foreach($rowSeats as $k2 => $seat) {
+                $seat['row'] = $row['name'];
+                
+                unset($seat['name']);
+                unset($seat['rowId']);
+                
+                $seat['forSale'] = $a[$seat['id']];
+                
+                array_push($seats, $seat);
+            }
+            
+            
+        }
+        
+        $this->context->returnSuccess($seats);
     }
     
     function put() {

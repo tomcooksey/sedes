@@ -9,13 +9,6 @@ class shows {
     
     function verbHandler() {
         
-        $this->dummyData = array(
-            array(
-                id => 1,
-                name => "Street car named desire"
-            )
-        );
-        
         switch($_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 $this->get();
@@ -36,15 +29,20 @@ class shows {
         
         if(!$this->context->getGETVal('id')) {
             
-            if(count($this->dummyData) === 1) {
+            $q = new ShowQuery();
+            
+            $q = $q->find()->toArray();
+
+            if(count($q) === 1) {
+
                 $prog = $this->context->getSessionVar('progress');
-                $prog['show_id'] = $this->dummyData[0]['id'];
+                $prog['show_id'] = $q[0]['id'];
                 $this->context->setSessionVar('progress', $prog);
             }
             
             
-            if($this->dummyData != "") {
-                $this->context->returnSuccess($this->dummyData);
+            if(count($q) > 0) {
+                $this->context->returnSuccess($q);
             }else{
                 $this->context->error("No shows found");
             }

@@ -13,6 +13,9 @@
             //Dynamically create the options list from the collection
             var choices = [], obj;
             simply.shows.each(function(show) {
+                
+                console.log(show);
+                
                 obj = {
                     value: show.get('id'),
                     text: show.get('name')
@@ -21,6 +24,8 @@
                 choices.push(obj);
                 
             }, this);
+            
+            
             
             this.form.addField( new simply.fields.radio({
                 label: "Choose show",

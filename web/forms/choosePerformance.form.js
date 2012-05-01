@@ -15,6 +15,9 @@
             var choices = [], obj;
             
             simply.performances.each(function(performance) {
+                
+
+                
                 obj = {
                     value: performance.get('id'),
                     text: performance.get('name')

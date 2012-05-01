@@ -65,6 +65,7 @@
 			simply.ticketTypes = new simply.collections.ticketTypes();
 			simply.performances = new simply.collections.performances();
 			simply.personalDetails = new simply.models.personalDetails();
+			simply.seats = new simply.collections.seats();
 	
 			//The bootstrapper blocks the app starting whilst it
 			//fulfills each dependency asyncronously.  This is because
@@ -76,11 +77,13 @@
 			dispatch.addDependency(simply.ticketTypes);
 			dispatch.addDependency(simply.performances);
 			dispatch.addDependency(simply.personalDetails);
+			dispatch.addDependency(simply.seats);
 			
 			dispatch.start(function() {
 			    new simply.routers.main();
 			    Backbone.history.start();
 			}, function() {
+
 			    //Create a new viewport
 			    errorViewport = new simply.views.viewport();
 			    errorViewport.loadingText.addClass('loadingError');
@@ -112,6 +115,7 @@
 	<script src="models/ticketType.model.js"></script>
 	<script src="models/seat.model.js"></script>
 	<script src="models/personalDetails.model.js"></script>
+	<script src="models/orderSummary.model.js"></script>
         
         <!--collections-->
         <script src="collections/stages.collection.js"></script>
@@ -151,6 +155,8 @@
         
         <!--templates-->
 	<script src="templates/simply.template.js"></script>
+	
+	<script src="lib/tempus.js"></script>
         
     </head>
     
@@ -171,8 +177,8 @@
 	
 	<section class="app">
 	    
-	    <h1 id="show_name"> </h1>
-	    <h2 id="performance_name"> </h2>
+	    <h1 id="show_name">&nbsp;</h1>
+	    <h2 id="performance_name">&nbsp;</h2>
 	    
 	    <div id="orderProgress">
 		<div class="bar"></div>

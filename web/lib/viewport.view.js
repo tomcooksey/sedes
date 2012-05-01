@@ -61,17 +61,17 @@
         },
         
         setShowName: function() {
-            var currentShow = simply.shows.get(simply.session.get('show_id'));
             
-            if(currentShow !== undefined) {
+            var currentShow = simply.shows.getSelectedShow();
+            
+            if(currentShow !== undefined && currentShow !== null) {
                 this.showTitle.html(currentShow.get('name'));
             }  
         },
         
         setPerformanceName: function() {
-            var currentPerformance = simply.performances.get(simply.session.get('performance_id'));
-            
-            if(currentPerformance !== undefined) {
+            var currentPerformance = simply.performances.getSelectedPerformance();
+            if(currentPerformance !== undefined && currentPerformance !== null) {
                 this.performanceTitle.html(currentPerformance.get('name'));
             }
         },

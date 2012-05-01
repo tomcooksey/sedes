@@ -8,6 +8,8 @@
             _.bindAll(this, 'clickEvent');
             
             this.model.on('change:selected', this.selectedChange, this);
+            
+            
         },
         
         events: {
@@ -15,6 +17,8 @@
         },
         
         clickEvent: function(event) {
+            
+            if(this.options.readonly) return;
             
             event.preventDefault();
             

@@ -55,12 +55,10 @@
                 this.forms.push(form);
                 
             }, this);
+                        
+            simply.seats.hasGaps();
             
-            this.collections.seatMap = new simply.collections.seats();
-            
-            this.collections.seatMap.hasGaps();
-            
-            this.seatMap = new simply.views.seatMap({ collection: this.collections.seatMap });
+            this.seatMap = new simply.views.seatMap({ collection: simply.seats });
             
             var buildUp;
             

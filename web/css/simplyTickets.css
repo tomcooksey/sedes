@@ -369,7 +369,21 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
     margin-top: 159px;
 }
 
-.seatMap .row {
+body td .row {
+    width: auto;
+}
+
+tr.orderFooter td  {
+    border-top: 1px solid #ccc;
+    font-weight: bold;
+}
+
+td.totalCell {
+    text-align: right;
+    padding-right: 5px;
+}
+
+.row {
     display: block;
     height: 30px;
     width: 860px;
@@ -378,7 +392,7 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
 }
 
 
-.seatMap .row .rowId {
+.row .rowId {
     height: 30px;
     width: 30px;
     text-align: center;
@@ -386,31 +400,38 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
     font-size: 12px;
     font-weight: bold;
     float: left;
+    color: #fff;
+    background-color: #000;
+    margin-right: 1px;
 }
 
-body .seatMap .notForSale {
+body .notForSale {
     background-color: #eee;
     color: #ccc;
     cursor: default;
 }
 
-body .seatMap .noSeat {
+body .noSeat {
     background-color: #fff;
     cursor: default;
 }
 
-body .seatMap .takenSeat {
+body .takenSeat {
     background-color: #3ecef7;
     color: #0f9bc3;
     cursor: default;
 }
 
-body .seatMap  .selectedSeat {
+body  .selectedSeat {
     background-color: #f73e9c;
     color: #fff;
 }
 
-.seatMap  .seat {
+body td .seat {
+    cursor: default;
+}
+
+.seat {
     width: 30px;
     height: 30px;
     background: #ccc;
@@ -450,6 +471,48 @@ body .seatMap  .selectedSeat {
     border-top: 1px solid #fd9bcd;
     border-bottom: 1px solid #c6126d;
     color: #fff;
+}
+
+table {
+    border: 0px;
+    margin-top: 20px;
+}
+
+table thead {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+table th {
+    vertical-align: top;
+    text-align: left;
+    width: 200px;
+    padding: 5px;
+}
+
+table td {
+    padding: 5px;
+}
+
+table td ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+table td ul li {
+    display: block;
+    padding: 5px 0px 5px 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+#map {
+    width: 400px;
+    height: 300px;
+    border: 1px solid #000;
+    margin-top: 10px;
 }
 
 footer {

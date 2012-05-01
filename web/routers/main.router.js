@@ -21,7 +21,6 @@
         
         //Sets up page furniture etc
         initialize: function() {
-            
             simply.globalChanging = false;
 
             //Setup the viewport
@@ -30,17 +29,18 @@
             
             this.viewport.setShowName();
             this.viewport.setPerformanceName();
+  
             
         },
         
-        setProgress: function(stage) {
+        setProgress: function(stage) {  
             simply.session.save({current_stage: stage}, {wait: true});
         },
         
         //Stage 1a
         choosePerformance: function() {
+     
             this.viewport.clean();
-            
             if(simply.shows.length > 1 && !simply.session.get('show_id')) {
                 location.hash = 'choose-show';
             }else{
@@ -84,6 +84,8 @@
         payment: function() {
             this.viewport.clean();
             this.setProgress(4);
+            
+            this.viewport.addView(new simply.views.checkout());
         },
         
         //Stage 5

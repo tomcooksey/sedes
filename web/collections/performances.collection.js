@@ -8,6 +8,11 @@
         
         initialize: function() {
             
+        },
+        
+        getSelectedPerformance: function() {
+            
+            return this.get(simply.session.get('performance_id'));
         }
     });
     

@@ -62,29 +62,35 @@ class ticketTypes {
         
         $ticketsSelected = $this->context->getSessionVar('ticketsSelected');
         
+        $prog = $this->context->getSessionVar('progress');
+        
+        $perfId = $prog['performance_id'];
+        
         if(!$ticketsSelected) {
             $ticketsSelected = array();
         }
         
+        if(!$ticketsSelected[$perfId]) {
+            $ticketsSelected[$perfId] = array();
+        }
+        
         if(!$this->context->getGETVal('id')) {
             
-            $prog = $this->context->getSessionVar('progress');
-            
-            if($prog['performance_id'] == "" || $prog['performance_id'] == "0") {
+            if($perfId == "" || $perfId == "0") {
                  $this->context->returnSuccess(array());
                  die();
             }
             
-           
-            $data = $this->dummyData[$prog['performance_id']];
-            
-            
-            if($data != "") {
+            $q = new TicketTypeQuery();
+            $q->filterByPerformanceId($perfId);
+            $data = $q->find()->toArray();
+
+            if(count($data)) {
                 
                 //Add in the quantities
                 foreach($data as $k => $v) {
                     
-                    $data[$k]['quantity'] = $ticketsSelected[$v['id']] ? $ticketsSelected[$v['id']] : 0;
+                    $data[$k]['quantity'] = $ticketsSelected[$perfId][$v['id']] ? $ticketsSelected[$perfId][$v['id']] : 0;
                 }
                 
                 $this->context->returnSuccess($data);
@@ -98,20 +104,28 @@ class ticketTypes {
     }
     
     function put() {
-        //Getting a specific
+
         $id = $this->context->getGETVal('id');
         
         $ticketsSelected = $this->context->getSessionVar('ticketsSelected');
+        
+        $prog = $this->context->getSessionVar('progress');
+        
+        $perfId = $prog['performance_id'];
         
         if(!$ticketsSelected) {
             $ticketsSelected = array();
         }
         
-        if(!$ticketsSelected[$id]) {
-            $ticketsSelected[$id] = array();
+        if(!$ticketsSelected[$perfId]) {
+            $ticketsSelected[$perfId] = array();
         }
         
-        $ticketsSelected[$id] = $this->context->headerVals['quantity'];
+        if(!$ticketsSelected[$perfId][$id]) {
+            $ticketsSelected[$perfId][$id] = array();
+        }
+        
+        $ticketsSelected[$perfId][$id] = $this->context->headerVals['quantity'];
         
         $this->context->setSessionVar('ticketsSelected', $ticketsSelected);
         

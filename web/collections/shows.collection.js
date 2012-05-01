@@ -6,6 +6,11 @@
         
         initialize: function() {
             
+        },
+        
+        getSelectedShow: function() {
+            return this.get(simply.session.get('show_id'));
+            
         }
     });
     

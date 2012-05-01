@@ -8,11 +8,11 @@
     errorCallBack = null,
     bootstrapper = false
     
-    var completion = function () {
+    var completion = function (atts) {
         completedCount +=1;
     }
     
-    var error =  function() {
+    var error =  function(atts) {
         fatal = true;
     }
     
@@ -22,6 +22,7 @@
             setTimeout(checker, 100);
         }else{
             if(fatal) {
+                
                 if(typeof errorCallBack === 'function') {
                     errorCallBack.apply();
                 }else{
@@ -55,9 +56,9 @@
             successCallback = sCallback;
             errorCallBack = eCallback;
             
-            for(var dependency in dependencies) {
+            for(var dependency in dependencies) {  
                 dependencies[dependency].fetch.call(dependencies[dependency], {'success': completion,
-                                                     'error': error});
+                                                     'error': error, 'add' : true});
             }
             
             

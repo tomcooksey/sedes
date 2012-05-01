@@ -57,7 +57,6 @@
         },
         
         getVal: function() {
-            console.log('getting val');
             return this.val;
         }
     });
