@@ -17,6 +17,17 @@
             this.table.append(row);
         },
         
+        events: {
+            'click .nextButton' : 'next'  
+        },
+        
+        next: function() {
+            this.form.submit();
+            
+            
+            
+        },
+        
         renderInfo: function() {
             
             //Render the table
@@ -55,6 +66,10 @@
             
             var ticketsChosen = simply.ticketTypes.getOrderedTickets();
             
+            var wrapper = $(this.make('div'));
+            
+            this.form = $(simply.templates.paypal());
+            
             //TO DO this should be a template
             var ticketsList = $(this.make('table'));
             
@@ -66,7 +81,8 @@
             
             ticketsList.append(head);
             
-            var orderTotal = 0, ticketsTotal = 0;
+            this.orderTotal = 0;
+            var ticketsTotal = 0;
             
             for(var x=0; x<ticketsChosen.length; x+=1) {
                 
@@ -85,17 +101,16 @@
                 
                 ticketsList.append(tr);
                 
-                orderTotal += rowTotal;
+                this.orderTotal += rowTotal;
             }
             
             //TO DO this should be in an order summary model
             var bookingFee = Math.round((ticketsTotal * 0.5) * 100) / 100;
-            orderTotal = Math.round(orderTotal * 100) / 100;
-            
+            this.orderTotal = Math.round(this.orderTotal * 100) / 100;
             
             var endRow = $(this.make('tr', {class: 'orderFooter'}));
             endRow.append(this.make('td', {'colspan': 3, class: 'totalCell'}, 'Sub Total'));
-            endRow.append(this.make('td', {}, '&pound;' + orderTotal));
+            endRow.append(this.make('td', {}, '&pound;' + this.orderTotal));
             
             ticketsList.append(endRow);
             
@@ -105,16 +120,35 @@
             
             ticketsList.append(feeRow);
             
+            var grandTotal = bookingFee + this.orderTotal;
+            
             var totalRow = $(this.make('tr', {class: 'orderFooter'}));
             totalRow.append(this.make('td', {'colspan': 3, class: 'totalCell'}, 'Total'));
-            totalRow.append(this.make('td', {}, '&pound;' + (bookingFee + orderTotal)));
+            totalRow.append(this.make('td', {}, '&pound;' + grandTotal));
+  
+            
+            this.form.append(this.make('input', { type: 'hidden', value: grandTotal, name: 'amount'}));
+            this.form.append(this.make('input', { type: 'hidden', value: 'Simply Theatre Tickets', name: 'item_name'}));
+            this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/#complete', name: 'return'}));
+            this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/notfiy.php', name: 'notify_url'}));
+            this.form.append(this.make('input', { type: 'hidden', value: 'goliver1984@gmail.com', name: 'business'}));
+            
+            this.$el.append(this.form);
             
             ticketsList.append(totalRow);
             
-            
             this.addRow('Tickets', ticketsList);
             
-            this.$el.html(this.table);
+            wrapper.append(this.table);
+            
+            var nextButtonWrap = $(this.make('div', {class: 'buttonWrapper nextButton'}));
+            var nextButton = $(this.make('button', {}, 'Next'));
+            
+            nextButtonWrap.append(nextButton);
+            
+            wrapper.append(nextButtonWrap);
+            
+            this.$el.html(wrapper);
             
         },
         

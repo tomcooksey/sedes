@@ -307,6 +307,7 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
 .seatMapHolder {
     overflow: auto;
     display: none;
+    position: relative;
 }
 
 .seatMap {
@@ -528,4 +529,22 @@ footer {
 
 footer a {
     color: #f73e9c;
+}
+
+.clock {
+    position: absolute;
+    top: 30px;
+    right: 22px;
+    border: 1px solid #000;
+    padding: 10px;
+    font-size: 10px;
+    text-align: center;
+    
+}
+
+.clock .clockTime {
+    display: block;
+    font-size: 26px;
+    text-align: center;
+    margin-top: 10px;
 }

@@ -74,6 +74,7 @@
     <column name="fullName" type="varchar" phpName="fullName" />
     <column name="email" type="varchar"  phpName="email"/>
     <column name="phone" type="varchar" phpName="phone" />
+    <column name="fulfilled" type="boolean" phpName="fulfilled" />
     <column name="performanceId" type="integer" />
     <foreign-key foreignTable="performance" phpName="Performance" refPhpName="PerformanceToOrder">
       <reference local="performanceId" foreign="id"/>

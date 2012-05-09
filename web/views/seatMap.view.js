@@ -5,7 +5,7 @@
         
         initialize: function(options) {
             
-            _.bindAll(this, 'renderSeats');
+            _.bindAll(this);
             //These can lazy load because we don't need them yet
             this.collection.fetch({success: this.renderSeats});
             this.seatMap = $(this.make("div", { "class": "seatMap"}));
@@ -46,7 +46,7 @@
                     rowContainer.append(this.make('div', {"class" : "rowId"}, row));
                     
                     for(seat in rows[row]) {
-                        rowView = new simply.views.seat({model: rows[row][seat], collection: this.collection});
+                        rowView = new simply.views.seat({model: rows[row][seat], collection: this.collection, seatMap: this});
                         rowContainer.append(rowView.render());
                     }
                     
@@ -58,7 +58,15 @@
                 this.renderStage();
                 this.renderKey();
                 this.renderButtons();
-            
+                
+                if(this.collection.getSelectedSeats().length > 0) {
+                
+                    $.ajax({
+                       url: '/api.php/order',
+                       success: this.handleOrder,
+                       dataType: 'json'
+                   });
+                }
             });
         },
         
@@ -121,6 +129,10 @@
             }
         },
         
+        handleOrder: function(data) {
+            this.clock(data.timestamp);  
+        },
+        
         show: function() {
             this.$el.slideDown('fast');  
         },
@@ -129,6 +141,73 @@
             
             return this.el;
         },
+        
+        clock: function(timestamp) {
+            
+            this.timestamp = timestamp + (60 * 10);
+            
+            if(!this.clockElement) {
+                this.clockElement = $(simply.templates.clock());
+                this.$el.append(this.clockElement);
+                
+                this.clockTimeElement = $('.clockTime');
+                
+                this.clockElement.fadeIn();
+                
+                this.startTimer();
+            }
+            
+            
+        },
+        
+        startTimer: function() {
+            var that = this;
+            
+            var timeremaining =  this.timestamp - (Tempus.now() / 1000);
+            
+            if(this.collection.getSelectedSeats().length === 0) {
+                this.clockElement.fadeOut();
+                this.clockElement.remove();
+                this.clockElement = null;
+                return;
+            }
+            
+            if(timeremaining > 0) {
+                
+                //Workout how many mins/secs
+                mins = Math.floor(timeremaining / 60);
+                secs = Math.floor(timeremaining % 60);
+                
+                secs = secs + '';
+                if(secs.length === 1) {
+                    secs = '0' + secs;
+                }
+                
+                mins = mins + '';
+                if(mins.length === 1) {
+                    mins = '0' + mins;
+                }
+                
+                this.clockTimeElement.html(mins + ':' + secs);
+                
+                setTimeout(function() {
+                    that.startTimer.apply(that);
+                }, 1000);
+                
+            }else{
+                
+                $.ajax({
+                    url: '/api.php/killOrder',
+                    dataType: 'json',
+                    success: function() { location.hash = ''}
+                });
+                
+            }
+            
+        },
+        
+        
+        
         
         //This function removes any amount of seats over the amount allowed
         adjustBookedSeats: function() {

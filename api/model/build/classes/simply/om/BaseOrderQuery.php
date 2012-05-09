@@ -11,6 +11,7 @@
  * @method     OrderQuery orderByfullName($order = Criteria::ASC) Order by the fullName column
  * @method     OrderQuery orderByemail($order = Criteria::ASC) Order by the email column
  * @method     OrderQuery orderByphone($order = Criteria::ASC) Order by the phone column
+ * @method     OrderQuery orderByfulfilled($order = Criteria::ASC) Order by the fulfilled column
  * @method     OrderQuery orderByPerformanceid($order = Criteria::ASC) Order by the performanceId column
  *
  * @method     OrderQuery groupByid() Group by the id column
@@ -18,6 +19,7 @@
  * @method     OrderQuery groupByfullName() Group by the fullName column
  * @method     OrderQuery groupByemail() Group by the email column
  * @method     OrderQuery groupByphone() Group by the phone column
+ * @method     OrderQuery groupByfulfilled() Group by the fulfilled column
  * @method     OrderQuery groupByPerformanceid() Group by the performanceId column
  *
  * @method     OrderQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -44,6 +46,7 @@
  * @method     Order findOneByfullName(string $fullName) Return the first Order filtered by the fullName column
  * @method     Order findOneByemail(string $email) Return the first Order filtered by the email column
  * @method     Order findOneByphone(string $phone) Return the first Order filtered by the phone column
+ * @method     Order findOneByfulfilled(boolean $fulfilled) Return the first Order filtered by the fulfilled column
  * @method     Order findOneByPerformanceid(int $performanceId) Return the first Order filtered by the performanceId column
  *
  * @method     array findByid(int $id) Return Order objects filtered by the id column
@@ -51,6 +54,7 @@
  * @method     array findByfullName(string $fullName) Return Order objects filtered by the fullName column
  * @method     array findByemail(string $email) Return Order objects filtered by the email column
  * @method     array findByphone(string $phone) Return Order objects filtered by the phone column
+ * @method     array findByfulfilled(boolean $fulfilled) Return Order objects filtered by the fulfilled column
  * @method     array findByPerformanceid(int $performanceId) Return Order objects filtered by the performanceId column
  *
  * @package    propel.generator.simply.om
@@ -140,7 +144,7 @@ abstract class BaseOrderQuery extends ModelCriteria
 	 */
 	protected function findPkSimple($key, $con)
 	{
-		$sql = 'SELECT `ID`, `WHEN`, `FULLNAME`, `EMAIL`, `PHONE`, `PERFORMANCEID` FROM `order` WHERE `ID` = :p0';
+		$sql = 'SELECT `ID`, `WHEN`, `FULLNAME`, `EMAIL`, `PHONE`, `FULFILLED`, `PERFORMANCEID` FROM `order` WHERE `ID` = :p0';
 		try {
 			$stmt = $con->prepare($sql);
 			$stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -375,6 +379,32 @@ abstract class BaseOrderQuery extends ModelCriteria
 			}
 		}
 		return $this->addUsingAlias(OrderPeer::PHONE, $phone, $comparison);
+	}
+
+	/**
+	 * Filter the query on the fulfilled column
+	 *
+	 * Example usage:
+	 * <code>
+	 * $query->filterByfulfilled(true); // WHERE fulfilled = true
+	 * $query->filterByfulfilled('yes'); // WHERE fulfilled = true
+	 * </code>
+	 *
+	 * @param     boolean|string $fulfilled The value to use as filter.
+	 *              Non-boolean arguments are converted using the following rules:
+	 *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+	 *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+	 *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+	 * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+	 *
+	 * @return    OrderQuery The current query, for fluid interface
+	 */
+	public function filterByfulfilled($fulfilled = null, $comparison = null)
+	{
+		if (is_string($fulfilled)) {
+			$fulfilled = in_array(strtolower($fulfilled), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+		}
+		return $this->addUsingAlias(OrderPeer::FULFILLED, $fulfilled, $comparison);
 	}
 
 	/**

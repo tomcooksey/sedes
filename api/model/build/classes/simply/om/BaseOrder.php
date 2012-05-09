@@ -61,6 +61,12 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 	protected $phone;
 
 	/**
+	 * The value for the fulfilled field.
+	 * @var        boolean
+	 */
+	protected $fulfilled;
+
+	/**
 	 * The value for the performanceid field.
 	 * @var        int
 	 */
@@ -186,6 +192,16 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 	}
 
 	/**
+	 * Get the [fulfilled] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getfulfilled()
+	{
+		return $this->fulfilled;
+	}
+
+	/**
 	 * Get the [performanceid] column value.
 	 * 
 	 * @return     int
@@ -298,6 +314,34 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 	} // setphone()
 
 	/**
+	 * Sets the value of the [fulfilled] column.
+	 * Non-boolean arguments are converted using the following rules:
+	 *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+	 *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+	 * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+	 * 
+	 * @param      boolean|integer|string $v The new value
+	 * @return     Order The current object (for fluent API support)
+	 */
+	public function setfulfilled($v)
+	{
+		if ($v !== null) {
+			if (is_string($v)) {
+				$v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+			} else {
+				$v = (boolean) $v;
+			}
+		}
+
+		if ($this->fulfilled !== $v) {
+			$this->fulfilled = $v;
+			$this->modifiedColumns[] = OrderPeer::FULFILLED;
+		}
+
+		return $this;
+	} // setfulfilled()
+
+	/**
 	 * Set the value of [performanceid] column.
 	 * 
 	 * @param      int $v new value
@@ -358,7 +402,8 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 			$this->fullname = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->email = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->phone = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->performanceid = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->fulfilled = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->performanceid = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -367,7 +412,7 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 				$this->ensureConsistency();
 			}
 
-			return $startcol + 6; // 6 = OrderPeer::NUM_HYDRATE_COLUMNS.
+			return $startcol + 7; // 7 = OrderPeer::NUM_HYDRATE_COLUMNS.
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Order object", $e);
@@ -644,6 +689,9 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 		if ($this->isColumnModified(OrderPeer::PHONE)) {
 			$modifiedColumns[':p' . $index++]  = '`PHONE`';
 		}
+		if ($this->isColumnModified(OrderPeer::FULFILLED)) {
+			$modifiedColumns[':p' . $index++]  = '`FULFILLED`';
+		}
 		if ($this->isColumnModified(OrderPeer::PERFORMANCEID)) {
 			$modifiedColumns[':p' . $index++]  = '`PERFORMANCEID`';
 		}
@@ -672,6 +720,9 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 						break;
 					case '`PHONE`':
 						$stmt->bindValue($identifier, $this->phone, PDO::PARAM_STR);
+						break;
+					case '`FULFILLED`':
+						$stmt->bindValue($identifier, (int) $this->fulfilled, PDO::PARAM_INT);
 						break;
 					case '`PERFORMANCEID`':
 						$stmt->bindValue($identifier, $this->performanceid, PDO::PARAM_INT);
@@ -850,6 +901,9 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 				return $this->getphone();
 				break;
 			case 5:
+				return $this->getfulfilled();
+				break;
+			case 6:
 				return $this->getPerformanceid();
 				break;
 			default:
@@ -886,7 +940,8 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 			$keys[2] => $this->getfullName(),
 			$keys[3] => $this->getemail(),
 			$keys[4] => $this->getphone(),
-			$keys[5] => $this->getPerformanceid(),
+			$keys[5] => $this->getfulfilled(),
+			$keys[6] => $this->getPerformanceid(),
 		);
 		if ($includeForeignObjects) {
 			if (null !== $this->aPerformance) {
@@ -945,6 +1000,9 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 				$this->setphone($value);
 				break;
 			case 5:
+				$this->setfulfilled($value);
+				break;
+			case 6:
 				$this->setPerformanceid($value);
 				break;
 		} // switch()
@@ -976,7 +1034,8 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 		if (array_key_exists($keys[2], $arr)) $this->setfullName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setemail($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setphone($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setPerformanceid($arr[$keys[5]]);
+		if (array_key_exists($keys[5], $arr)) $this->setfulfilled($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setPerformanceid($arr[$keys[6]]);
 	}
 
 	/**
@@ -993,6 +1052,7 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 		if ($this->isColumnModified(OrderPeer::FULLNAME)) $criteria->add(OrderPeer::FULLNAME, $this->fullname);
 		if ($this->isColumnModified(OrderPeer::EMAIL)) $criteria->add(OrderPeer::EMAIL, $this->email);
 		if ($this->isColumnModified(OrderPeer::PHONE)) $criteria->add(OrderPeer::PHONE, $this->phone);
+		if ($this->isColumnModified(OrderPeer::FULFILLED)) $criteria->add(OrderPeer::FULFILLED, $this->fulfilled);
 		if ($this->isColumnModified(OrderPeer::PERFORMANCEID)) $criteria->add(OrderPeer::PERFORMANCEID, $this->performanceid);
 
 		return $criteria;
@@ -1060,6 +1120,7 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 		$copyObj->setfullName($this->getfullName());
 		$copyObj->setemail($this->getemail());
 		$copyObj->setphone($this->getphone());
+		$copyObj->setfulfilled($this->getfulfilled());
 		$copyObj->setPerformanceid($this->getPerformanceid());
 
 		if ($deepCopy && !$this->startCopy) {
@@ -1553,6 +1614,7 @@ abstract class BaseOrder extends BaseObject  implements Persistent
 		$this->fullname = null;
 		$this->email = null;
 		$this->phone = null;
+		$this->fulfilled = null;
 		$this->performanceid = null;
 		$this->alreadyInSave = false;
 		$this->alreadyInValidation = false;

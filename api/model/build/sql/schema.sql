@@ -146,6 +146,7 @@ CREATE TABLE `order`
 	`fullName` VARCHAR(255),
 	`email` VARCHAR(255),
 	`phone` VARCHAR(255),
+	`fulfilled` TINYINT(1),
 	`performanceId` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `order_FI_1` (`performanceId`),

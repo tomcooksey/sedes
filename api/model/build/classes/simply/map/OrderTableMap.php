@@ -43,6 +43,7 @@ class OrderTableMap extends TableMap
 		$this->addColumn('FULLNAME', 'fullName', 'VARCHAR', false, 255, null);
 		$this->addColumn('EMAIL', 'email', 'VARCHAR', false, 255, null);
 		$this->addColumn('PHONE', 'phone', 'VARCHAR', false, 255, null);
+		$this->addColumn('FULFILLED', 'fulfilled', 'BOOLEAN', false, 1, null);
 		$this->addForeignKey('PERFORMANCEID', 'Performanceid', 'INTEGER', 'performance', 'ID', false, null, null);
 		// validators
 	} // initialize()

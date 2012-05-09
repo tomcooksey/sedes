@@ -26,6 +26,9 @@ class seats {
     }
     
     function get() {
+        
+        //TO DO Add booked and selected seats
+        
         $prog = $this->context->getSessionVar('progress');
         $perfId = $prog['performance_id'];
         
@@ -36,6 +39,27 @@ class seats {
         if(!$chosen) {
             $chosen = array();
         }
+        
+        $orderObj = new OrderQuery();
+        $orderObj = $orderObj->filterByPerformanceId($prog['performance_id']);
+        $orderObj = $orderObj->find();
+        
+        $bookedSeats = array();
+
+        if(count($orderObj)) {
+            foreach($orderObj as $order) {
+                $orderSeats = new OrderSeatQuery();
+                $orderSeats->filterByOrderId($order->getId());
+                $orderSeats = $orderSeats->find();
+                
+                if(count($orderSeats)) {
+                    foreach($orderSeats as $os) {
+                        array_push($bookedSeats, $os->getSeatId());
+                    }
+                }
+            }
+        }
+        
   
         $q = new RowQuery();
         //Hardcoded Venue ID for now
@@ -67,6 +91,17 @@ class seats {
                 unset($seat['rowId']);
                 
                 $seat['forSale'] = $a[$seat['id']];
+                
+                if(in_array($seat['id'], $chosen)) {
+                    $seat['selected'] = true;
+                }
+                
+                if(in_array($seat['id'], $bookedSeats) && !$seat['selected']) {
+                    $seat['booked'] = true;
+                }
+                
+                
+                
                 
                 array_push($seats, $seat);
             }

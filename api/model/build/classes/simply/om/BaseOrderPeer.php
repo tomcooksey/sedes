@@ -26,13 +26,13 @@ abstract class BaseOrderPeer {
 	const TM_CLASS = 'OrderTableMap';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-	const NUM_HYDRATE_COLUMNS = 6;
+	const NUM_HYDRATE_COLUMNS = 7;
 
 	/** the column name for the ID field */
 	const ID = 'order.ID';
@@ -48,6 +48,9 @@ abstract class BaseOrderPeer {
 
 	/** the column name for the PHONE field */
 	const PHONE = 'order.PHONE';
+
+	/** the column name for the FULFILLED field */
+	const FULFILLED = 'order.FULFILLED';
 
 	/** the column name for the PERFORMANCEID field */
 	const PERFORMANCEID = 'order.PERFORMANCEID';
@@ -71,12 +74,12 @@ abstract class BaseOrderPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	protected static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('id', 'when', 'fullName', 'email', 'phone', 'Performanceid', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'when', 'fullName', 'email', 'phone', 'performanceid', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::WHEN, self::FULLNAME, self::EMAIL, self::PHONE, self::PERFORMANCEID, ),
-		BasePeer::TYPE_RAW_COLNAME => array ('ID', 'WHEN', 'FULLNAME', 'EMAIL', 'PHONE', 'PERFORMANCEID', ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'when', 'fullName', 'email', 'phone', 'performanceId', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('id', 'when', 'fullName', 'email', 'phone', 'fulfilled', 'Performanceid', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'when', 'fullName', 'email', 'phone', 'fulfilled', 'performanceid', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::WHEN, self::FULLNAME, self::EMAIL, self::PHONE, self::FULFILLED, self::PERFORMANCEID, ),
+		BasePeer::TYPE_RAW_COLNAME => array ('ID', 'WHEN', 'FULLNAME', 'EMAIL', 'PHONE', 'FULFILLED', 'PERFORMANCEID', ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'when', 'fullName', 'email', 'phone', 'fulfilled', 'performanceId', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -86,12 +89,12 @@ abstract class BaseOrderPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	protected static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('id' => 0, 'when' => 1, 'fullName' => 2, 'email' => 3, 'phone' => 4, 'Performanceid' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'when' => 1, 'fullName' => 2, 'email' => 3, 'phone' => 4, 'performanceid' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WHEN => 1, self::FULLNAME => 2, self::EMAIL => 3, self::PHONE => 4, self::PERFORMANCEID => 5, ),
-		BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'WHEN' => 1, 'FULLNAME' => 2, 'EMAIL' => 3, 'PHONE' => 4, 'PERFORMANCEID' => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'when' => 1, 'fullName' => 2, 'email' => 3, 'phone' => 4, 'performanceId' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('id' => 0, 'when' => 1, 'fullName' => 2, 'email' => 3, 'phone' => 4, 'fulfilled' => 5, 'Performanceid' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'when' => 1, 'fullName' => 2, 'email' => 3, 'phone' => 4, 'fulfilled' => 5, 'performanceid' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WHEN => 1, self::FULLNAME => 2, self::EMAIL => 3, self::PHONE => 4, self::FULFILLED => 5, self::PERFORMANCEID => 6, ),
+		BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'WHEN' => 1, 'FULLNAME' => 2, 'EMAIL' => 3, 'PHONE' => 4, 'FULFILLED' => 5, 'PERFORMANCEID' => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'when' => 1, 'fullName' => 2, 'email' => 3, 'phone' => 4, 'fulfilled' => 5, 'performanceId' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -168,6 +171,7 @@ abstract class BaseOrderPeer {
 			$criteria->addSelectColumn(OrderPeer::FULLNAME);
 			$criteria->addSelectColumn(OrderPeer::EMAIL);
 			$criteria->addSelectColumn(OrderPeer::PHONE);
+			$criteria->addSelectColumn(OrderPeer::FULFILLED);
 			$criteria->addSelectColumn(OrderPeer::PERFORMANCEID);
 		} else {
 			$criteria->addSelectColumn($alias . '.ID');
@@ -175,6 +179,7 @@ abstract class BaseOrderPeer {
 			$criteria->addSelectColumn($alias . '.FULLNAME');
 			$criteria->addSelectColumn($alias . '.EMAIL');
 			$criteria->addSelectColumn($alias . '.PHONE');
+			$criteria->addSelectColumn($alias . '.FULFILLED');
 			$criteria->addSelectColumn($alias . '.PERFORMANCEID');
 		}
 	}

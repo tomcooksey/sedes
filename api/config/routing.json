@@ -11,6 +11,24 @@
         "secure" : false
     },
     
+    "/ipn" : {
+        "module" : "payment",
+        "action" : "ipn",
+        "secure" : false
+    },
+    
+    "/killAllOutstandingOrders" : {
+        "module" : "orderMake",
+        "action" : "killAllOutstandingOrders",
+        "secure" : false
+    },
+    
+    "/killOrder" : {
+        "module" : "orderMake",
+        "action" : "killOrder",
+        "secure" : false
+    },
+    
     "/login" : {
         "module" : "admin",
         "action" : "login",
