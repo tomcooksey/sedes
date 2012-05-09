@@ -52,7 +52,7 @@ class stub {
         $performance = new Performance();
         $performance->setShowId($show_id);
         $performance->setVenueId($venueId);
-        $performance->setName(date('Y-m-d G:i:00'));
+        $performance->setName('2011-06-14 19:45:00');
  
         $performance->save();
         
@@ -63,7 +63,7 @@ class stub {
         $ticketType1 = new TicketType();
         $ticketType1->setPerformanceId($performance_id);
         $ticketType1->setName('Adults');
-        $ticketType1->setPrice('14.00');
+        $ticketType1->setPrice('12.00');
         
         $ticketType1->save();
         
@@ -73,7 +73,73 @@ class stub {
         
         $ticketType2 = new TicketType();
         $ticketType2->setPerformanceId($performance_id);
-        $ticketType2->setName('Children');
+        $ticketType2->setName('Concessions');
+        $ticketType2->setPrice('10.00');
+        
+        $ticketType2->save();
+        
+        $ticket_type_2_id = $ticketType2->getId();
+        
+        //----
+        
+        $performance = new Performance();
+        $performance->setShowId($show_id);
+        $performance->setVenueId($venueId);
+        $performance->setName('2011-06-15 19:45:00');
+ 
+        $performance->save();
+        
+        $performance_id = $performance->getId();
+        
+        echo 'Performance ID: ' . $performance_id . '<br/>';
+        
+        $ticketType1 = new TicketType();
+        $ticketType1->setPerformanceId($performance_id);
+        $ticketType1->setName('Adults');
+        $ticketType1->setPrice('12.00');
+        
+        $ticketType1->save();
+        
+        $ticket_type_1_id = $ticketType1->getId();
+        
+        echo 'Ticket Type 1 ID: ' . $ticket_type_1_id . '<br/>';
+        
+        $ticketType2 = new TicketType();
+        $ticketType2->setPerformanceId($performance_id);
+        $ticketType2->setName('Concessions');
+        $ticketType2->setPrice('10.00');
+        
+        $ticketType2->save();
+        
+        $ticket_type_2_id = $ticketType2->getId();
+        
+        //----
+        
+        $performance = new Performance();
+        $performance->setShowId($show_id);
+        $performance->setVenueId($venueId);
+        $performance->setName('2011-06-16 19:45:00');
+ 
+        $performance->save();
+        
+        $performance_id = $performance->getId();
+        
+        echo 'Performance ID: ' . $performance_id . '<br/>';
+        
+        $ticketType1 = new TicketType();
+        $ticketType1->setPerformanceId($performance_id);
+        $ticketType1->setName('Adults');
+        $ticketType1->setPrice('12.00');
+        
+        $ticketType1->save();
+        
+        $ticket_type_1_id = $ticketType1->getId();
+        
+        echo 'Ticket Type 1 ID: ' . $ticket_type_1_id . '<br/>';
+        
+        $ticketType2 = new TicketType();
+        $ticketType2->setPerformanceId($performance_id);
+        $ticketType2->setName('Concessions');
         $ticketType2->setPrice('10.00');
         
         $ticketType2->save();
