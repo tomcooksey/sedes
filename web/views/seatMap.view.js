@@ -146,6 +146,8 @@
             
             this.timestamp = timestamp + (60 * 10);
             
+            
+            
             if(!this.clockElement) {
                 this.clockElement = $(simply.templates.clock());
                 this.$el.append(this.clockElement);
@@ -163,7 +165,9 @@
         startTimer: function() {
             var that = this;
             
-            var timeremaining =  this.timestamp - (Date.now() / 1000);
+            var DateStamp = new Date();
+            
+            var timeremaining =  this.timestamp - (DateStamp.now() / 1000);
             
             if(this.collection.getSelectedSeats().length === 0) {
                 this.clockElement.fadeOut();
