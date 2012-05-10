@@ -10,7 +10,7 @@
             this.collection.fetch({success: this.renderSeats});
             this.seatMap = $(this.make("div", { "class": "seatMap"}));
             
-            var el = this.make('div', {class: "seatMapHolder"});
+            var el = this.make('div', {"class": "seatMapHolder"});
             
             this.setElement(el);
             

@@ -9,7 +9,7 @@
         
         renderField: function() {
             
-            this.setElement(this.make('div', {class: 'choosePerformance'}));  
+            this.setElement(this.make('div', {"class": 'choosePerformance'}));  
         },
         
         events: {

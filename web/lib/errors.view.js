@@ -9,7 +9,7 @@
             this.$el.append(this.make('h2', {}, 'Ooops...'));
             this.$el.append(this.make('p', {}, 'Please correct the following errors before continuing'));
             
-            this.errorContents = $(this.make('div', {class: 'errorContents'}));
+            this.errorContents = $(this.make('div', {"class": 'errorContents'}));
             this.$el.append(this.errorContents);
             
             this.closeButton = $(this.make('button', {}, 'OK'));

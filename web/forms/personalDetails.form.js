@@ -61,7 +61,7 @@
             
             this.form.addField( new simply.fields.button({
                 label: "Next",
-                class: "nextButton",
+                "className": "nextButton",
                 form: this.form,
                 action: "submit",
                 id: "next"

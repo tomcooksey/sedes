@@ -49,8 +49,8 @@
         render: function() {
             this.wrapper = $(this.make(this.wrapperTagName, { "id": this.fieldName + '_wrapper', "class": this.wrapperClass}));
             
-            if(this.options.class) {
-                this.wrapper.addClass(this.options.class);
+            if(this.options.className) {
+                this.wrapper.addClass(this.options.className);
             }
             
             this.wrapper.append(this.label);

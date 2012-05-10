@@ -3,7 +3,7 @@
     simply.views.checkout = Backbone.View.extend({
         
         initialize: function() {
-            this.setElement(this.make('div', {class: 'orderSummary'}, 'Loading order summary please wait...'));
+            this.setElement(this.make('div', {"class": 'orderSummary'}, 'Loading order summary please wait...'));
             
             _.bindAll(this);
             this.renderInfo();

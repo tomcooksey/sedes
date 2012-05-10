@@ -14,7 +14,7 @@
             var choices = [], obj;
             simply.shows.each(function(show) {
                 
-                console.log(show);
+     
                 
                 obj = {
                     value: show.get('id'),
