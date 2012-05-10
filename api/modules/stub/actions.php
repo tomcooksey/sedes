@@ -52,7 +52,7 @@ class stub {
         $performance = new Performance();
         $performance->setShowId($show_id);
         $performance->setVenueId($venueId);
-        $performance->setName('2011-06-14 19:45:00');
+        $performance->setName('2012-06-14 19:45:00');
  
         $performance->save();
         
@@ -85,7 +85,7 @@ class stub {
         $performance = new Performance();
         $performance->setShowId($show_id);
         $performance->setVenueId($venueId);
-        $performance->setName('2011-06-15 19:45:00');
+        $performance->setName('2012-06-15 19:45:00');
  
         $performance->save();
         
@@ -118,7 +118,7 @@ class stub {
         $performance = new Performance();
         $performance->setShowId($show_id);
         $performance->setVenueId($venueId);
-        $performance->setName('2011-06-16 19:45:00');
+        $performance->setName('2012-06-16 19:45:00');
  
         $performance->save();
         
