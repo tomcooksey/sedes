@@ -128,6 +128,11 @@ class orderMake {
         
         if($orderObj) {
             
+            if($orderObj->getFulfilled()) {
+                $this->context->returnSuccess(array());
+                die();
+            }
+            
             $orderSeats = OrderSeatQuery::create();
             $orderSeats->filterByOrderId($orderObj->getId());
             
