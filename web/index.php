@@ -1,6 +1,6 @@
 <?php
 
-if($_GET['st']) {
+if($_GET['merchant_return_link']) {
     header('Location: /#complete');
     die();
 
