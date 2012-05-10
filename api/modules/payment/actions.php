@@ -88,7 +88,7 @@ class payment {
             
             $performance = $performance->findById($order->getPerformanceId());
             
-            $performamce = $performance[0];
+            $performamce = $performance[0]->toArray();
             
             if(count($orderSeats)) {
                 $x = 1;
@@ -109,10 +109,14 @@ class payment {
                 $from = 'noreply@simplytheatre.net';
                 $subject = 'Ticket Order Confirmation';
                 
-                file_put_contents('get.html', $performance);
+                //file_put_contents('get.html', $performance->getName());
+                
+                $headers = 'From: noreply@simplytheatre.net' . "\r\n" .
+                'Reply-To: noreply@simplytheatre.net' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
                 
                 //TODO hardcoded name
-                $body = 'Thank you for your order for tickets to see Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($performance->getName())).'\r\n\r\n';
+                $body = 'Thank you for your order for tickets to see Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($performance['name'])).'\r\n\r\n';
                 $body .= 'Your seats are: '. $seatsBuildup.'\r\n\r\n';
                 $body .= 'Thank you and enjoy the show!';
                 
