@@ -182,13 +182,13 @@
 	    
 	</div>
 	
-	<header>
+	<div class="header">
 	    <div class="inner">
 		<img src="images/common/logo.png" alt="Simply Theatre" class="logo" />
 	    </div>
-	</header>
+	</div>
 	
-	<section class="app">
+	<div class="app">
 	    
 	    <h1 id="show_name">&nbsp;</h1>
 	    <h2 id="performance_name">&nbsp;</h2>
@@ -209,11 +209,11 @@
 		
 	    </div>
 	    
-	</section>
+	</div>
 	
-	<footer>
+	<div class="footer">
 	    Powered by <a href="#">Sedes</a> v0.1.0 | &copy; 2012
-	</footer>
+	</div>
 
     </body>
     

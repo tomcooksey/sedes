@@ -77,14 +77,14 @@ h2 {
     margin: 0px 0px 10px 10px;
 }
 
-header {
+.header {
     display: block;
     height: 90px;
     border-bottom: 1px solid #b5b4ad;
     margin-bottom: 20px;
 }
 
-header .inner {
+.header .inner {
     width: 967px;
     margin: auto;
     padding: 0px;
@@ -92,20 +92,20 @@ header .inner {
     position: relative;
 }
 
-header .inner img.logo {
+.header .inner img.logo {
     margin-top: 27px;
 }
 
 
 
-section.app {
+.app {
     width: 967px;
     margin: auto;
     padding: 0px;
     position: relative;
 }
 
-section.app #orderProgress {
+.app #orderProgress {
     display: block;
     height: 46px;
     position: relative;
@@ -113,7 +113,7 @@ section.app #orderProgress {
     overflow: hidden;
 }
 
-section.app #orderProgress .bar {
+.app #orderProgress .bar {
     width: 1251px;
     height: 70px;
     background-image: url(../images/progress/bar.png);
@@ -124,7 +124,7 @@ section.app #orderProgress .bar {
     z-index: 50;
 }
 
-section.app #orderProgress .mask {
+.app #orderProgress .mask {
     width: 967px;
     height: 46px;
     background: url(../images/progress/mask.png);
@@ -134,7 +134,7 @@ section.app #orderProgress .mask {
     z-index: 100;
 }
 
-section.app #orderProgress .steps {
+.app #orderProgress .steps {
     width: 967px;
     height: 46px;
     position: absolute;
@@ -146,7 +146,7 @@ section.app #orderProgress .steps {
     padding: 0px;
 }
 
-section.app #orderProgress .steps li {
+.app #orderProgress .steps li {
     padding: 0px;
     width:  224px;
     display: inline-block;
@@ -157,20 +157,20 @@ section.app #orderProgress .steps li {
     color: #999;
 }
 
-section.app #orderProgress .steps li.end {
+.app #orderProgress .steps li.end {
     margin-right: 0px;
     width: 198px!important;
     margin-left: 8px;
 }
 
-section.app #orderProgress .steps li.complete {
+.app #orderProgress .steps li.complete {
     color: #fff;
     background-image: url(../images/progress/tick.png);
     background-position: right center;
     background-repeat: no-repeat;
 }
 
-section.app #orderProgress .steps li.current {
+.app #orderProgress .steps li.current {
     font-weight: bold;
     color: #606060;
 }
@@ -516,7 +516,7 @@ table td ul li {
     margin-top: 10px;
 }
 
-footer {
+.footer {
     display: block;
     height: 90px;
     border-top: 1px solid #b5b4ad;
@@ -527,7 +527,7 @@ footer {
     padding-top: 10px;
 }
 
-footer a {
+.footer a {
     color: #f73e9c;
 }
 
