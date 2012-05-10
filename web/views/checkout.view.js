@@ -98,7 +98,7 @@
                 
                 tr.append(this.make('td', {}, '&pound' + ticketsChosen[x].get('price')));
                 
-                tr.append(this.make('td', {}, '&pound' + rowTotal));
+                tr.append(this.make('td', {}, '&pound' + this.roundNumber(rowTotal, 2)));
                 
                 ticketsList.append(tr);
                 
@@ -106,18 +106,18 @@
             }
             
             //TO DO this should be in an order summary model
-            var bookingFee = Math.round((ticketsTotal * 0.5) * 100) / 100;
+            var bookingFee = Math.round((ticketsTotal * 1) * 100) / 100;
             this.orderTotal = Math.round(this.orderTotal * 100) / 100;
             
             var endRow = $(this.make('tr', {"class": 'orderFooter'}));
             endRow.append(this.make('td', {'colspan': 3, "class": 'totalCell'}, 'Sub Total'));
-            endRow.append(this.make('td', {}, '&pound;' + this.orderTotal));
+            endRow.append(this.make('td', {}, '&pound;' + this.roundNumber(this.orderTotal, 2)));
             
             ticketsList.append(endRow);
             
             var feeRow = $(this.make('tr', {"class": 'orderFooter'}));
             feeRow.append(this.make('td', {'colspan': 3, "class": 'totalCell'}, 'Booking Fee'));
-            feeRow.append(this.make('td', {}, '&pound;' + bookingFee));
+            feeRow.append(this.make('td', {}, '&pound;' + this.roundNumber(bookingFee, 2)));
             
             ticketsList.append(feeRow);
             
@@ -125,7 +125,7 @@
             
             var totalRow = $(this.make('tr', {"class": 'orderFooter'}));
             totalRow.append(this.make('td', {'colspan': 3, "class": 'totalCell'}, 'Total'));
-            totalRow.append(this.make('td', {}, '&pound;' + grandTotal));
+            totalRow.append(this.make('td', {}, '&pound;' + this.roundNumber(grandTotal, 2)));
             
             this.form.append(this.make('input', { type: 'hidden', value: grandTotal, name: 'amount'}));
             this.form.append(this.make('input', { type: 'hidden', value: 'Simply Theatre Tickets', name: 'item_name'}));
@@ -153,6 +153,37 @@
             this.$el.html(wrapper);
             this.$el.append(this.form);
             
+        },
+        
+        roundNumber: function(num, dec) {
+            var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
+            
+            result = result + '';
+            
+            parts = result.split('.');
+            
+            if(!parts[1]) {
+                parts[1] = '00';
+            }
+            
+            result = this.pad(parts[0], 'left') + '.' + this.pad(parts[1], 'right');
+            
+            
+            
+            return result;
+        },
+        
+        pad: function(num, direction) {
+            
+            if(num.length < 2) {
+                if(direction === 'left') {
+                    num =  num;
+                }else{
+                    num = num + '0';
+                }
+            }
+            
+            return num;
         },
         
         render: function() {

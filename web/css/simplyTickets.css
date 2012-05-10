@@ -527,6 +527,7 @@ table td ul li {
     color: #888;
     font-size: 14px;
     padding-top: 10px;
+    clear: both;
 }
 
 .footer a {
