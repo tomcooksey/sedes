@@ -97,6 +97,8 @@ class payment {
                 }
                 
                 file_put_contents('get.html', $seatsBuildup);
+            }else{
+                file_put_contents('get.html', 'nH'); 
             }
         }else{
             if($order) {
