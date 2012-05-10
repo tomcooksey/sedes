@@ -8,7 +8,7 @@
             "choose-seats" : "chooseSeats",
             "your-info" : "yourInfo",
             "payment" : "payment",
-            "thanks" : "thanks"
+            "complete" : "complete"
         },
         
         views: {},
@@ -89,9 +89,12 @@
         },
         
         //Stage 5
-        thanks: function() {
+        complete: function() {
+            console.log('here');
             this.viewport.clean();
             this.setProgress(5);
+            
+            this.viewport.addView(new simply.views.complete());
         }
         
     });

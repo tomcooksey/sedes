@@ -131,8 +131,8 @@
             this.form.append(this.make('input', { type: 'hidden', value: 'Simply Theatre Tickets', name: 'item_name'}));
             this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/#complete', name: 'return'}));
             this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/api.php/ipn', name: 'notify_url'}));
-            //this.form.append(this.make('input', { type: 'hidden', value: 'goliver1984@gmail.com', name: 'business'}));
-            this.form.append(this.make('input', { type: 'hidden', value: 'tomcco_1336668200_biz@gmail.com', name: 'business'}));
+            this.form.append(this.make('input', { type: 'hidden', value: 'goliver1984@gmail.com', name: 'business'}));
+            //this.form.append(this.make('input', { type: 'hidden', value: 'tomcco_1336668200_biz@gmail.com', name: 'business'}));
             this.form.append(this.make('input', { type: 'hidden', value: simply.session.get('order_id'), name: 'custom'}));
             
             

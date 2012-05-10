@@ -163,6 +163,7 @@
 	<script src="views/seat.view.js"></script>
 	<script src="lib/errors.view.js"></script>
 	<script src="views/checkout.view.js"></script>
+	<script src="views/complete.view.js"></script>
         
         <!--routers-->
         <script src="routers/main.router.js"></script>

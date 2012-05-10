@@ -550,3 +550,9 @@ table td ul li {
     text-align: center;
     margin-top: 10px;
 }
+
+.complete h2 {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+}
