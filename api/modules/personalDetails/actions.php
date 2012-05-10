@@ -14,7 +14,7 @@ class personalDetails {
                 $this->get();
                  break;
             case 'POST':
-                $this->post();
+                $this->put();
                 break;
             case 'PUT':
                 $this->put();
@@ -32,6 +32,8 @@ class personalDetails {
         if(!$personalDetails) {
             $personalDetails = array();
         }
+        
+        
             
         $this->context->returnSuccess($personalDetails); 
     }
