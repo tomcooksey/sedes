@@ -122,12 +122,24 @@ class orderMake {
     }
     
     function killOrder() {
-
         
         $orderObj = new OrderQuery();
         $orderObj = $orderObj->findPK($_SESSION['order_id']);
         
         if($orderObj) {
+            
+            $orderSeats = OrderSeatQuery::create();
+            $orderSeats->filterByOrderId($orderObj->getId());
+            
+            $orderSeats = $orderSeats->find();
+            
+            if(count($orderSeats)) {
+                foreach($orderSeats as $k => $v) {
+                    $v->delete();
+                }
+            }
+           
+            
             $orderObj->delete();
         }
         
@@ -147,10 +159,14 @@ class orderMake {
         
         if(count($orderObj)) {
             foreach($orderObj as $order) {
+                
+                echo $order.'<br/>';
+                
                 $date = strtotime($order->getWhen());
+                
 
                 if(($cutoff - $date) > 600) {
-                   
+                                       
                    //Get any seats
                     $orderSeats = OrderSeatQuery::create();
                     $orderSeats->filterByOrderId($order->getId());
@@ -158,7 +174,9 @@ class orderMake {
                     $orderSeats = $orderSeats->find();
                     
                     if(count($orderSeats)) {
+                        
                         foreach($orderSeats as $k => $v) {
+                            echo $v .'<br/>';
                             $v->delete();
                         }
                     }
