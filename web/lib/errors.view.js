@@ -4,7 +4,7 @@
        
        initialize: function(options) {
         
-            this.setElement(this.make('div', {class: 'errorPane'}));
+            this.setElement(this.make('div', {"class": 'errorPane'}));
             
             this.$el.append(this.make('h2', {}, 'Ooops...'));
             this.$el.append(this.make('p', {}, 'Please correct the following errors before continuing'));

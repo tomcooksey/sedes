@@ -111,7 +111,7 @@
                 //Has to be wrapped in a closure due to loop
                 (function(btn) {
                     label = btn === "next" ? "Next" : "Back";
-                    var wrapper = $(self.make('div', {class: "buttonWrapper " + btn + "Button"}));
+                    var wrapper = $(self.make('div', {"class": "buttonWrapper " + btn + "Button"}));
                     self[btn + "Button"] = $(self.make('button', {}, label));
                     
                     if(funcs[btn]) {

@@ -108,22 +108,22 @@
             var bookingFee = Math.round((ticketsTotal * 0.5) * 100) / 100;
             this.orderTotal = Math.round(this.orderTotal * 100) / 100;
             
-            var endRow = $(this.make('tr', {class: 'orderFooter'}));
-            endRow.append(this.make('td', {'colspan': 3, class: 'totalCell'}, 'Sub Total'));
+            var endRow = $(this.make('tr', {"class": 'orderFooter'}));
+            endRow.append(this.make('td', {'colspan': 3, "class": 'totalCell'}, 'Sub Total'));
             endRow.append(this.make('td', {}, '&pound;' + this.orderTotal));
             
             ticketsList.append(endRow);
             
-            var feeRow = $(this.make('tr', {class: 'orderFooter'}));
-            feeRow.append(this.make('td', {'colspan': 3, class: 'totalCell'}, 'Booking Fee'));
+            var feeRow = $(this.make('tr', {"class": 'orderFooter'}));
+            feeRow.append(this.make('td', {'colspan': 3, "class": 'totalCell'}, 'Booking Fee'));
             feeRow.append(this.make('td', {}, '&pound;' + bookingFee));
             
             ticketsList.append(feeRow);
             
             var grandTotal = bookingFee + this.orderTotal;
             
-            var totalRow = $(this.make('tr', {class: 'orderFooter'}));
-            totalRow.append(this.make('td', {'colspan': 3, class: 'totalCell'}, 'Total'));
+            var totalRow = $(this.make('tr', {"class": 'orderFooter'}));
+            totalRow.append(this.make('td', {'colspan': 3, "class": 'totalCell'}, 'Total'));
             totalRow.append(this.make('td', {}, '&pound;' + grandTotal));
   
             
@@ -141,7 +141,7 @@
             
             wrapper.append(this.table);
             
-            var nextButtonWrap = $(this.make('div', {class: 'buttonWrapper nextButton'}));
+            var nextButtonWrap = $(this.make('div', {"class": 'buttonWrapper nextButton'}));
             var nextButton = $(this.make('button', {}, 'Next'));
             
             nextButtonWrap.append(nextButton);
