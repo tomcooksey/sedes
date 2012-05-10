@@ -155,6 +155,7 @@ h2 {
     margin-left: 15px;
     margin-right: 8px;
     color: #999;
+    z-index:20000;
 }
 
 .app #orderProgress .steps li.end {
