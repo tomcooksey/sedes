@@ -163,6 +163,7 @@
         },
         
         startTimer: function() {
+            alert('hello');
             var that = this;
             
             var DateStamp = new Date();
