@@ -47,9 +47,7 @@ class payment {
 
         //file_put_contents('post.html', $this->getValuesWithKeys($_POST));
         //file_put_contents('get.html', $this->getValuesWithKeys($_GET));
-        
-        
-
+   
         $order = OrderQuery::create();
         $order = $order->findPK($_POST['custom']);
         
@@ -66,37 +64,56 @@ class payment {
             $orderSeats = $orderSeats->find();
             
             $rows = RowQuery::create();
-            $rows->find();
+            $rows = $rows->find();
             
             $rowsFinal = array();
             
             foreach($rows as $row) {
-                $rowsFinal[$row->getId()] = $row;
+                $rowsFinal[$row->getId()] = $row->getName();
             }
             
             $seats = SeatQuery::create();
-            $seats->find();
+            $seats = $seats->find();
             
             $seatsFinal = array();
             
             foreach($seats as $seat) {
-                $seatsFinal[$seat->getId()] = $seat->getNumber();
+                $seatsFinal[$seat->getId()] = $seat;
             }
             
             $seatsBuildup = '';
             
+            //Get performance
+            $performance = PerformanceQuery::create();
+            
+            $performance = $performance->findByPk($order->getPerformanceId());
+            
             if(count($orderSeats)) {
+                $x = 1;
                 foreach($orderSeats as $k => $orderSeat) {
-                    
+                    $x++;
                     $thisSeat = $seatsFinal[$orderSeat->getSeatId()];
                     $thisSeatNumber = $thisSeat->getNumber();
                     $thisRow = $rowsFinal[$thisSeat->getRowId()];
                     
-                    $seatsBuildup .= ', '.$thisRow.$thisSeatNumber;
+                    $seatsBuildup .= $thisRow.$thisSeatNumber;
                     
+                    if($x != count($orderSeats)) {
+                        $seatsBuildup = $seatsBuildup . ', ';
+                    }
                 }
                 
-                file_put_contents('get.html', $seatsBuildup);
+                $to = $_POST['payer_email'];
+                $from = 'noreply@simplytheatre.net';
+                $subject = 'Ticket Order Confirmation';
+                
+                //TODO hardcoded name
+                $body = 'Thank you for your order for tickets to see Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($performance->getName())).'\r\n\r\n';
+                $body .= 'Your seats are: '. $seatsBuildup.'\r\n\r\n';
+                $body .= 'Thank you and enjoy the show!';
+                
+                mail($to, $subject, $body);
+                
             }else{
                 file_put_contents('get.html', 'nH'); 
             }
