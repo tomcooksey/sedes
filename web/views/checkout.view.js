@@ -22,7 +22,7 @@
         },
         
         next: function() {
-            alert(this.form);
+            alert(this.form.submit);
             this.form.submit();
             
             
@@ -134,7 +134,7 @@
             this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/notfiy.php', name: 'notify_url'}));
             this.form.append(this.make('input', { type: 'hidden', value: 'goliver1984@gmail.com', name: 'business'}));
             
-            this.$el.append(this.form);
+            
             
             ticketsList.append(totalRow);
             
@@ -150,6 +150,7 @@
             wrapper.append(nextButtonWrap);
             
             this.$el.html(wrapper);
+            this.$el.append(this.form);
             
         },
         
