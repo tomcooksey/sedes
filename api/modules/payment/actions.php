@@ -49,7 +49,7 @@ class payment {
         //file_put_contents('get.html', $this->getValuesWithKeys($_GET));
         
         
-        $result = file_get_contents('https://www.sandbox.paypal.com/cgi-bin/websrc?cmd=_notify-validate'. $this->getValuesWithKeys($_POST));
+        $result = file_get_contents('https://www.paypal.com/cgi-bin/websrc?cmd=_notify-validate'. $this->getValuesWithKeys($_POST));
     echo $result;
         file_put_contents('get.html', $result);
     
