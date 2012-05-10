@@ -109,6 +109,8 @@ class payment {
                 $from = 'noreply@simplytheatre.net';
                 $subject = 'Ticket Order Confirmation';
                 
+                file_put_contents('get.html', $performance);
+                
                 //TODO hardcoded name
                 $body = 'Thank you for your order for tickets to see Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($performance->getName())).'\r\n\r\n';
                 $body .= 'Your seats are: '. $seatsBuildup.'\r\n\r\n';
