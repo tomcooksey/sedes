@@ -126,13 +126,13 @@
             var totalRow = $(this.make('tr', {"class": 'orderFooter'}));
             totalRow.append(this.make('td', {'colspan': 3, "class": 'totalCell'}, 'Total'));
             totalRow.append(this.make('td', {}, '&pound;' + grandTotal));
-  
             
             this.form.append(this.make('input', { type: 'hidden', value: grandTotal, name: 'amount'}));
             this.form.append(this.make('input', { type: 'hidden', value: 'Simply Theatre Tickets', name: 'item_name'}));
             this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/#complete', name: 'return'}));
-            this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/notfiy.php', name: 'notify_url'}));
+            this.form.append(this.make('input', { type: 'hidden', value: 'http://tickets.simply-theatre.net/notify.php', name: 'notify_url'}));
             this.form.append(this.make('input', { type: 'hidden', value: 'goliver1984@gmail.com', name: 'business'}));
+            this.form.append(this.make('input', { type: 'hidden', value: simply.session.get('order_id'), name: 'custom'}));
             
             
             

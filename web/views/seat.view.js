@@ -44,7 +44,8 @@
         },
         
         handleOrder: function(data) {
-            this.seatMap.clock(data.timestamp);  
+            this.seatMap.clock(data.timestamp);
+            simply.session.set({"order_id" : data.order_id});
         },
         
         
