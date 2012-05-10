@@ -22,7 +22,7 @@
         },
         
         next: function() {
-            alert(this.form.submit);
+
             this.form.submit();
             
             
