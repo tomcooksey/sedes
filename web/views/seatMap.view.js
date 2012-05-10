@@ -163,12 +163,12 @@
         },
         
         startTimer: function() {
-            alert('hello');
+
             var that = this;
             
             var DateStamp = new Date();
             
-            var timeremaining =  this.timestamp - (DateStamp.now() / 1000);
+            var timeremaining =  this.timestamp - (DateStamp.getTime() / 1000);
             
             if(this.collection.getSelectedSeats().length === 0) {
                 this.clockElement.fadeOut();
