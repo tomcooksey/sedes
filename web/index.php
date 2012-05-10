@@ -1,5 +1,17 @@
 <!DOCTYPE html>
     
+    <script>
+    
+	if(!window.console) {
+	    window.console = {
+		log: function(data) {
+		    
+		}
+	    }
+	}
+    
+    </script>
+    
 <html>
 
     <head>
