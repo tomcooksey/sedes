@@ -30,8 +30,23 @@ class payment {
         
     }
     
+    function getValuesWithKeys($var) {
+        
+        $string = '';
+        
+        foreach($var as $k=>$v) {
+            $string = $string . '['.$k.'] = '.$v.'\n';
+        }
+        
+        return $string;
+        
+    }
+    
     function ipn() {
         
+
+        file_put_contents('post.html', $this->getValuesWithKeys($_POST));
+        file_put_contents('get.html', $this->getValuesWithKeys($_GET));
     }
     
     function put() {
