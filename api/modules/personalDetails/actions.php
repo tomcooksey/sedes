@@ -27,18 +27,34 @@ class personalDetails {
     
     function get() {
         
-        $pd = $this->context->getSessionVar('personalDetails');
+        $personalDetails= $this->context->getSessionVar('personalDetails');
         
-        if($pd == '') {
-            $pd = array('id' => '1');   
+        if(!$personalDetails) {
+            $personalDetails = array();
         }
             
-        $this->context->returnSuccess($pd); 
+        $this->context->returnSuccess($personalDetails); 
     }
     
     function put() {
         
         $this->context->setSessionVar('personalDetails', $this->context->headerVals);
+        
+        $personalDetails = $this->context->headerVals;
+        
+        if(!$_SESSION['order_id']) {
+            $orderObj = new Order();
+            $orderObj->setWhen(date('Y-m-d G:i:00'));
+        }else{
+            $orderObj = new OrderQuery();
+            $orderObj = $orderObj->findPK($_SESSION['order_id']);
+        }
+        
+        $orderObj->setFullName($personalDetails['name']);
+        $orderObj->setEmail($personalDetails['email']);
+        $orderObj->setPerformanceId($progress['performance_id']);
+        
+        $orderObj->save();
         
         $this->context->returnSuccess(array());
     }
