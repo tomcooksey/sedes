@@ -35,7 +35,7 @@ class payment {
         $string = '';
         
         foreach($var as $k=>$v) {
-            $string = $string . '['.$k.'] = '.$v.'\n';
+            $string = $string . $k. '=' .$v;
         }
         
         return $string;
@@ -45,8 +45,15 @@ class payment {
     function ipn() {
         
 
-        file_put_contents('post.html', $this->getValuesWithKeys($_POST));
+        //file_put_contents('post.html', $this->getValuesWithKeys($_POST));
+        //file_put_contents('get.html', $this->getValuesWithKeys($_GET));
+        
+        $url = implode();
+        
+        $result = file_get_contents('https://www.sandbox.paypal.com/cgi-bin/websrc?cmd=_notify-validate'. $this->getValuesWithKeys($_POST));
+    
         file_put_contents('get.html', $this->getValuesWithKeys($_GET));
+    
     }
     
     function put() {
