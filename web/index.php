@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="css/simplyTickets.css" />
         <!--hosted for the time being-->
 	<script type="text/javascript" src="/jquery.js"></script>
+	<script src="json2.js"></script>
         <script src="underscore.js"></script>
         <script src="backbone.js"></script>
 	
