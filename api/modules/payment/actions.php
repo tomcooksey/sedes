@@ -52,7 +52,7 @@ class payment {
         //$result = file_get_contents();
         
         $curl_handle=curl_init();
-        curl_setopt($curl_handle, CURLOPT_URL,'https://www.paypal.com/cgi-bin/websrc?cmd=_notify-validate'. $this->getValuesWithKeys($_POST));
+        curl_setopt($curl_handle, CURLOPT_URL,'https://www.sandbox.paypal.com/cgi-bin/websrc?cmd=_notify-validate'. $this->getValuesWithKeys($_POST));
         curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
         curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Simply');
