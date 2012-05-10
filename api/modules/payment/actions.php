@@ -44,6 +44,20 @@ class payment {
     
     function ipn() {
         
+        echo 'here';
+        
+        $performance = PerformanceQuery::create();
+            
+        $performance = $performance->filterById(2);
+        
+        $performance = $performance->find();
+        
+        $performamce = $performance[0]->toArray();
+        
+        print_r($performance);
+        
+        die();
+        
 
         //file_put_contents('post.html', $this->getValuesWithKeys($_POST));
         //file_put_contents('get.html', $this->getValuesWithKeys($_GET));
@@ -109,15 +123,15 @@ class payment {
                 $from = 'noreply@simplytheatre.net';
                 $subject = 'Ticket Order Confirmation';
                 
-                //file_put_contents('get.html', $performance->getName());
+                file_put_contents('get.html', $performance['name']);
                 
                 $headers = 'From: noreply@simplytheatre.net' . "\r\n" .
                 'Reply-To: noreply@simplytheatre.net' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
                 
                 //TODO hardcoded name
-                $body = 'Thank you for your order for tickets to see Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($performance['name'])).'\r\n\r\n';
-                $body .= 'Your seats are: '. $seatsBuildup.'\r\n\r\n';
+                $body = 'Thank you for your order for tickets to see Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($performance['name'])).'<br/><br/>';
+                $body .= 'Your seats are: '. $seatsBuildup.'<br/><br/>';
                 $body .= 'Thank you and enjoy the show!';
                 
                 mail($to, $subject, $body, $headers);
