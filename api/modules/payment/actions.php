@@ -88,7 +88,7 @@ class payment {
             
             $performance = $performance->findById($order->getPerformanceId());
             
-            $performamce = $performamce[0];
+            $performamce = $performance[0];
             
             if(count($orderSeats)) {
                 $x = 1;
