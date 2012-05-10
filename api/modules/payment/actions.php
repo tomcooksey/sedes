@@ -51,6 +51,8 @@ class payment {
         
         //$result = file_get_contents();
         
+        ini_set('display_errors', 'on');
+        
         $curl_handle=curl_init();
         curl_setopt($curl_handle, CURLOPT_URL,'https://www.sandbox.paypal.com/cgi-bin/websrc?cmd=_notify-validate'. $this->getValuesWithKeys($_POST));
         curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
@@ -59,8 +61,7 @@ class payment {
         $query = curl_exec($curl_handle);
         curl_close($curl_handle);
         
-        
-    echo $query;
+        echo $query;
         file_put_contents('get.html', $query);
     
     }
