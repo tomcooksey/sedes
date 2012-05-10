@@ -22,6 +22,7 @@
         },
         
         next: function() {
+            alert('here');
             this.form.submit();
             
             
