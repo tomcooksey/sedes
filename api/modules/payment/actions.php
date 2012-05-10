@@ -53,11 +53,51 @@ class payment {
         $order = OrderQuery::create();
         $order = $order->findPK($_POST['custom']);
         
-        if($_POST['payment_status'] == 'complete') {
+        if($_POST['payment_status'] == 'Completed') {
             $order->setFulfilled(true);
             $order->save();
             
-            file_put_contents('get.html', 'saved');
+            $order_id = $order->getId();
+            
+            //Get the seats and ticket types
+            $orderSeats = OrderSeatQuery::create();
+            $orderSeats->filterByOrderId($order_id);
+            
+            $orderSeats = $orderSeats->find();
+            
+            $rows = RowQuery::create();
+            $rows->find();
+            
+            $rowsFinal = array();
+            
+            foreach($rows as $row) {
+                $rowsFinal[$row->getId()] = $row;
+            }
+            
+            $seats = SeatQuery::create();
+            $seats->find();
+            
+            $seatsFinal = array();
+            
+            foreach($seats as $seat) {
+                $seatsFinal[$seat->getId()] = $seat->getNumber();
+            }
+            
+            $seatsBuildup = '';
+            
+            if(count($orderSeats)) {
+                foreach($orderSeats as $k => $orderSeat) {
+                    
+                    $thisSeat = $seatsFinal[$orderSeat->getSeatId()];
+                    $thisSeatNumber = $thisSeat->getNumber();
+                    $thisRow = $rowsFinal[$thisSeat->getRowId()];
+                    
+                    $seatsBuildup .= ', '.$thisRow.$thisSeatNumber;
+                    
+                }
+                
+                file_put_contents('get.html', $seatsBuildup);
+            }
         }else{
             if($order) {
             
@@ -74,8 +114,7 @@ class payment {
                
                 
                 $order->delete();
-                
-                file_put_contents('get.html', 'deleted');
+
             }
         }
         
