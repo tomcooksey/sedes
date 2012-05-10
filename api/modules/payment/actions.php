@@ -120,7 +120,7 @@ class payment {
                 $body .= 'Your seats are: '. $seatsBuildup.'\r\n\r\n';
                 $body .= 'Thank you and enjoy the show!';
                 
-                mail($to, $subject, $body);
+                mail($to, $subject, $body, $headers);
                 
             }else{
                 file_put_contents('get.html', 'nH'); 
