@@ -86,7 +86,9 @@ class payment {
             //Get performance
             $performance = PerformanceQuery::create();
             
-            $performance = $performance->findByPk($order->getPerformanceId());
+            $performance = $performance->findById($order->getPerformanceId());
+            
+            $performamce = $performamce[0];
             
             if(count($orderSeats)) {
                 $x = 1;
