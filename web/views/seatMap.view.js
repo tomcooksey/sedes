@@ -18,8 +18,35 @@
             
             this.addLoading();
             
-    
+            simply.session.on('change:manual', this.changeManual, this);
+            
+            
   	
+        },
+        
+        events: {
+            'click .manual' : 'manualBooking'
+        },
+        
+        manualBooking: function(e) {
+            e.preventDefault();
+            
+            simply.session.save({'manual' : !simply.session.get('manual')});
+            
+            
+        },
+        
+        changeManual: function() {
+           
+            if(!simply.session.get('manual')) {
+                $('.manual').removeClass('active');
+                
+                //Deactive seats
+                simply.seats.removeSeats(simply.seats.getSelectedSeats().length);
+            }else{
+                $('.manual').addClass('active');
+             
+            }
         },
         
         addLoading: function() {
@@ -61,6 +88,13 @@
                 this.renderStage();
                 this.renderKey();
                 this.renderButtons();
+                
+                
+                
+                if(simply.admin) {
+                    this.seatMap.append(this.make('button', {'class': 'manual'}, 'Manual Booking'));
+                    this.changeManual();
+                }
                 
                 if(this.collection.getSelectedSeats().length > 0) {
                 
@@ -146,7 +180,7 @@
         },
         
         clock: function(timestamp) {
-            
+            if(simply.session.get('manual')) return;
             this.timestamp = timestamp + (60 * 10);
             
             

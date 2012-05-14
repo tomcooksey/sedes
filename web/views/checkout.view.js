@@ -22,11 +22,22 @@
         },
         
         next: function() {
-
-            this.form.submit();
             
-            
-            
+            if(simply.session.get('manual')) {
+                $.ajax({
+                    url: '/api.php/orderManual',
+                    success: this.handleManual,
+                    dataType: 'json'
+                });
+            }else{
+                this.form.submit();
+            }
+    
+        },
+        
+        handleManual: function() {
+            alert('Booking made, email confirmation sent');
+            location.hash = '';
         },
         
         renderInfo: function() {

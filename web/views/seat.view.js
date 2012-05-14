@@ -26,7 +26,8 @@
             
             event.preventDefault();
             
-            if(simply.admin) {
+            if(simply.admin && !simply.session.get('manual')) {
+                
                 if(this.model.get('booked')) {
                     alert('Sorry, this seat has been sold');
                     return;
@@ -52,7 +53,7 @@
         },
         
         forSaleChange: function() {
-            console.log('yup');
+  
             this.model.get('forSale') ? this.$el.removeClass('notForSale') : this.$el.addClass('notForSale');
         },
         

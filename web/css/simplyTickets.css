@@ -219,7 +219,7 @@ form .fieldWrapper input {
 }
 
 form .valid {
-    background-color: #D1FFDC;
+    /*background-color: #D1FFDC;*/
 }
 
 form .invalid {
@@ -284,6 +284,22 @@ form fieldset.fieldWrapper .radioGroup .radioRow {
     font-size: 16px;
     padding: 5px 10px 5px 10px;
     cursor: pointer;
+}
+
+.manual {
+    background-color: #ccc;
+    color: #fff;
+    border: 0px;
+    font-size: 16px;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.active {
+    background-color: #f73e9c;
 }
 
 .buttonWrapper button:hover {
@@ -461,9 +477,9 @@ body td .seat {
 
 .performanceWrapper .performanceRow {
     display: block;
-    border-top: 1px solid #8ae0f8;
-    border-bottom: 1px solid #1992b5;
-    background-color: #3ecef7;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #D9D4D6;
+    background-color: #F5F5F5;
     padding: 20px;
     padding-left: 40px;
     cursor: pointer;

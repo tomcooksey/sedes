@@ -11,6 +11,12 @@
         "secure" : false
     },
     
+    "/orderManual" : {
+        "module" : "payment",
+        "action" : "orderManual",
+        "secure" : false
+    },
+    
     "/ipn" : {
         "module" : "payment",
         "action" : "ipn",

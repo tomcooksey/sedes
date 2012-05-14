@@ -2,7 +2,7 @@
 session_start();
 
 
-if($_GET['merchant_return_link']) {
+if(isset($_GET['merchant_return_link'])) {
     header('Location: /#complete');
     die();
 

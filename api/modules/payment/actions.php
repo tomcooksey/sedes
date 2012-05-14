@@ -42,6 +42,31 @@ class payment {
         
     }
     
+    function orderManual() {
+        if($_SESSION['admin']) {
+            
+            $_POST['custom'] = $_SESSION['order_id'];
+            $_POST['payment_status'] = 'Completed';
+            
+            $this->ipn();
+            
+            
+            //Reset the session
+            unset($_SESSION['order_id']);
+            unset($_SESSION['progress']);
+            unset($_SESSION['ticketsSelected']);
+            unset($_SESSION['personalDetails']);
+            unset($_SESSION['seatsBooked']);
+            
+            
+            
+            
+            $this->context->returnSuccess(array());
+            
+        }
+        
+    }
+    
     function ipn() {
         
         //file_put_contents('post.html', $this->getValuesWithKeys($_POST));
@@ -51,8 +76,17 @@ class payment {
         $order = $order->findPK($_POST['custom']);
         
         if($_POST['payment_status'] == 'Completed') {
+            
             $order->setFulfilled(true);
             $order->save();
+            
+            $progress = $this->context->getSessionVar('progress');
+            
+            //Fix for weird situation that performance_id wasn't set
+            if(!$order->getPerformanceId()) {
+                $order->setPerformanceId($progress['performance_id']);
+                $order->save();
+            }
             
             $order_id = $order->getId();
             
@@ -117,11 +151,15 @@ class payment {
                 //TODO hardcoded name
                 $body = "ORDER CONFIRMATION - PLEASE RETAIN\n\n";
                 $body .= "Dear ".$_POST['first_name'].' ' . $_POST['last_name'] ."\n\n";
-                $body .= 'Thank you for your order for tickets to see Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($p[0]['name']))."\n\n";
+                $body .= 'Thank you for your order for tickets to see A Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($p[0]['name']))."\n\n";
                 $body .= 'Your seats are: '. $seatsBuildup."\n\n";
                 $body .= 'Thank you and enjoy the show!';
                 
                 mail($to, $subject, $body, $headers);
+                
+                
+                //Send to admin
+                mail('nicole_pitt@hotmail.com', 'ORDER HAS BEEN MADE ON SIMPLY TICKETS', "This is the confirmation email they received\n\n".$body, $headers);
                 
             }else{
                 file_put_contents('get.html', 'nH'); 
