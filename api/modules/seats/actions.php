@@ -143,6 +143,19 @@ class seats {
         $seatsBooked[$perfId] = $stored;
         $this->context->setSessionVar('seatsBooked', $seatsBooked);
         
+        //If we're admin update the forSale flag
+        
+        if($_SESSION['admin']) {
+            $seatAvail = SeatAvailabilityQuery::create();
+            $seatAvail->filterBySeatId($this->context->headerVals['id']);
+            $seatAvail = $seatAvail->findOne();
+            
+            if($seatAvail) {
+                $seatAvail->setForSale($this->context->headerVals['forSale']);
+                $seatAvail->save();
+            }
+        }
+        
         $this->context->returnSuccess(array());
 
     }

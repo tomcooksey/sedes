@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 
 if($_GET['merchant_return_link']) {
     header('Location: /#complete');
@@ -105,6 +107,9 @@ if($_GET['merchant_return_link']) {
 			dispatch.addDependency(simply.seats);
 			
 			dispatch.start(function() {
+			    
+			    simply.admin = <?php echo isset($_SESSION['admin']) ? 'true' : 'false'; ?>;
+			    
 			    new simply.routers.main();
 			    Backbone.history.start();
 			}, function() {

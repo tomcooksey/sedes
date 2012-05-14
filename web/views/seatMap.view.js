@@ -17,6 +17,9 @@
             this.$el.append(this.seatMap);
             
             this.addLoading();
+            
+    
+  	
         },
         
         addLoading: function() {
