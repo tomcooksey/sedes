@@ -108,12 +108,7 @@ class payment {
             
             $seatsBuildup = '';
             
-            //Get performance
-            $performance = PerformanceQuery::create();
             
-            $performance = $performance->findById($order->getPerformanceId());
-            
-            $p = $performance->toArray();
             
             $orderTicketTypes = OrderTicketTypeQuery::create();
             $orderTicketTypes = $orderTicketTypes->filterByOrderId($order_id);
@@ -128,6 +123,13 @@ class payment {
                     $order->save();
                 }
             }
+            
+            //Get performance
+            $performance = PerformanceQuery::create();
+            
+            $performance = $performance->findById($order->getPerformanceId());
+            
+            $p = $performance->toArray();
             
             if(count($orderSeats)) {
                 $x = 1;
