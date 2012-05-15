@@ -154,10 +154,16 @@ class payment {
                 'Reply-To: noreply@simplytheatre.net' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
                 
-                //TODO hardcoded name
+                $show = ShowQuery::create();
+                $show->filterById(1);
+                $show = $show->findOne();
+                
+                
+                
+          
                 $body = "ORDER CONFIRMATION - PLEASE RETAIN\n\n";
                 $body .= "Dear ".$_POST['first_name'].' ' . $_POST['last_name'] ."\n\n";
-                $body .= 'Thank you for your order for tickets to see A Street Car Named Desire on '. date('l jS F Y g:ia', strtotime($p[0]['name']))."\n\n";
+                $body .= 'Thank you for your order for tickets to see ' . $show->getName(). ' on '. date('l jS F Y g:ia', strtotime($p[0]['name']))."\n\n";
                 $body .= 'Your seats are: '. $seatsBuildup."\n\n";
                 $body .= 'Thank you and enjoy the show!';
                 
