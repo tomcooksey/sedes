@@ -43,10 +43,10 @@ abstract class BaseUser extends BaseObject  implements Persistent
 	protected $username;
 
 	/**
-	 * The value for the password field.
+	 * The value for the pass field.
 	 * @var        string
 	 */
-	protected $password;
+	protected $pass;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -83,13 +83,13 @@ abstract class BaseUser extends BaseObject  implements Persistent
 	}
 
 	/**
-	 * Get the [password] column value.
+	 * Get the [pass] column value.
 	 * 
 	 * @return     string
 	 */
 	public function getpass()
 	{
-		return $this->password;
+		return $this->pass;
 	}
 
 	/**
@@ -133,7 +133,7 @@ abstract class BaseUser extends BaseObject  implements Persistent
 	} // setusername()
 
 	/**
-	 * Set the value of [password] column.
+	 * Set the value of [pass] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     User The current object (for fluent API support)
@@ -144,9 +144,9 @@ abstract class BaseUser extends BaseObject  implements Persistent
 			$v = (string) $v;
 		}
 
-		if ($this->password !== $v) {
-			$this->password = $v;
-			$this->modifiedColumns[] = UserPeer::PASSWORD;
+		if ($this->pass !== $v) {
+			$this->pass = $v;
+			$this->modifiedColumns[] = UserPeer::PASS;
 		}
 
 		return $this;
@@ -186,7 +186,7 @@ abstract class BaseUser extends BaseObject  implements Persistent
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->username = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->password = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->pass = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -409,8 +409,8 @@ abstract class BaseUser extends BaseObject  implements Persistent
 		if ($this->isColumnModified(UserPeer::USERNAME)) {
 			$modifiedColumns[':p' . $index++]  = '`USERNAME`';
 		}
-		if ($this->isColumnModified(UserPeer::PASSWORD)) {
-			$modifiedColumns[':p' . $index++]  = '`PASSWORD`';
+		if ($this->isColumnModified(UserPeer::PASS)) {
+			$modifiedColumns[':p' . $index++]  = '`PASS`';
 		}
 
 		$sql = sprintf(
@@ -429,8 +429,8 @@ abstract class BaseUser extends BaseObject  implements Persistent
 					case '`USERNAME`':
 						$stmt->bindValue($identifier, $this->username, PDO::PARAM_STR);
 						break;
-					case '`PASSWORD`':
-						$stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
+					case '`PASS`':
+						$stmt->bindValue($identifier, $this->pass, PDO::PARAM_STR);
 						break;
 				}
 			}
@@ -682,7 +682,7 @@ abstract class BaseUser extends BaseObject  implements Persistent
 
 		if ($this->isColumnModified(UserPeer::ID)) $criteria->add(UserPeer::ID, $this->id);
 		if ($this->isColumnModified(UserPeer::USERNAME)) $criteria->add(UserPeer::USERNAME, $this->username);
-		if ($this->isColumnModified(UserPeer::PASSWORD)) $criteria->add(UserPeer::PASSWORD, $this->password);
+		if ($this->isColumnModified(UserPeer::PASS)) $criteria->add(UserPeer::PASS, $this->pass);
 
 		return $criteria;
 	}
@@ -798,7 +798,7 @@ abstract class BaseUser extends BaseObject  implements Persistent
 	{
 		$this->id = null;
 		$this->username = null;
-		$this->password = null;
+		$this->pass = null;
 		$this->alreadyInSave = false;
 		$this->alreadyInValidation = false;
 		$this->clearAllReferences();

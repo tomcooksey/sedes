@@ -40,8 +40,8 @@ abstract class BaseUserPeer {
 	/** the column name for the USERNAME field */
 	const USERNAME = 'user.USERNAME';
 
-	/** the column name for the PASSWORD field */
-	const PASSWORD = 'user.PASSWORD';
+	/** the column name for the PASS field */
+	const PASS = 'user.PASS';
 
 	/** The default string format for model objects of the related table **/
 	const DEFAULT_STRING_FORMAT = 'YAML';
@@ -64,9 +64,9 @@ abstract class BaseUserPeer {
 	protected static $fieldNames = array (
 		BasePeer::TYPE_PHPNAME => array ('id', 'username', 'pass', ),
 		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'username', 'pass', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USERNAME, self::PASSWORD, ),
-		BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USERNAME', 'PASSWORD', ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'password', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USERNAME, self::PASS, ),
+		BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USERNAME', 'PASS', ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'pass', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
@@ -79,9 +79,9 @@ abstract class BaseUserPeer {
 	protected static $fieldKeys = array (
 		BasePeer::TYPE_PHPNAME => array ('id' => 0, 'username' => 1, 'pass' => 2, ),
 		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'username' => 1, 'pass' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USERNAME => 1, self::PASSWORD => 2, ),
-		BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USERNAME' => 1, 'PASSWORD' => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'password' => 2, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USERNAME => 1, self::PASS => 2, ),
+		BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USERNAME' => 1, 'PASS' => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'pass' => 2, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
@@ -156,11 +156,11 @@ abstract class BaseUserPeer {
 		if (null === $alias) {
 			$criteria->addSelectColumn(UserPeer::ID);
 			$criteria->addSelectColumn(UserPeer::USERNAME);
-			$criteria->addSelectColumn(UserPeer::PASSWORD);
+			$criteria->addSelectColumn(UserPeer::PASS);
 		} else {
 			$criteria->addSelectColumn($alias . '.ID');
 			$criteria->addSelectColumn($alias . '.USERNAME');
-			$criteria->addSelectColumn($alias . '.PASSWORD');
+			$criteria->addSelectColumn($alias . '.PASS');
 		}
 	}
 

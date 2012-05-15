@@ -8,11 +8,11 @@
  *
  * @method     UserQuery orderByid($order = Criteria::ASC) Order by the id column
  * @method     UserQuery orderByusername($order = Criteria::ASC) Order by the username column
- * @method     UserQuery orderBypass($order = Criteria::ASC) Order by the password column
+ * @method     UserQuery orderBypass($order = Criteria::ASC) Order by the pass column
  *
  * @method     UserQuery groupByid() Group by the id column
  * @method     UserQuery groupByusername() Group by the username column
- * @method     UserQuery groupBypass() Group by the password column
+ * @method     UserQuery groupBypass() Group by the pass column
  *
  * @method     UserQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     UserQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -23,11 +23,11 @@
  *
  * @method     User findOneByid(int $id) Return the first User filtered by the id column
  * @method     User findOneByusername(string $username) Return the first User filtered by the username column
- * @method     User findOneBypass(string $password) Return the first User filtered by the password column
+ * @method     User findOneBypass(string $pass) Return the first User filtered by the pass column
  *
  * @method     array findByid(int $id) Return User objects filtered by the id column
  * @method     array findByusername(string $username) Return User objects filtered by the username column
- * @method     array findBypass(string $password) Return User objects filtered by the password column
+ * @method     array findBypass(string $pass) Return User objects filtered by the pass column
  *
  * @package    propel.generator.simply.om
  */
@@ -116,7 +116,7 @@ abstract class BaseUserQuery extends ModelCriteria
 	 */
 	protected function findPkSimple($key, $con)
 	{
-		$sql = 'SELECT `ID`, `USERNAME`, `PASSWORD` FROM `user` WHERE `ID` = :p0';
+		$sql = 'SELECT `ID`, `USERNAME`, `PASS` FROM `user` WHERE `ID` = :p0';
 		try {
 			$stmt = $con->prepare($sql);
 			$stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -256,12 +256,12 @@ abstract class BaseUserQuery extends ModelCriteria
 	}
 
 	/**
-	 * Filter the query on the password column
+	 * Filter the query on the pass column
 	 *
 	 * Example usage:
 	 * <code>
-	 * $query->filterBypass('fooValue');   // WHERE password = 'fooValue'
-	 * $query->filterBypass('%fooValue%'); // WHERE password LIKE '%fooValue%'
+	 * $query->filterBypass('fooValue');   // WHERE pass = 'fooValue'
+	 * $query->filterBypass('%fooValue%'); // WHERE pass LIKE '%fooValue%'
 	 * </code>
 	 *
 	 * @param     string $pass The value to use as filter.
@@ -280,7 +280,7 @@ abstract class BaseUserQuery extends ModelCriteria
 				$comparison = Criteria::LIKE;
 			}
 		}
-		return $this->addUsingAlias(UserPeer::PASSWORD, $pass, $comparison);
+		return $this->addUsingAlias(UserPeer::PASS, $pass, $comparison);
 	}
 
 	/**

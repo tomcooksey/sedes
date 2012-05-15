@@ -18,12 +18,16 @@ if($_POST) {
     
     $user = $user->findOne();
     
-    if($user->getPass() == $_POST['password']) {
-	$_SESSION['admin'] = true;
-        
-        header("Location: index.php");
-        die();
+    if($user) {
+	if($user->getPass() == $_POST['password']) {
+	    $_SESSION['admin'] = true;
+	    
+	    header("Location: index.php");
+	    die();
+	}
     }
+    
+    
     
    
     
