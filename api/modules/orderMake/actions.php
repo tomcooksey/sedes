@@ -127,6 +127,7 @@ class orderMake {
         $orderObj = new OrderQuery();
         $orderObj = $orderObj->findPK($_SESSION['order_id']);
         
+        
         if($orderObj) {
             
             if($orderObj->getFulfilled()) {
@@ -141,6 +142,17 @@ class orderMake {
             
             if(count($orderSeats)) {
                 foreach($orderSeats as $k => $v) {
+                    $v->delete();
+                }
+            }
+            
+            $orderTickets = OrderTicketTypeQuery::create();
+            $orderTickets->filterByOrderId($orderObj->getId());
+            
+            $orderTickets = $orderTickets->find();
+            
+            if(count($orderTickets)) {
+                foreach($orderTickets as $k => $v) {
                     $v->delete();
                 }
             }
@@ -183,6 +195,17 @@ class orderMake {
                         
                         foreach($orderSeats as $k => $v) {
                             echo $v .'<br/>';
+                            $v->delete();
+                        }
+                    }
+                    
+                    $orderTickets = OrderTicketTypeQuery::create();
+                    $orderTickets->filterByOrderId($order->getId());
+                    
+                    $orderTickets = $orderTickets->find();
+                    
+                    if(count($orderTickets)) {
+                        foreach($orderTickets as $k => $v) {
                             $v->delete();
                         }
                     }

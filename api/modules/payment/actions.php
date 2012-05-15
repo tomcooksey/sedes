@@ -79,15 +79,7 @@ class payment {
             
             $order->setFulfilled(true);
             $order->save();
-            
-            $progress = $this->context->getSessionVar('progress');
-            
-            //Fix for weird situation that performance_id wasn't set
-            if(!$order->getPerformanceId()) {
-                $order->setPerformanceId($progress['performance_id']);
-                $order->save();
-            }
-            
+
             $order_id = $order->getId();
             
             //Get the seats and ticket types
@@ -122,6 +114,20 @@ class payment {
             $performance = $performance->findById($order->getPerformanceId());
             
             $p = $performance->toArray();
+            
+            $orderTicketTypes = OrderTicketTypeQuery::create();
+            $orderTicketTypes = $orderTicketTypes->filterByOrderId($order_id);
+            $orderTicketTypes = $orderTicketTypes->find();
+            
+            if(count($orderTicketTypes)) {
+                foreach($orderTicketTypes as $tt) {
+                    
+                    $ticket =  $tt->getTicketType();
+                    
+                    $order->setPerformanceId($ticket->getPerformanceId());
+                    $order->save();
+                }
+            }
             
             if(count($orderSeats)) {
                 $x = 1;

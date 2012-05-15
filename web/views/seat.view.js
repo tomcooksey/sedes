@@ -68,7 +68,7 @@
         
         handleOrder: function(data) {
             this.seatMap.clock(data.timestamp);
-            simply.session.set({"order_id" : data.order_id});
+            simply.session.save({"order_id" : data.order_id});
         },
         
         
