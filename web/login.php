@@ -1,14 +1,31 @@
 <?php
 session_start();
+require_once ('propel/Propel.php');
+
+// Initialize Propel with the runtime configuration
+Propel::init("../api/model/build/conf/simply-conf.php");
+
+// Add the generated 'classes' directory to the include path
+set_include_path("../api/model/build/classes" . PATH_SEPARATOR . get_include_path());
+
+
+
 if($_POST) {
     
-    if($_POST['username'] == "simply1" && $_POST['password'] == "magenta1") {
-        
-        $_SESSION['admin'] = true;
+    $user = UserQuery::create();
+
+    $user->filterByUsername($_POST['username']);
+    
+    $user = $user->findOne();
+    
+    if($user->getPass() == $_POST['password']) {
+	$_SESSION['admin'] = true;
         
         header("Location: index.php");
         die();
     }
+    
+   
     
 }
 

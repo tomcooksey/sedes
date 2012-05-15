@@ -106,4 +106,10 @@
     </foreign-key>
   </table>
   
+  <table name="user" phpName="User">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="id"/>
+    <column name="username" type="varchar" phpName="username" />
+    <column name="password" type="varchar" phpName="pass" />
+  </table>
+  
 </database>
