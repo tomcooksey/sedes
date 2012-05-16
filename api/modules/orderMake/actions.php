@@ -52,8 +52,8 @@ class orderMake {
             $orderObj = $orderObj->findPK($_SESSION['order_id']);
             
             if(!$orderObj) {
-                $orderObj = new OrderQuery();
-                $orderObj = $orderObj->findPK($_SESSION['order_id']);
+                $orderObj = new Order();
+                $orderObj->setWhen(date('Y-m-d G:i:00'));
             }
         }
     
