@@ -50,6 +50,11 @@ class orderMake {
         }else{
             $orderObj = new OrderQuery();
             $orderObj = $orderObj->findPK($_SESSION['order_id']);
+            
+            if(!$orderObj) {
+                $orderObj = new OrderQuery();
+                $orderObj = $orderObj->findPK($_SESSION['order_id']);
+            }
         }
     
         $orderObj->setFullName($personalDetails['name']);
