@@ -27,7 +27,7 @@ class orderMake {
     
     function get() {
         
-        sleep(2);
+        
         
         //At this point we need to get ourselves an order ID and send it back to the client
         
