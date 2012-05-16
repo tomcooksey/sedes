@@ -12,7 +12,7 @@
             _.bindAll(this);
             
             this.model.on('change:selected', this.selectedChange, this);
-            this.model.on('change:selected', this.checkOrder, this);
+            //this.model.on('change:selected', this.checkOrder, this);
             this.model.on('change:forSale', this.forSaleChange, this);
             
         },
@@ -57,14 +57,6 @@
             this.model.get('forSale') ? this.$el.removeClass('notForSale') : this.$el.addClass('notForSale');
         },
         
-        checkOrder: function() {
-            //Make AJAX request to the order
-            $.ajax({
-                url: '/api.php/order',
-                success: this.handleOrder,
-                dataType: 'json'
-            });  
-        },
         
         handleOrder: function(data) {
             this.seatMap.clock(data.timestamp);

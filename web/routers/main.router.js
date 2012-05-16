@@ -77,7 +77,17 @@
             this.viewport.clean();
             this.setProgress(3);
             
-            this.viewport.addView(new simply.forms.personalDetails());
+            var that = this;
+            
+            //Make the booking
+            $.ajax({
+                url: '/api.php/order',
+                error: function() { alert('unable to process order, please try again later');},
+                success: function() { that.viewport.addView(new simply.forms.personalDetails()); },
+                dataType: 'json'
+            }); 
+            
+            
         },
         
         //Stage 4

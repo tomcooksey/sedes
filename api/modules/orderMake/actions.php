@@ -27,6 +27,8 @@ class orderMake {
     
     function get() {
         
+        sleep(2);
+        
         //At this point we need to get ourselves an order ID and send it back to the client
         
         $personalDetails = $this->context->getSessionVar('personalDetails');
@@ -39,8 +41,10 @@ class orderMake {
         print_r($personalDetails);
         print_r($seats);
         print_r($ticketsSelected);*/
+        
 
         if(!$_SESSION['order_id']) {
+
             $orderObj = new Order();
             $orderObj->setWhen(date('Y-m-d G:i:00'));
         }else{
@@ -124,10 +128,12 @@ class orderMake {
     
     function killOrder() {
         
+        
         $orderObj = new OrderQuery();
         $orderObj = $orderObj->findPK($_SESSION['order_id']);
+        
                 
-                
+        //echo $_SESSION['order_id'];
         
         if($orderObj) {
             
@@ -163,7 +169,6 @@ class orderMake {
         }
         
         unset($_SESSION['order_id']);
-        
         $this->context->returnSuccess(array());
     }
     

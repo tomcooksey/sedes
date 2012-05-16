@@ -4,6 +4,8 @@
         
         initialize: function() {
             
+            
+            
             this.form = new simply.form({
                 name: 'yourInfo',
                 action: 'payment',

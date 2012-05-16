@@ -180,6 +180,17 @@ if(isset($_GET['merchant_return_link'])) {
 	<script src="lib/errors.view.js"></script>
 	<script src="views/checkout.view.js"></script>
 	<script src="views/complete.view.js"></script>
+	
+	
+	<?php
+	
+	    if(isset($_SESSION['admin'])) {
+		?>
+		<script src="lib/admin.view.js"></script>
+		<?php
+	    }
+	
+	?>
         
         <!--routers-->
         <script src="routers/main.router.js"></script>

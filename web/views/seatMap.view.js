@@ -96,14 +96,7 @@
                     this.changeManual();
                 }
                 
-                if(this.collection.getSelectedSeats().length > 0) {
                 
-                    $.ajax({
-                       url: '/api.php/order',
-                       success: this.handleOrder,
-                       dataType: 'json'
-                   });
-                }
             });
         },
         

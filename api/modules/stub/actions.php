@@ -27,6 +27,11 @@ class stub {
     
     function get() {
         
+        $user = new User();
+        $user->setUsername('simply1');
+        $user->setPass('magenta1');
+        $user->save();
+        
         $venue = new Venue();
         $venue->setName('Rhoda McGaw Theatre');
         $venue->setAddress('The Ambassadors
