@@ -83,7 +83,7 @@
             $.ajax({
                 url: '/api.php/order',
                 error: function() { alert('unable to process order, please try again later');},
-                success: function() { that.viewport.addView(new simply.forms.personalDetails()); },
+                success: function(response) { that.viewport.addView(new simply.forms.personalDetails()); simply.session.set('order_id', response.order_id);  },
                 dataType: 'json'
             }); 
             

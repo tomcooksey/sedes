@@ -119,6 +119,9 @@ class orderMake {
         }
         
         if($order_id) {
+	    $progress['order_id'] = $order_id;
+	    $this->context->setSessionVar('progress', $progress);
+
             $this->context->returnSuccess(array("order_id" => $order_id, "timestamp" => strtotime($orderObj->getWhen())));
         }else{
             

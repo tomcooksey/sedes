@@ -54,7 +54,8 @@ class personalDetails {
         
         $orderObj->setFullName($personalDetails['name']);
         $orderObj->setEmail($personalDetails['email']);
-        $orderObj->setPerformanceId($progress['performance_id']);
+	$orderObj->setPhone($personalDetails['phone']);
+
         
         $orderObj->save();
         

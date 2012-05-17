@@ -30,6 +30,7 @@ class session {
     }
     
     function put() {
+
         $this->context->setSessionVar('progress', $this->context->headerVals);
         
         $this->context->returnSuccess(array());
