@@ -27,6 +27,7 @@
                 $.ajax({
                     url: '/api.php/orderManual',
                     success: this.handleManual,
+                    error: alert('Manual booking failed'),
                     dataType: 'json'
                 });
             }else{
@@ -117,7 +118,8 @@
             }
             
             //TO DO this should be in an order summary model
-            var bookingFee = Math.round((ticketsTotal * 1) * 100) / 100;
+            var bookingFee = 1;
+            console.log('bf', ticketsTotal);
             this.orderTotal = Math.round(this.orderTotal * 100) / 100;
             
             var endRow = $(this.make('tr', {"class": 'orderFooter'}));
