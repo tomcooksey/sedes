@@ -155,15 +155,7 @@
                 
                 'previous': function() {
                     
-                    //Strict equals here because it always returns something
-                    //either true if valid or an array if invalid
-                    var valid = self.collection.valid();
-                    if(valid !== true) {
-                        simply.errors.addErrors(valid);
-                    }else{
-                        simply.errors.hide();
-                        location.hash = '';
-                    }
+                    location.hash = '';
                 }
             }
             var wrapper, label;
