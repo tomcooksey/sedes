@@ -18,7 +18,12 @@
         },
         
         events: {
-            'click .nextButton' : 'next'  
+            'click .nextButton button' : 'next',
+            'click .previousButton button' : 'previous'
+        },
+        
+        previous: function() {
+            location.hash = 'your-info';
         },
         
         next: function() {
@@ -27,7 +32,7 @@
                 $.ajax({
                     url: '/api.php/orderManual',
                     success: this.handleManual,
-                    error: alert('Manual booking failed'),
+                    error: this.handleError,
                     dataType: 'json'
                 });
             }else{
@@ -41,10 +46,14 @@
             location.hash = '';
         },
         
+        handleError: function() {
+            alert('Manual Booking failed');  
+        },
+        
         renderInfo: function() {
             
             //Render the table
-            this.table = $(this.make('table'));
+            this.table = $(this.make('table', {"id" : "summary"}));
             
             //this.table.append(this.make('thead', {}, 'Please confirm your order'));
             
@@ -84,7 +93,7 @@
             this.form = $(simply.templates.paypal());
             
             //TO DO this should be a template
-            var ticketsList = $(this.make('table'));
+            var ticketsList = $(this.make('table', {"id" : "money"}));
             
             var head = $(this.make('tr'));
             head.append(this.make('th', {}, 'Ticket Type'));
@@ -108,9 +117,9 @@
                 
                 tr.append(this.make('td', {}, ticketsChosen[x].get('quantity')));
                 
-                tr.append(this.make('td', {}, '&pound' + ticketsChosen[x].get('price')));
+                tr.append(this.make('td', {}, '&pound;' + ticketsChosen[x].get('price')));
                 
-                tr.append(this.make('td', {}, '&pound' + this.roundNumber(rowTotal, 2)));
+                tr.append(this.make('td', {}, '&pound;' + this.roundNumber(rowTotal, 2)));
                 
                 ticketsList.append(tr);
                 
@@ -162,6 +171,13 @@
             nextButtonWrap.append(nextButton);
             
             wrapper.append(nextButtonWrap);
+            
+            var prevButtonWrap = $(this.make('div', {"class": 'buttonWrapper previousButton'}));
+            var prevButton = $(this.make('button', {}, 'Back'));
+            
+            prevButtonWrap.append(prevButton);
+            
+            wrapper.append(prevButtonWrap);
             
             this.$el.html(wrapper);
             this.$el.append(this.form);

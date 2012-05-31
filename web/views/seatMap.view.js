@@ -20,7 +20,7 @@
             
             simply.session.on('change:manual', this.changeManual, this);
             
-            
+            simply.viewport.on('orientationchange', this.changeOrientation);
   	
         },
         
@@ -32,8 +32,29 @@
             e.preventDefault();
             
             simply.session.save({'manual' : !simply.session.get('manual')});
+        },
+        
+        changeOrientation: function(orientation) {
             
+            if(simply.session.get('current_stage') !== 2) {
+                return;
+            }
             
+            switch(orientation) {
+                case 'portrait':
+                    this.$el.width('auto');
+                    
+                    
+                    break;
+                case 'landscape':
+                    if(simply.ticketTypes.getTotalTickets() > 0) {
+                        this.$el.show();
+                        //this.$el.fadeIn();
+                    }
+                    
+                    break;
+              
+            }
         },
         
         changeManual: function() {
@@ -129,6 +150,19 @@
                     }else{
                         simply.errors.hide();
                         location.hash = 'your-info';
+                    }
+                },
+                
+                'previous': function() {
+                    
+                    //Strict equals here because it always returns something
+                    //either true if valid or an array if invalid
+                    var valid = self.collection.valid();
+                    if(valid !== true) {
+                        simply.errors.addErrors(valid);
+                    }else{
+                        simply.errors.hide();
+                        location.hash = '';
                     }
                 }
             }

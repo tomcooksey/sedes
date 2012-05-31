@@ -18,7 +18,7 @@
             this.name = options.name;
             this.action = options.action || null;
             
-            this.setElement(this.make('form', {id: this.name, name: this.name}));
+            this.setElement(this.make('form', {id: this.name, name: this.name, "class" : options["class"]}));
             
         },
         
@@ -67,7 +67,6 @@
         },
         
         render: function() {
-            
             return this.$el;
         }
     });

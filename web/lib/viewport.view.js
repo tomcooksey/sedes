@@ -12,9 +12,14 @@
 
             this.collections.progress = new simply.collections.stages();
             
+            
+            
             _.bindAll(this);
             
+            this.window = $(window);
+            this.body = $('body');
             
+            this.window.bind('orientationchange', this.orientate);
             
             //Create our bindings to the session object
             simply.session.on('change:current_stage', this.collections.progress.changeStage, this.collections.progress);
@@ -37,8 +42,37 @@
             this.showTitle = $('#show_name');
             this.performanceTitle = $('#performance_name');
             
+            //We need to setup the errors page first
+	    simply.errors = new simply.views.errors();
+            
+            this.orientate();
+            
+            
+            
             //Return this for chaining
             return this;
+        },
+        
+        orientate: function(e) {
+            
+            
+            if(this.window.width() > 480) {
+                this.mode = 'desktop';
+                return;
+            }
+            
+            var orientation = this.window.width() > this.window.height() ? 'landscape' : 'portrait';
+            
+            this.body.removeClass('portrait');
+            this.body.removeClass('landscape');
+            
+            this.body.addClass(orientation);
+            
+            this.mode = 'mobile';
+            
+            this.trigger('orientationchange', orientation);
+            
+            
         },
         
         setLoadingActive: function() {
@@ -137,7 +171,8 @@
                     self.loadingOverlay.fadeOut('fast', function() {
                         self.loadingText.text('Loading, please wait...');
                     });
-                    self.views[ref] = el;
+
+                    self.views.current = el;
                     
                     self.$el.append(el.render());
                 }
@@ -157,11 +192,12 @@
             
             //Destroy the views
             for(var x in this.views) {
+                this.views[x].remove();
                 this.views[x].off();
-                this.views[x].off();
+                
             }
             
-            this.$el.html('');
+            this.$el.empty();
         }
         
     });

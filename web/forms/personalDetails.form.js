@@ -4,6 +4,7 @@
         
         initialize: function() {
             
+            var fieldType = simply.viewport.mode === 'mobile' ? simply.fields.touchField : simply.field
             
             
             this.form = new simply.form({
@@ -12,8 +13,8 @@
                 model: simply.personalDetails
             });
             
-            this.form.addField( new simply.field({
-                label: "Your Full Name:",
+            this.form.addField( new fieldType({
+                label: "Your Full Name",
                 id: "full_name",
                 form: this.form,
                 modelField: 'name',
@@ -25,11 +26,12 @@
                 ]
             }));
             
-            this.form.addField( new simply.field({
-                label: "Your Email Address:",
+            this.form.addField( new fieldType({
+                label: "Your Email Address",
                 id: "email",
                 form: this.form,
                 modelField: 'email',
+                tagType: 'email',
                 validation: [
                     {
                         type: "required",
@@ -42,11 +44,12 @@
                 ]
             }));
             
-            this.form.addField( new simply.field({
-                label: "Contact Phone Number:",
+            this.form.addField( new fieldType({
+                label: "Contact Phone Number",
                 id: "phone",
                 form: this.form,
                 modelField: 'phone',
+                tagType: 'tel',
                 validation: [
                     {
                         type: "required",
@@ -69,10 +72,20 @@
                 id: "next"
             }));
             
+            this.form.addField( new simply.fields.button({
+                label: "Back",
+                "className": "previousButton",
+                form: this.form,
+                action: function() { location.hash = 'seat-options'; },
+                id: "previous"
+            }));
+            
         },
         
         render: function() {
-            return this.form.render();
+            this.setElement(this.form.render());
+            
+            return this.$el; 
         }
     });
     

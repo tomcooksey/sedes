@@ -55,7 +55,9 @@
         },
         
         render: function() {
-            return this.form.render();
+            this.setElement(this.form.render());
+            
+            return this.$el; 
         }
     });
 

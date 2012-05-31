@@ -31,7 +31,16 @@
             
             //Bind to keep it at the top
             $(window).scroll(function() {
-                self.$el.css('top', self.window.scrollTop() + 'px');
+                
+                var topVal;
+                
+                if(simply.viewport.mode === 'desktop') {
+                    topVal = self.window.scrollTop();
+                }else{
+                    topVal = self.window.scrollTop() + 20;
+                }
+                    
+                self.$el.css('top', topVal + 'px');
             });
        },
        
@@ -45,12 +54,22 @@
        },
        
        show: function() {
-            this.$el.slideDown('fast');
+            if(simply.viewport.mode === 'desktop') {
+                this.$el.slideDown('fast');
+            }else{
+                this.$el.width(simply.viewport.window.width() - 40);
+                this.$el.height(simply.viewport.window.height() - 40);
+                this.$el.fadeIn('fast');
+            }
        },
        
        hide: function(callback) {
+        
             var self = this;
-            this.$el.slideUp('fast', function() {
+            
+            var methodName = simply.viewport.mode === 'desktop' ? 'slideUp' : 'fadeOut';
+            
+            this.$el[methodName]('fast', function() {
                 if(typeof callback === 'function') {
                     self.errorContents.html('');
                     callback.apply();

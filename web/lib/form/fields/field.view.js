@@ -16,14 +16,22 @@
         
         initialize: function(options) {
             
+            
             this.options = options;
             this.options.validation = options.validation || [];
+            this.tagType = options.tagType || this.tagType;
             
             this.makeName();
             this.makeLabel();
             this.renderField();
 
             this.delegateEvents();
+
+            
+
+
+            _.bindAll(this);
+
         },
         
         events: {
@@ -46,13 +54,9 @@
             this.note = this.make('div', {"class": "fieldNote"}, this.options.note);  
         },
         
-        render: function() {
-            this.wrapper = $(this.make(this.wrapperTagName, { "id": this.fieldName + '_wrapper', "class": this.wrapperClass}));
-            
-            if(this.options.className) {
-                this.wrapper.addClass(this.options.className);
-            }
-            
+        render: function() {            
+            this.makeWrapper();
+
             this.wrapper.append(this.label);
             this.wrapper.append(this.$el);
             
@@ -61,15 +65,28 @@
                 this.wrapper.append(this.note);
             }
             
-            //Grab associated model value and set it
-            if(this.options.form.model && this.options.modelField) {
-                this.setVal(this.options.form.model.get(this.options.modelField));
-            }
+            this.renderActions();
             
             return this.wrapper;
         },
         
+        makeWrapper: function() {
+            this.wrapper = $(this.make(this.wrapperTagName, { "id": this.fieldName + '_wrapper', "class": this.wrapperClass}));
+            
+            if(this.options.className) {
+                this.wrapper.addClass(this.options.className);
+            }  
+        },
+        
+        renderActions: function() {
+            //Grab associated model value and set it
+            if(this.options.form.model && this.options.modelField) {
+                this.setVal(this.options.form.model.get(this.options.modelField));
+            }
+        },
+        
         renderField: function() {
+            console.log('rf: ' + this.tagType);
             this.setElement(this.make(this.tagName, { "type": this.tagType, "id" : this.fieldName, "name": this.fieldName}));
             
             return this.$el;
@@ -84,7 +101,7 @@
         },
         
         validate: function(silent) {
-            
+  
             var obj = this;
             
             function regexValidator(regex) {
@@ -97,6 +114,8 @@
                 this.valid = true;
                 return true;
             }
+            
+            //console.log(this.getVal() === this.options.label);
 
             var validCount, modelUpdate;
             
@@ -122,7 +141,7 @@
                         //Switch through some defaults
                         switch (rule.type) {
                             case "required":
-                                if(this.getVal() !== undefined && this.getVal() !== '') {
+                                if(this.getVal() !== undefined && this.getVal() !== '' && this.getVal() !== this.options.label) {
                                     validCount +=1;
                                 }
                                 break;
@@ -150,7 +169,9 @@
             }
             
             if(this.valid) {
+
                 this.wrapper.addClass('valid');
+                this.wrapper.removeClass('invalid');
                 
                 //Set associated model attribute
                 if(this.options.form.model && this.options.modelField) {

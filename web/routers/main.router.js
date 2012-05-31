@@ -25,6 +25,7 @@
 
             //Setup the viewport
             this.viewport = new simply.views.viewport();
+            simply.viewport = this.viewport;
             this.viewport.render();
             
             this.viewport.setShowName();

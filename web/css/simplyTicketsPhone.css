@@ -1,0 +1,341 @@
+body {
+    background-color: #fff;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.errorPane {
+    
+    top: 20px;
+    left: 20px;
+    border-radius: 10px;
+    background-color: #f73e9c;
+    box-shadow: 0px 0px 40px 2px #000;
+    text-align: left;
+}
+
+.errorPane h2 {
+    margin: 0px;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.errorPane p {
+    margin: 0px;
+    line-height: 14px;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.errorPane ul {
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.errorPane button {
+    background: #fff;
+    color: #f73e9c;
+    padding: 10px 20px 10px 20px;
+    border: 0px;
+    margin: 0px 0px 10px 10px;
+    border-radius: 10px;
+}
+
+.header {
+    display: block;
+    height: 50px;
+    margin: 0px;
+    background-color: #fff;
+    
+}
+
+.header .inner {
+    height:50px;
+    width: auto;
+    display: block;
+    text-align: center;
+    line-height: 50px;
+}
+
+.header .inner img.logo {
+    margin: 12px 0px 0px 0px;
+    width: 140px;
+}
+
+.app {
+
+    width: auto;
+    display: block;
+}
+
+.app h1 {
+    display: none;
+    font-size: 20px;
+    color: #000;
+    width: auto;
+    
+ 
+}
+
+.app h2 {
+    display: none;
+}
+
+.app #activeSpace {
+    padding: 10px;
+    background-color: #eee;
+}
+
+.app #orderProgress {
+    background: #aaa;
+}
+
+.app #orderProgress .bar {
+    display: none;
+}
+
+.app #orderProgress .mask {
+    display: none;
+}
+
+.app #orderProgress .steps {
+    display: block;
+    width: auto;
+}
+
+.app #orderProgress .steps li {
+    display:none;
+}
+
+.app #orderProgress .steps li.current {
+    display:block;
+    color: #fff;
+}
+
+.app #choosePerformance h3 {
+    display: none;
+}
+
+.app .performanceRow {
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 0px;
+    padding: 15px;
+    outline: 0px;
+    
+}
+
+
+
+.app #choosePerformance .performanceRow:first-child {
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.app #choosePerformance .performanceRow:last-child {
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.app #performance_choice .selected {
+    background-color: #f73e9c;
+}
+
+.app .nextButton {
+    position: absolute;
+    top: -43px;
+    right: 0px;
+    margin: 0px;
+    
+}
+
+.app .previousButton {
+    position: absolute;
+    top: -43px;
+    left: 0px;
+    margin: 0px;
+    
+}
+
+body button, body a, body select, body input {
+    -webkit-tap-highlight-color: #ccc!important;
+}
+
+.app .nextButton button, .app .previousButton button {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.app .fieldWrapper {
+    background-color: #fff;
+    padding: 0px;
+    overflow: auto;
+    padding: 15px;
+}
+
+.app .ticketsForm1 .fieldWrapper, .app #yourInfo .fieldWrapper:first-child {
+    border: 1px solid #ccc;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+
+
+.app .ticketsForm2 .fieldWrapper, .app #yourInfo_phone_wrapper {
+    border: 1px solid #ccc;
+    border-top: 0px;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.app #yourInfo .fieldWrapper {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.defaultVal {
+    color: #ccc;
+}
+
+.app #yourInfo .fieldWrapper input {
+    border: 0px;
+    outline: 0px;
+    width: 90%;
+    font-size: 14px;
+}
+
+.app .fieldWrapper label {
+    display: inline-block;
+    width: 150px;
+    float: left;
+}
+
+.app .fieldWrapper .fieldNote {
+    display: inline-block;
+    width: 50px;
+    float: left;
+}
+
+.app .fieldWrapper select {
+    width: 40%;
+    float: right;
+    display: inline-block;
+}
+
+.app .invalid input {
+    color: red;
+}
+
+form {
+    margin: 0px;
+}
+
+@media screen and (orientation:portrait) {
+    .seatMapHolder {
+        
+        height: 296px;
+        display: block;
+        background: #ddd;
+        margin: 10px 1px 0px 1px;
+        border: 1px solid #ccc;
+        overflow: visible;
+        width: 296px;
+        background-image: url(../images/common/flip-phone.png);
+        background-position: center;
+        
+        
+    }
+    
+    .seatMapHolder .buttonWrapper {
+        top: -242px;
+        z-index: 800;
+        position: absolute;
+    }
+    
+    .seatMapHolder .nextButton {
+        right: -12px;
+    }
+    
+    .seatMapHolder .previousButton {
+        left: -11px;
+    }
+    
+    .seatMapHolder .seatMap {
+        display: none;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    
+    .seatMapHolder {
+        
+        position: absolute;
+        top: -51px;
+        left: 0px;
+        background-color: #fff;
+        z-index: 100000;
+    }
+    
+    .seatMapHolder .buttonWrapper {
+        display: none;
+    }
+    
+
+    
+}
+
+table#summary th {
+    display: block;
+    float: left;
+    width: 180px;
+}
+
+table#summary td {
+    display: block;
+    float: left;
+}
+
+table#money th {
+    display: table-cell;
+    float: none;
+}
+
+table#money td {
+    display: table-cell;
+    float: none;
+}
+
+
+.footer {
+    display: block;
+    height: 50px;
+    border-top: 1px solid #b5b4ad;
+    margin-top: 0px;
+    text-align:center;
+    color: #888;
+    background-color: #fff;
+    font-size: 14px;
+    padding: 0px;
+    clear: both;
+    line-height: 50px;
+}

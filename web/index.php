@@ -32,6 +32,10 @@ if(isset($_GET['merchant_return_link'])) {
         <title>Simply Tickets</title>
         
         <link rel="stylesheet" type="text/css" href="css/simplyTickets.css" />
+	
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="css/simplyTicketsPhone.css" />
+	
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">	
         <!--hosted for the time being-->
 	<script type="text/javascript" src="/jquery.js"></script>
 	<script src="json2.js"></script>
@@ -66,8 +70,7 @@ if(isset($_GET['merchant_return_link'])) {
 		loadingOverlay.width(win.width());
 		loadingOverlay.fadeIn('fast');
 		
-		//We need to setup the errors page first
-		simply.errors = new simply.views.errors();
+		
 			
 		//Put shows in global namespace for ease of use
 		simply.shows = new simply.collections.shows();
@@ -160,6 +163,7 @@ if(isset($_GET['merchant_return_link'])) {
 	<script src="lib/form/fields/radio.field.view.js"></script>
 	<script src="lib/form/fields/button.field.view.js"></script>
 	<script src="lib/form/fields/performance.field.view.js"></script>
+	<script src="lib/form/fields/touchField.field.view.js"></script>
 	
 	
 	<!--form lib-->

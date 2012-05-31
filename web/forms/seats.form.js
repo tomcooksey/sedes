@@ -29,6 +29,8 @@
 
         render: function() {
             
+            var count = 1;
+            
             simply.ticketTypes.each(function(ticket) {
                 var form, self = this;
 
@@ -36,7 +38,8 @@
                     name: 'form_seats_' + ticket.get('id'),
                     action: 'seat-map',
                     model: ticket,
-                    noWait: true
+                    noWait: true,
+                    "class" : "ticketsForm" + count
                 });
                 
                 form.addField( new simply.fields.select({
@@ -53,7 +56,7 @@
                 }));
                 
                 this.forms.push(form);
-                
+                count +=1;
             }, this);
                         
             simply.seats.hasGaps();
@@ -78,7 +81,9 @@
                 }
             }, 100);
             
-            return buildUp;
+            this.setElement(buildUp);
+            
+            return this.$el;
             
         }
     });
