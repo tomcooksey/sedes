@@ -35,6 +35,14 @@ if(isset($_GET['merchant_return_link'])) {
 	
 	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="css/simplyTicketsPhone.css" />
 	
+	 
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+ 
+
+
+	
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">	
         <!--hosted for the time being-->
 	<script type="text/javascript" src="/jquery.js"></script>

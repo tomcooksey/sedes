@@ -134,6 +134,21 @@ class orderMake {
            $this->context->returnSuccess(array());
     }
     
+    function orders() {
+        echo '<pre>';
+        $orderObj = new OrderQuery();
+        $orderObj->filterBy('fulfilled', true);
+        $orderObj = $orderObj->find();
+        
+        if($orderObj) {
+            foreach($orderObj as $order) {
+                echo $order .'<br/>';
+                
+                //$seatsQuery = 
+            }
+        }
+    }
+    
     function killOrder() {
         
         

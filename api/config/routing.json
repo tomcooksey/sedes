@@ -29,6 +29,12 @@
         "secure" : false
     },
     
+    "/allOrders" : {
+        "module" : "orderMake",
+        "action" : "orders",
+        "secure" : false
+    },
+    
     "/killOrder" : {
         "module" : "orderMake",
         "action" : "killOrder",
